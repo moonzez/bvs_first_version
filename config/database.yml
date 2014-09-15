@@ -1,0 +1,22 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: root
+  password: 1911asAS
+  host: localhost
+  socket: /tmp/mysql.sock
+
+development:
+  <<: *default
+  database: bvs_development
+
+test:
+  <<: *default
+  database: bvs_test
+
+production:
+  <<: *default
+  database: bvs_production
+  username: some_user
+  password: <%= ENV['BVS_DATABASE_PASSWORD'] %>

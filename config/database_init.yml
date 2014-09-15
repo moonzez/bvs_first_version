@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: some_user
+  password: some_password
+  host: localhost
+
+development:
+  <<: *default
+  database: some_development
+
+test:
+  <<: *default
+  database: some_test
+
+production:
+  <<: *default
+  database: some_production
+  username: some_user
+  password: <%= ENV['SOME_PASSWORD'] %>
