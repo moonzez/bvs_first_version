@@ -17,5 +17,3 @@
 
 #Ignore configurations
 /config/config.yml
-/config/roots_initial.rb
-/config/database.yml
