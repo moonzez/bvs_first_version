@@ -17,4 +17,4 @@
 
 #Ignore configurations
 /config/config.yml
-/config/database_my.yml
+/config/database.yml
