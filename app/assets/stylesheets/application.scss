@@ -1,0 +1,237 @@
+html {
+    background:  #b2bed9;
+}
+
+body {
+  font: 12pt "Myriad Pro", Helvetica;
+  padding: 10px;
+}
+
+h1 {
+  margin: 10px;
+}
+
+div.field {
+  margin: 5px;
+  padding: 5px;
+}
+
+#error_explanation {
+  font: 11pt "Myriad Pro", Helvetica;
+  color: #CC0000;
+  padding: 10px;
+}
+
+div.field_with_errors {
+  color:#CC0000;
+  font-weight: bold;
+  display:inline-table;
+}
+
+div.field_with_errors input {
+  border-color:#CC0000;
+}
+
+input[type=submit] {
+}
+
+#notice, #alert {
+  margin-top:20px;
+  margin-left:10px;
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background: #f0f0f0;
+  font: bold smaller sans-serif;
+}
+
+div#navi_crutch {
+  margin: 0; padding: 0;
+  width: 100%;
+  border: 1px solid #eee;
+  background-color: #8795A8;
+}
+
+* html div#navi_crutch {  /* Korrektur fuer IE 5.x */
+  width: 100%;
+  w\idth: 100%;
+}
+
+div#navi_crutch div {
+  clear: left;
+}
+ul#navi {
+  margin: 0; padding: 0;
+  text-align: center;
+}
+
+ul#navi li {
+  list-style: none;
+  float: left;  /* ohne width - nach CSS 2.1 erlaubt */
+  position: relative;
+  margin: 0.3em; padding: 0;
+}
+
+* html ul#navi li {  /* Korrektur fuer den IE 5 und 6 */
+  margin-bottom: -0.4em;
+}
+
+*:first-child+html ul#navi li {  /* Korrektur fuer den IE 7 */
+  margin-bottom: -0.1em;
+}
+
+ul#navi li ul {
+  margin: 0; padding: 0;
+  position: absolute;
+  top: 1.4em; left: -0.3em;
+  display: none;  /* Unternavigation ausblenden */
+}
+* html ul#navi li ul {  /* Korrektur fuer IE 5.x */
+  left: -1.5em;
+  lef\t: -0.4em;
+}
+*:first-child+html ul#navi ul {  /* Workaround fuer den IE 7 */
+  background-color:#8795A8; padding-bottom:0.4em;
+}
+ul#navi li:hover ul {
+  display: block;  /* Unternavigation in modernen Browsern einblenden */
+}
+ul#navi li ul li {
+  float: none;
+  display: block;
+  margin-bottom: 0.2em;
+}
+
+ul#navi a {
+  display: block;
+  width: 6.4em;  /* Breite den in li enthaltenen Elementen zuweisen */
+  padding: 0.2em 1em;
+  text-decoration: none; font-weight: bold; font-size: 10pt;
+  border: 1px solid #eee;
+  border-left-color: white; border-top-color: white;
+  color: #000066; background-color: #ccc;
+}
+* html ul#navi a, * html ul#navi span {
+  width: 8.6em;   /* Breite nach altem MS-Boxmodell für IE 5.x */
+  w\idth: 6.4em;  /* korrekte Breite fuer den IE 6 im standardkonformen Modus */
+}
+ul#navi a:hover {
+  border-color: white;
+  border-left-color: black; border-top-color: black;
+  color: white; background-color: #6795C9;
+}
+table#small {
+    margin-left:auto; 
+    margin-right:auto;        
+    border-spacing:2px;
+    border-width: 3px;
+    border-color: #cccccc;
+    border-style: solid;
+    text-align: center;     
+}
+table#small th {
+    background-color:#d9d5d5;
+    font-size:   12px;
+}
+table#small td {
+    font-weight:normal;
+    background-color:#f5f2f2; 
+    font-size:   13px;
+    vertical-align:top;
+}
+
+table#left_small {    
+    border-spacing:2px;
+    border-width: 3px;
+    border-color: #cccccc;
+    border-style: solid;       
+}
+table#left_small th { 
+    background-color:#d9d5d5;
+    font-size:   12px;
+}
+
+table#left_small td { 
+  font-weight:normal;
+  background-color:#f5f2f2; 
+  font-size:   13px;
+  vertical-align:top;
+}
+
+table#form {
+  border-spacing: 3px;
+  border-color: #cccccc;
+  border-style: solid;
+  text-align: left;
+}
+
+table#form th {
+  padding: 5px;
+  font: 12pt "Myriad Pro", Helvetica;
+  background-color:#d9d5d5;
+}
+
+table#form td#centered {
+  padding: 5px;
+  text-align: center;
+}
+
+table#form td {
+  padding: 5px;
+  font: 10pt "Myriad Pro", Helvetica;
+  background-color:#f5f2f2; 
+}
+
+table#stat {
+  border-spacing:2px;
+  border-width: 3px;
+  border-color: #cccccc;
+  border-style: solid;
+  text-align: center; 
+  margin-left:auto; 
+  margin-right:auto;
+}
+
+#tabs ul {
+  list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#tabs li {
+  float: left;
+  border: 1px solid #8795A8;
+  border-bottom-width: 0;
+}
+
+#tabs a {
+  text-decoration: none;
+  display: block;
+  background: #eee;
+  padding: 0.24em 1em;
+  text-align: center;
+}
+
+#tabs a:hover {
+  border-color: white;
+  border-left-color: black; border-top-color: #6795C9;
+  color: white; background-color: #6795C9;
+}
+	
+#tabs #selected {
+  border-color: #6795C9;
+}
+	
+#tabs #selected a {
+  position: relative;
+  top: 1px;
+  background: white;
+  color: black;
+  font-weight: bold;
+}
+#tab_content {
+  clear: both;
+}
+

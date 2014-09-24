@@ -1,0 +1,26 @@
+<h1>Anmelden</h1>
+<%= form_for @user_session do |f| %>
+  <% if @user_session.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user_session.errors.count %> Fehler aufgetreten:</h2>
+
+      <ul>
+        <% @user_session.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <table>
+    <tr>
+      <td><%= f.label :username, "Login" %></td>
+      <td><%= f.text_field :username %></td>
+    <tr>
+
+    <tr>
+      <td><%= f.label :password %></td>
+      <td><%= f.password_field :password %></td>
+    <tr>
+  </table>
+  <p><%= f.submit "Anmelden"%></p>
+<% end %>

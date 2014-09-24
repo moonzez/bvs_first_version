@@ -1,14 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bvs</title>
+  <title>
+    <% if content_for(:title) %>
+      <%= yield(:title) %>
+    <% else %>
+      BVS
+    <% end %>
+  </title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <% if current_user %>
+    <div id="navi_crutch">
+      <ul id="navi">
+        <li><%= link_to "Home", root_path %></li>
 
-<%= yield %>
+        <% if admin? %>
+          <%= render '/shared/admin_navi' %></li>
+        <% end %>
 
+        <% if dbuser? %>
+          <%= render '/shared/dbuser_navi' %></li>
+        <% end %>
+
+        <% if reader? %>
+          <%= render '/shared/reader_navi' %></li>
+        <% end %>
+
+        <% if accounter? %>
+          <%= render '/shared/accouner_navi' %></li>
+        <% end %>
+
+        <% if referent? %>
+          <%= render '/shared/reader_navi' %></li>
+        <% end %>
+
+        <li><%= link_to "Abmelden", logout_path %></li>
+        </ul>
+    <div></div>
+    </div>
+  <% end %>
+
+  <% flash.each do |key, value| %>
+    <div class='flash' id='<%= key %>'>
+      <%= value %>
+    </div>
+  <% end %>
+  <%= yield %>
 </body>
 </html>

@@ -1,0 +1,135 @@
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= @user.errors.count %> Fehler aufgetreten:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="form_user">
+
+    <tr>
+      <td><%=f.label :gender %>*</td>
+      <td><%= f.radio_button :gender, :herr %> Herr <%= f.radio_button :gender, :frau %> Frau</td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :firstname %>*</td>
+      <td><%= f.text_field :firstname %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :lastname %>*</td>
+      <td><%= f.text_field :lastname %></td>
+    <tr>
+
+    <tr>
+      <td><%= f.label :username %>*</td>
+      <td><%= f.text_field :username %></td>
+    <tr>
+
+    <tr>
+      <td><%= f.label :password %></td>
+      <td><%= f.password_field :password %></td>
+    <tr>
+
+    <tr>
+      <td><%= f.label :password_confirmation %></td>
+      <td><%= f.password_field :password_confirmation %></td>
+    <tr>
+
+    <tr>
+      <td><%= f.label :email %>*</td>
+      <td><%= f.text_field :email %></td>
+    </tr>
+
+    <tr>
+      <td><%= f.label :tel %>*</td>
+      <td><%= f.text_field :tel %></td>
+    <tr>
+
+    <tr>
+      <td><%= f.label :tel2 %></td>
+      <td><%= f.text_field :tel2 %></td>
+    </tr>
+
+  <table>
+
+  <p>Rollen:</p>
+  <% @roles.each do |role| %>
+    <%= check_box_tag "role_#{role.id}", role.id, @user.roles.include?(role), name: "roles[]" %>
+    <%= label_tag :roles, role.title %>
+  <% end %>
+
+  <% if @user.is_referent? || !@user.persisted? %>
+    <h2>Referentendaten:</p><h2>
+
+    <table>
+      <tr>
+        <td><%= f.label :remarc %></td>
+        <td><%= f.text_area :remarc %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :active %></td>
+        <td><%= f.select :activ, User::ACTIVITY.collect { |id, text | [ text, id ] } %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :zip %></td>
+        <td><%= f.text_field :zip %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :city %></td>
+        <td><%= f.text_field :city %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :street %></td>
+        <td><%= f.text_field :street %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :country %></td>
+        <td><%= f.text_field :country %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :bank %>*</td>
+        <td><%= f.text_field :bank %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :blz %>*</td>
+        <td><%= f.text_field :blz %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :konto %>*</td>
+        <td><%= f.text_field :konto %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :honorar %></td>
+        <td><%= f.check_box :honorar %></td>
+      </tr>
+
+    </table>
+
+      <% if @languages %>
+        <p>Referent spricht:</p>
+        <% @languages.each do |language| %>
+          <%= check_box_tag "language_#{language.id}", language.id, @user.languages.include?(language), :name => "languages[]" %>
+          <%= label_tag :languages, language.language %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+  <p><%= f.submit %></p>
+<% end %>

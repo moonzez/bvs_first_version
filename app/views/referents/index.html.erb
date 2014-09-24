@@ -1,0 +1,39 @@
+<h1>Referents</h1>
+
+<div id="tabs">
+  <ul>
+    <% @all_letters.each do |letter| %>
+      <li id="<%= (letter == @selected_letter) ? 'selected' : '' %>"><%= link_to letter, referents_path(selected_letter: letter) %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div id= "tab_content">
+  <table id ="form">
+    <thead>
+      <tr>
+        <th>Nachname</th>
+        <th>Vorname</th>
+        <th>Email</th>
+        <th>Telefon</th>
+        <th>Rechte</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody id="scrollable">
+      <% @referents.each do |referent| %>
+        <tr>
+          <td><%= link_to referent.lastname, edit_referent_path(referent), :name => referent.lastname.first %></td>
+          <td><%= referent.firstname %></td>
+          <td><%= referent.email %></td>
+          <td><%= referent.tel %></td>
+          <td><%= referent.roles.collect(&:title).join(", ") %></td>
+          <td><%= link_to 'Bearbeiten', edit_referent_path(referent) %></td>
+          <td><%= link_to 'Löschen', referent, method: :delete, data: { confirm: "#{ referent.full_name } löschen?" } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+</div>

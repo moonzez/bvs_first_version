@@ -1,0 +1,26 @@
+<h1>Alle Sprachen für Referenten</h1>
+
+<table id="form">
+  <thead>
+    <tr>
+      <th>Sprache</th><th>Löschen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @languages.each do |language| %>
+      <tr id="language_<%= language.id %>">
+        <td><%= language.language %></td>
+        <td><%= link_to "X", language, :method => :delete, :remote => true, :title => "#{language.language} löschen" %></td>
+      <tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Neue Sprache anlegen</h2>
+<div id="new_language">
+  <%= form_for @language do |f| %>
+    <%= f.label :language %>
+    <%= f.text_field :language %>
+    <%= f.submit %>
+  <% end %>
+</div>

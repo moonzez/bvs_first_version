@@ -1,0 +1,39 @@
+<h1>Alle Nutzer</h1>
+
+<div id="tabs">
+  <ul>
+    <% @all_letters.each do |letter| %>
+      <li id="<%= (letter == @selected_letter) ? 'selected' : '' %>"><%= link_to letter, users_path(selected_letter: letter) %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div id= "tab_content">
+  <table id ="form">
+    <thead>
+      <tr>
+        <th>Nachname</th>
+        <th>Vorname</th>
+        <th>Email</th>
+        <th>Telefon</th>
+        <th>Rechte</th>
+        <th colspan="2"></th>
+      </tr>
+    </thead>
+
+    <tbody id="scrollable">
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= link_to user.lastname, edit_user_path(user), :name => user.lastname.first %></td>
+          <td><%= user.firstname %></td>
+          <td><%= user.email %></td>
+          <td><%= user.tel %></td>
+          <td><%= user.roles.collect(&:title).join(", ") %></td>
+          <td><%= link_to 'Bearbeiten', edit_user_path(user) %></td>
+          <td><%= link_to 'Löschen', user, method: :delete, data: { confirm: "#{ user.full_name } löschen?" } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+</div>

@@ -1,0 +1,114 @@
+de:
+  activerecord:
+    models:
+      user: Nutzer
+      language: Sprache
+      license: Lizenz
+    attributes:
+      language:
+        language: Sprache
+      license:
+        shortcut: Abkürzung
+        title: Lizenztitel
+      user:
+        firstname : Vorname
+        lastname: Nachname
+        email: Email
+        password: Password
+        password_confirmation: Password wiederholen
+        username: Login
+        gender: Anrede
+        tel: Telefon
+        tel2: 2.Telefon
+        remarc: Bemerkungen
+        active: "Ist aktiviert"
+        zip: PLZ
+        city: Ort
+        street: Strasse/Hnr.
+        country: Land
+        bank: Bank
+        blz: BIC
+        konto: IBAN
+        honorar: Honorar
+
+    errors:
+      messages:
+        record_invalid: Datensatz ungültig
+      models:
+        user:
+          attributes:
+            username:
+              blank: darf nicht leer sein
+              too_short: ist zu kurz
+            password:
+              too_short: ist zu kurz
+              blank: darf nicht leer sein
+            password_confirmation:
+              confirmation: stimmt nicht mit Password überein
+              too_short: ist zu kurz
+            email:
+              taken: ist bereits verwendet
+              blank: darf nicht leer sein
+            lastname:
+              blank: darf nicht leer sein
+            firstname:
+              blank: darf nicht leer sein
+            gender:
+              blank: darf nicht leer sein
+            tel:
+              blank: darf nicht leer sein
+            bank:
+              blank: für Referenten darf nicht leer sein
+            blz:
+              blank: für Referenten darf nicht leer sein
+            konto:
+              blank: für Referenten darf nicht leer sein
+
+        language:
+          attributes:
+            language:
+              taken: ist bereits verwendet
+              blank: darf nicht leer sein
+        license:
+          attributes:
+            title:
+              taken: ist bereits verwendet
+              blank: darf nicht leer sein
+            shortcut:
+              taken: ist bereits verwendet
+              blank: darf nicht leer sein
+
+  authlogic:
+    error_messages:
+      login_blank: darf nicht leer sein
+      login_not_found: ist falsch
+      login_invalid: darf nur Buchstaben, Nummer und .-_@ enthalten
+      consecutive_failed_logins_limit_exceeded: Zu viele Anmeldeversuche, Konto wurde deaktiviert
+      email_invalid: entspricht nicht dem Format
+      password_blank: darf nicht leer sein
+      password_invalid: ist falsch
+      not_active: Konto nicht aktiv
+      not_confirmed: Konto ist nicht bestätigt
+      not_approved: Konto ist nicht überprüft
+      no_authentication_details: Sie haben nichts eingegeben
+      general_credentials_error: Login/Password Kombination ist nicht valide
+    models:
+      user_session: Anmeldung
+    attributes:
+      user_session:
+        username: Login
+
+  title:
+    herr: "Herr"
+    frau: "Frau"
+
+  license:
+    shortcut_explanation: Diese Abkürzung wird als Spaltenname in der Referentenübersichtstabelle verwendet
+
+  is_in_use: "%{what} kann nicht gelöscht werden: ist in verwendung"
+
+  helpers:
+    submit:
+      create: "Speichern"
+      submit: "Speichern"
+      update: "Speichern"

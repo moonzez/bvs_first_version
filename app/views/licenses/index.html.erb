@@ -1,0 +1,30 @@
+<h1> Alle Lizenzen für Referenten</h1>
+
+<table id="form">
+  <thead>
+    <tr>
+      <th>Lizenz Titel</th>
+      <th title="<%= t('license.shortcut_explanation') %>">Abkürzung</th>
+      <th>Löschen</th>
+    <tr>
+  </thead>
+
+  <tbody>
+    <% @licenses.each do |license| %>
+      <tr id="license_<%= license.id %>">
+        <td><%= license.title %></td>
+        <td title="<%= t('license.shortcut_explanation') %>"><%= license.shortcut %></td>
+        <td id="centered"><%= link_to "X", license, :method => :delete, :remote => true, :title => "#{license.shortcut} löschen" %></td>
+      <tr>
+    <% end %>
+  <tbody>
+
+</table>
+<h2>Neue Lizenz anlegen</h2>
+<div id="new_license">
+  <%= form_for @license do |f| %>
+    <p><%= f.label :title %> <%= f.text_area :title %></p>
+    <p><%= f.label :shortcut %> <%= f.text_field :shortcut, :title => t('license.shortcut_explanation') %></p>
+    <%= f.submit %>
+  <% end %>
+</div>

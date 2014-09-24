@@ -18,3 +18,6 @@
 #Ignore configurations
 /config/config.yml
 /config/database.yml
+/config/todo.txt
+/config/setup_steps.txt
+/bin/

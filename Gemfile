@@ -10,11 +10,28 @@ gem 'jquery-rails'
 gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
-gem 'spring',        group: :development
+
+gem 'authlogic'
+gem 'scrypt'
+
+group :development do
+  gem 'spring'
+end
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
 group :test, :development do
   gem 'pry'
+  gem 'rspec-rails'
+  gem 'launchy'
+end
+
+group :test do
+  gem 'faker'
+  gem 'cucumber-rails', :require => false
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails'
+  gem 'factory_girl'
 end
