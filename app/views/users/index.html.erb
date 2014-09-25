@@ -24,13 +24,13 @@
     <tbody id="scrollable">
       <% @users.each do |user| %>
         <tr>
-          <td><%= link_to user.lastname, edit_user_path(user), :name => user.lastname.first %></td>
+          <td><%= user.lastname %></td>
           <td><%= user.firstname %></td>
           <td><%= user.email %></td>
           <td><%= user.tel %></td>
           <td><%= user.roles.collect(&:title).join(", ") %></td>
-          <td><%= link_to 'Bearbeiten', edit_user_path(user) %></td>
-          <td><%= link_to 'Löschen', user, method: :delete, data: { confirm: "#{ user.full_name } löschen?" } %></td>
+          <td><%= link_to(image_tag("edit.png", size: "20"), edit_user_path(user), title: "Bearbeiten")  %></td>
+          <td><%= link_to(image_tag("delete.png", size: "20"), user, title: "Löschen", method: :delete, data: { confirm: "#{ user.full_name } löschen?" } ) %></td>
         </tr>
       <% end %>
     </tbody>

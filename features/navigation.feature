@@ -13,6 +13,7 @@ Feature:
     And I should see "Lizenzen"
     And I should see "Sprachen"
     And I should see "Abmelden"
+    And I should see "Profil ändern"
 
   Scenario: Navi for dbuser
     Given I am logged in as an dbuser
@@ -22,6 +23,7 @@ Feature:
     And I should see "Lizenzen"
     And I should see "Sprachen"
     And I should see "Abmelden"
+    And I should see "Profil ändern"
 
     And I should not see "Nutzer"
     And I should not see "Nutzer anlegen"
@@ -31,6 +33,7 @@ Feature:
     And I am on the homepage
     Then I should see "Home"
     And I should see "Abmelden"
+    And I should see "Profil ändern"
 
     And I should not see "Nutzer"
     And I should not see "Nutzer anlegen"
@@ -46,6 +49,7 @@ Feature:
     And I should see "Lizenzen"
     And I should see "Sprachen"
     And I should see "Abmelden"
+    And I should see "Profil ändern"
 
     And I should not see "Nutzer"
     And I should not see "Nutzer anlegen"
@@ -55,6 +59,7 @@ Feature:
     And I am on the homepage
     Then I should see "Home"
     And I should see "Abmelden"
+    And I should see "Profil ändern"
 
     And I should not see "Nutzer"
     And I should not see "Nutzer anlegen"

@@ -29,7 +29,7 @@
           <td><%= referent.email %></td>
           <td><%= referent.tel %></td>
           <td><%= referent.roles.collect(&:title).join(", ") %></td>
-          <td><%= link_to 'Bearbeiten', edit_referent_path(referent) %></td>
+          <td><%= link_to 'Bearbeiten', edit_user_path(referent) %></td>
           <td><%= link_to 'Löschen', referent, method: :delete, data: { confirm: "#{ referent.full_name } löschen?" } %></td>
         </tr>
       <% end %>

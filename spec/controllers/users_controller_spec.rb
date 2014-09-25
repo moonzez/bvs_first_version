@@ -121,22 +121,21 @@ RSpec.describe UsersController, type: :controller do
         expect(response).to redirect_to(users_path)
       end
 
-      describe "with roles given" do
-
-        it "calls assign_roles on User instance" do
-          admin_role = FactoryGirl.create(:admin_role)
-          expect_any_instance_of(User).to receive(:assign_roles).with([admin_role.id.to_param])
-          post :create, { user: @user_attributes, roles: [admin_role.id] }
-        end
+      it "calls check_referent every time" do
+        expect_any_instance_of(User).to receive(:check_referent).with(nil)
+        post :create, { user: @user_attributes }
       end
 
-      describe "with languages given" do
+      it "calls assign_roles on User instance" do
+        admin_role = FactoryGirl.create(:admin_role)
+        expect_any_instance_of(User).to receive(:assign_roles).with([admin_role.id.to_param])
+        post :create, { user: @user_attributes , roles: [admin_role.id]}
+      end
 
-        it "calls assign_languages on User instance" do
-          german = FactoryGirl.build(:german)
-          expect_any_instance_of(User).to receive(:assign_languages).with([german.id])
-          post :create, { user: @user_attributes, languages: [german.id.to_param] }
-        end
+      it "calls assign_languages on User instance" do
+        german = FactoryGirl.create(:german)
+        expect_any_instance_of(User).to receive(:assign_languages).with([german.id.to_param])
+        post :create, { user: @user_attributes, languages: [german.id] }
       end
     end
 
@@ -172,6 +171,21 @@ RSpec.describe UsersController, type: :controller do
         post :create, { user: @invalid_user_attrs }
         expect(response).to render_template("new")
       end
+
+      describe "with referent role given but no bank data" do
+        before do
+          @role = FactoryGirl.create(:referent_role)
+        end
+
+        it "renders new template" do
+          post :create, { user: @user_attributes, roles: [@role.id] }
+          expect(response).to render_template("new")
+        end
+
+        it "doesn't save the user" do
+          expect { post :create, { user: @user_attributes, roles: [@role.id] } }.to change(User, :count).by(0)
+        end
+      end
     end
   end
 
@@ -194,22 +208,17 @@ RSpec.describe UsersController, type: :controller do
         expect(assigns(:user)).to eq @referent
       end
 
-      describe "with roles given" do
 
-        it "calls assign_roles on User instance" do
-          admin_role = FactoryGirl.create(:admin_role)
-          expect_any_instance_of(User).to receive(:assign_roles).with([admin_role.id.to_param])
-          put :update, { id: @referent, user: new_attributes, roles: [admin_role.id] }
-        end
+      it "calls assign_roles on User instance" do
+        admin_role = FactoryGirl.create(:admin_role)
+        expect_any_instance_of(User).to receive(:assign_roles).with([admin_role.id.to_param])
+        put :update, { id: @referent, user: new_attributes, roles: [admin_role.id] }
       end
 
-      describe "with languages given" do
-
-        it "calls assign_languages on User instance" do
-          german = FactoryGirl.build(:german)
-          expect_any_instance_of(User).to receive(:assign_languages).with([german.id])
-          put :update, { id: @referent, user: new_attributes, languages: [german.id] }
-        end
+      it "calls assign_languages on User instance" do
+        german = FactoryGirl.build(:german)
+        expect_any_instance_of(User).to receive(:assign_languages).with([german.id])
+        put :update, { id: @referent, user: new_attributes, languages: [german.id] }
       end
 
       it "redirects to the users_path" do
@@ -235,28 +244,34 @@ RSpec.describe UsersController, type: :controller do
         expect(@referent.username).not_to eql ""
       end
 
-      describe "with roles given" do
-
-        it "doesn't call assign_roles on User instance" do
-          admin_role = FactoryGirl.create(:admin_role)
-          expect_any_instance_of(User).not_to receive(:assign_roles).with([admin_role.id.to_param])
-          put :update, { id: @referent, user: invalid_attributes, roles: [admin_role.id] }
-        end
+      it "doesn't call assign_roles on User instance" do
+        admin_role = FactoryGirl.create(:admin_role)
+        expect_any_instance_of(User).not_to receive(:assign_roles).with([admin_role.id.to_param])
+        put :update, { id: @referent, user: invalid_attributes, roles: [admin_role.id] }
       end
 
-      describe "with languages given" do
-
-        it "doesn't call assign_languages on User instance" do
-          german = FactoryGirl.build(:german)
-          expect_any_instance_of(User).not_to receive(:assign_languages).with([german.id])
-          put :update, { id: @referent, user: invalid_attributes, languages: [german.id] }
-        end
+      it "doesn't call assign_languages on User instance" do
+        german = FactoryGirl.create(:german)
+        expect_any_instance_of(User).not_to receive(:assign_languages).with([german.id])
+        put :update, { id: @referent, user: invalid_attributes, languages: [german.id] }
       end
 
       it "renders the 'edit' template" do
         put :update, { id: @referent, user: invalid_attributes }
         expect(flash[:notice]).to be_nil
         expect(response).to render_template("edit")
+      end
+
+      describe "with referent role given but no bank data" do
+
+        it "renders edit template" do
+          put :update, { id: @referent, user: { bank: "" } }
+          expect(response).to render_template("edit")
+        end
+
+        it "doen't save the user" do
+          expect { put :update, id: @referent, user: { bank: "" } }.to change(User, :count).by(0)
+        end
       end
     end
   end
@@ -306,6 +321,13 @@ RSpec.describe UsersController, type: :controller do
         expect(flash[:alert]).to eql "#{ @admin.full_name } darf nicht gelöscht werden"
         expect(response).to redirect_to(users_url)
       end
+    end
+  end
+
+  describe "GET #home" do
+    it "renders home template" do
+      get :home
+      expect(response).to render_template :home
     end
   end
 end

@@ -28,17 +28,21 @@ class User < ActiveRecord::Base
 
   def assign_languages(languages_ids)
     self.languages.delete_all
-    languages_ids.each do |language_id|
-      language = Language.find(language_id)
-      self.languages << language
+    if !languages_ids.blank?
+      languages_ids.each do |language_id|
+        language = Language.find(language_id)
+        self.languages << language
+      end
     end
   end
 
   def assign_roles(roles_ids)
     self.roles.delete_all
-    roles_ids.each do |role_id|
-      role = Role.find(role_id)
-      self.roles << role
+    if !roles_ids.blank?
+      roles_ids.each do |role_id|
+        role = Role.find(role_id)
+        self.roles << role
+      end
     end
   end
 
@@ -53,6 +57,19 @@ class User < ActiveRecord::Base
       return false
     end
     true
+  end
+
+  def check_referent(roles_ids)
+    return true if roles_ids.blank?
+    roles_ids.each do |role_id|
+      role = Role.find(role_id)
+      if role.title == "referent"
+        self.errors.add(:bank, :blank) if self.bank.blank?
+        self.errors.add(:blz, :blank) if self.blz.blank?
+        self.errors.add(:konto, :blank) if self.konto.blank?
+      end
+    end
+    return !self.errors.present?
   end
 
   def self.ordered_by_name(letter)

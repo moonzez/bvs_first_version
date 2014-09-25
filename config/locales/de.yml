@@ -40,6 +40,7 @@ de:
             username:
               blank: darf nicht leer sein
               too_short: ist zu kurz
+              taken: ist bereits verwendet
             password:
               too_short: ist zu kurz
               blank: darf nicht leer sein

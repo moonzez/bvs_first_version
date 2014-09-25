@@ -60,10 +60,12 @@
 
   <table>
 
-  <p>Rollen:</p>
-  <% @roles.each do |role| %>
-    <%= check_box_tag "role_#{role.id}", role.id, @user.roles.include?(role), name: "roles[]" %>
-    <%= label_tag :roles, role.title %>
+  <% if admin? %>
+    <p>Rollen:</p>
+    <% @roles.each do |role| %>
+      <%= check_box_tag "role_#{role.title}", role.id, @user.roles.include?(role), name: "roles[]" %>
+      <%= label_tag :roles, role.title %>
+    <% end %>
   <% end %>
 
   <% if @user.is_referent? || !@user.persisted? %>
@@ -75,10 +77,12 @@
         <td><%= f.text_area :remarc %></td>
       </tr>
 
-      <tr>
-        <td><%= f.label :active %></td>
-        <td><%= f.select :activ, User::ACTIVITY.collect { |id, text | [ text, id ] } %></td>
-      </tr>
+      <% if admin? || accounter? || dbuser? %>
+        <tr>
+          <td><%= f.label :active %></td>
+          <td><%= f.select :activ, User::ACTIVITY.collect { |id, text | [ text, id ] } %></td>
+        </tr>
+      <% end %>
 
       <tr>
         <td><%= f.label :zip %></td>
@@ -115,10 +119,12 @@
         <td><%= f.text_field :konto %></td>
       </tr>
 
-      <tr>
-        <td><%= f.label :honorar %></td>
-        <td><%= f.check_box :honorar %></td>
-      </tr>
+      <% if admin? or accounter? %>
+        <tr>
+          <td><%= f.label :honorar %></td>
+          <td><%= f.check_box :honorar %></td>
+        </tr>
+      <% end %>
 
     </table>
 

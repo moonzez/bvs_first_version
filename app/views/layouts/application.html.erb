@@ -31,13 +31,14 @@
         <% end %>
 
         <% if accounter? %>
-          <%= render '/shared/accouner_navi' %></li>
+          <%= render '/shared/accounter_navi' %></li>
         <% end %>
 
         <% if referent? %>
-          <%= render '/shared/reader_navi' %></li>
+          <%= render '/shared/referent_navi' %></li>
         <% end %>
 
+        <li><%= link_to "Profil ändern", edit_user_path(current_user) %>
         <li><%= link_to "Abmelden", logout_path %></li>
         </ul>
     <div></div>

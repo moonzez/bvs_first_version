@@ -4,6 +4,12 @@ Given /^There are the following users:$/ do |table|
   end
 end
 
+Given /^There are the following users with role "(.+)":$/ do |role, table|
+  table.hashes.each do |attributes|
+    @user = FactoryGirl.create(role.to_sym, attributes)
+  end
+end
+
 Given /^I am signed in as them$/ do
   steps(%Q{
     Given I am on the homepage

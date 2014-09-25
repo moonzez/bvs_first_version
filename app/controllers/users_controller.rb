@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   before_action :get_languages, only: [:new, :create, :edit, :update, :show]
   before_action :get_roles, only: [:new, :create, :edit, :update, :show]
 
+  def home; end
+
   def index
     @selected_letter = params[:selected_letter] || "*"
     @users = User.ordered_by_name(@selected_letter)
@@ -18,13 +20,9 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save
-      if params[:roles]
-        @user.assign_roles(params[:roles])
-      end
-      if params[:languages]
-        @user.assign_languages(params[:languages])
-      end
+    if @user.check_referent(params[:roles]) and @user.save
+      @user.assign_roles(params[:roles])
+      @user.assign_languages(params[:languages])
       redirect_to users_path, notice: "Nutzer #{ @user.full_name } wurde angelegt"
     else
       render :new
@@ -33,12 +31,8 @@ class UsersController < ApplicationController
 
   def update
     if @user.update(user_params)
-      if params[:roles]
-        @user.assign_roles(params[:roles])
-      end
-      if params[:languages]
-        @user.assign_languages(params[:languages])
-      end
+      @user.assign_roles(params[:roles])
+      @user.assign_languages(params[:languages])
       redirect_to users_path, notice: "Nutzerdaten für #{ @user.full_name } wurden geändert"
     else
       render :edit
@@ -74,5 +68,4 @@ class UsersController < ApplicationController
     def get_user
       @user = User.find(params[:id])
     end
-
 end

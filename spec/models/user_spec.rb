@@ -72,6 +72,16 @@ RSpec.describe User, :type => :model do
 
       expect(@user.languages.count).to eql(0)
     end
+
+    it "reassigns languages if nil given" do
+      english = FactoryGirl.create(:language)
+      @user.languages << english
+      expect(@user.languages.count).to eql(1)
+
+      @user.assign_languages(nil)
+
+      expect(@user.languages.count).to eql(0)
+    end
   end
 
   context "assign_roles" do
@@ -93,6 +103,14 @@ RSpec.describe User, :type => :model do
       expect(@user.roles).to match_array([@admin_role])
 
       @user.assign_roles([])
+      expect(@user.roles).to match_array([])
+    end
+
+    it "reasignes languages if nil given" do
+      @user.roles << @admin_role
+      expect(@user.roles).to match_array([@admin_role])
+
+      @user.assign_roles(nil)
       expect(@user.roles).to match_array([])
     end
   end
@@ -239,6 +257,29 @@ RSpec.describe User, :type => :model do
       reader = FactoryGirl.create(:reader)
       dbuser = FactoryGirl.create(:dbuser)
       expect(User.referents).to match_array []
+    end
+  end
+
+  context "check_referent" do
+
+    it "returns false if referent role given and bank data is missing for new user record" do
+      dbuser = FactoryGirl.build(:dbuser)
+      referent_role = FactoryGirl.create(:referent_role)
+      expect(dbuser.check_referent([referent_role.id])).to eql false
+      expect(dbuser.errors.keys).to match_array([:bank, :blz, :konto])
+    end
+
+    it "returns true if role is not referent" do
+      dbuser = FactoryGirl.build(:dbuser)
+      accounter_role = FactoryGirl.create(:accounter_role)
+      expect(dbuser.check_referent([accounter_role.id])).to eql true
+      expect(dbuser.errors.keys).to match_array([])
+    end
+
+    it "returns true if refeernt role bur ban data present" do
+      referent = FactoryGirl.build(:referent)
+      referent_role = Role.find_by(title: "referent")
+      expect(referent.check_referent([referent_role.id])).to eql true
     end
   end
 end

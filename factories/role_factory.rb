@@ -15,7 +15,7 @@ FactoryGirl.define do
       title 'referent'
     end
     factory :accounter_role do
-      title 'dbuser'
+      title 'accounter'
     end
   end
 end
