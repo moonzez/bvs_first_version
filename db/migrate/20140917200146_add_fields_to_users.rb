@@ -1,11 +1,15 @@
 class AddFieldsToUsers < ActiveRecord::Migration
   def change
-
-    sql = "DELETE FROM schema_migrations"
+    sql = 'DELETE FROM schema_migrations'
     execute sql
 
     rename_column :users, :login, :old_login
 
+    add_new_columns
+    change_old_columns
+  end
+
+  def add_new_columns
     add_column :users, :username, :string
     add_column :users, :password_salt, :string
     add_column :users, :persistence_token, :string
@@ -15,7 +19,7 @@ class AddFieldsToUsers < ActiveRecord::Migration
     add_column :users, :tel, :string
     add_column :users, :tel2, :string
     add_column :users, :remarc, :text
-    add_column :users, :activ, :integer, :default => 0 # 0 == activ
+    add_column :users, :activ, :integer, default: 0 # 0 == activ
     add_column :users, :zip, :string
     add_column :users, :city, :string
     add_column :users, :street, :string
@@ -23,9 +27,11 @@ class AddFieldsToUsers < ActiveRecord::Migration
     add_column :users, :bank, :string
     add_column :users, :blz, :string
     add_column :users, :konto, :string
-    add_column :users, :honorar, :boolean, :default => true
+    add_column :users, :honorar, :boolean, default: true
+  end
 
-    change_column :users, :crypted_password, :string, :limit => 128, :null => false, :default => ""
-    change_column :users, :salt, :string, :limit => 128, :null => false, :default => ""
+  def change_old_columns
+    change_column :users, :crypted_password, :string, limit: 128, null: false, default: ''
+    change_column :users, :salt, :string, limit: 128, null: false, default: ''
   end
 end

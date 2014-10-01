@@ -1,10 +1,9 @@
 class Migrate < ActiveRecord::Migration
   def change
-
-    referent_role = Role.find_by(title: "referent")
+    referent_role = Role.find_by(title: 'referent')
 
     User.all.each do |user|
-      if user.role.blank?
+      if !user.role?
         user.roles << referent_role
       else
         role = Role.find_by(title: user.role)

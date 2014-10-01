@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919200607) do
+ActiveRecord::Schema.define(version: 20140930143037) do
 
   create_table "detours", force: true do |t|
     t.string   "gender"
@@ -173,6 +173,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.datetime "changed_on"
   end
 
+  add_index "htsreferents", ["htseminar_id"], name: "index_htsreferents_on_htseminar_id", using: :btree
+  add_index "htsreferents", ["referent_id"], name: "index_htsreferents_on_referent_id", using: :btree
+
   create_table "languages", force: true do |t|
     t.string "language"
   end
@@ -181,6 +184,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.integer "language_id"
     t.integer "user_id"
   end
+
+  add_index "languages_users", ["language_id"], name: "index_languages_users_on_language_id", using: :btree
+  add_index "languages_users", ["user_id"], name: "index_languages_users_on_user_id", using: :btree
 
   create_table "licenses", force: true do |t|
     t.text   "title"
@@ -191,6 +197,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.integer "license_id"
     t.integer "user_id"
   end
+
+  add_index "licenses_users", ["license_id"], name: "index_licenses_users_on_license_id", using: :btree
+  add_index "licenses_users", ["user_id"], name: "index_licenses_users_on_user_id", using: :btree
 
   create_table "opentourrefs", force: true do |t|
     t.integer  "opentour_id"
@@ -203,6 +212,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.string   "changed_by"
     t.datetime "changed_on"
   end
+
+  add_index "opentourrefs", ["opentour_id"], name: "index_opentourrefs_on_opentour_id", using: :btree
+  add_index "opentourrefs", ["referent_id"], name: "index_opentourrefs_on_referent_id", using: :btree
 
   create_table "opentours", force: true do |t|
     t.date     "date"
@@ -224,6 +236,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "opentourwishes", ["opentour_id"], name: "index_opentourwishes_on_opentour_id", using: :btree
+  add_index "opentourwishes", ["referent_id"], name: "index_opentourwishes_on_referent_id", using: :btree
 
   create_table "referents", force: true do |t|
     t.string   "gender"
@@ -263,6 +278,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.integer "user_id"
   end
 
+  add_index "roles_users", ["role_id"], name: "index_roles_users_on_role_id", using: :btree
+  add_index "roles_users", ["user_id"], name: "index_roles_users_on_user_id", using: :btree
+
   create_table "simple_captcha_data", force: true do |t|
     t.string   "key",        limit: 40
     t.string   "value",      limit: 6
@@ -287,6 +305,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.string   "changed_by"
     t.datetime "changed_on"
   end
+
+  add_index "tourreferents", ["detour_id"], name: "index_tourreferents_on_detour_id", using: :btree
+  add_index "tourreferents", ["referent_id"], name: "index_tourreferents_on_referent_id", using: :btree
 
   create_table "ts_requests", force: true do |t|
     t.string   "gender"
@@ -377,6 +398,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.datetime "changed_on"
   end
 
+  add_index "tsreferents", ["referent_id"], name: "index_tsreferents_on_referent_id", using: :btree
+  add_index "tsreferents", ["ts_request_id"], name: "index_tsreferents_on_ts_request_id", using: :btree
+
   create_table "users", force: true do |t|
     t.string   "firstname"
     t.string   "lastname"
@@ -420,6 +444,9 @@ ActiveRecord::Schema.define(version: 20140919200607) do
     t.string   "changed_by"
     t.datetime "changed_on"
   end
+
+  add_index "workreferents", ["referent_id"], name: "index_workreferents_on_referent_id", using: :btree
+  add_index "workreferents", ["workshop_id"], name: "index_workreferents_on_workshop_id", using: :btree
 
   create_table "workshops", force: true do |t|
     t.string   "gender"

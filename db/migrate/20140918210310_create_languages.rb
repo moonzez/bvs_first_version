@@ -4,7 +4,7 @@ class CreateLanguages < ActiveRecord::Migration
       t.string :language
     end
 
-    create_table :languages_users, :id => false do |t|
+    create_table :languages_users, id: false do |t|
       t.integer :language_id
       t.integer :user_id
     end

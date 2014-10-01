@@ -1,2 +1,0 @@
-module ReferentsHelper
-end

@@ -4,14 +4,12 @@ class CreateRoles < ActiveRecord::Migration
       t.string :title
     end
 
-    create_table :roles_users, :id => false do |t|
+    create_table :roles_users, id: false do |t|
       t.integer :role_id
       t.integer :user_id
     end
 
-    roles = ["admin", "dbuser", "reader", "accounter", "referent"]
-
-    roles.each do |role|
+    %w(admin dbuser reader accounter referent).each do |role|
       Role.create(title: role)
     end
   end

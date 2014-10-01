@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :role do
-    title { (Faker::Name.title.split(" ")).last }
+    title { (Faker::Name.title.split(' ')).last }
 
     factory :dbuser_role do
       title 'dbuser'

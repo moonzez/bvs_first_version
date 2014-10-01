@@ -1,19 +1,18 @@
 Rails.application.routes.draw do
+  get 'login', to: 'user_sessions#new', as: 'login'
+  get 'logout', to: 'user_sessions#destroy', as: 'logout'
 
-  get 'login', :to => 'user_sessions#new', :as => 'login'
-  get 'logout', :to => 'user_sessions#destroy', :as => 'logout'
+  root to: 'users#home'
 
-  root :to => 'users#home'
+  resources :users, except: [:show]
 
-  resources :users
-  resources :referents
+  resources :referents, except: [:new, :create, :edit, :update, :show, :destroy]
 
-  resources :user_sessions
+  resources :user_sessions, except: [:update, :edit, :show, :index]
 
-  resources :languages
+  resources :languages, except: [:new, :update, :edit, :show]
 
-  resources :roles
+  # resources :roles
 
-  resources :licenses
-
+  resources :licenses, except: [:new, :update, :edit, :show]
 end

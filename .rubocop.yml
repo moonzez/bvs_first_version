@@ -1,0 +1,22 @@
+Documentation:
+  Enabled: false
+
+AllCops:
+  RunRailsCops: true
+
+  Exclude:
+    - 'bin/*'
+    - 'db/schema.rb'
+    - 'db/migrate/20140919200607_create_licenses.rb'
+    - 'db/migrate/20140917200146_add_fields_to_users.rb'
+    - 'db/migrate/20140917221922_migrate_referents_to_users.rb'
+    - 'db/migrate/20140919145830_migrate_referents_languages.rb'
+    - 'db/migrate/20140930143037_add_indixes_on_old_tables.rb'
+    - 'features/support/env.rb'
+    - 'features/support/paths.rb'
+    - 'lib/tasks/cucumber.rake'
+    - 'spec/spec_helper.rb'
+
+Metrics/LineLength:
+  Max: 110
+

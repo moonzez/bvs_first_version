@@ -1,12 +1,11 @@
 class MigrateReferentsToUsers < ActiveRecord::Migration
   def change
-    my_logger_file = Logger.new("#{Rails.root}/log/migration_log.log")
-
     Referent.all.each do |r|
 
       password = r.id.to_s + r.lastname
-      genders = { "Frau" => 1, "Herr" => 0}
-      state = { "aktiv" => 0, "inaktiv" => 1, "temporary" => 2 }
+      genders = { 'Frau' => 1, 'Herr' => 0 }
+      states = { 'aktiv' => 0, 'inaktiv' => 1, 'temporary' => 2 }
+      email = r.email.strip
 
       user = User.new(
         firstname: r.firstname,
@@ -14,13 +13,13 @@ class MigrateReferentsToUsers < ActiveRecord::Migration
         password: password,
         password_confirmation: password,
         created_at: r.created_at,
-        email: r.email.strip,
+        email: email,
         referent_id: r.id,
         gender: genders[r.gender],
         tel: r.tel,
         tel2: r.tel2,
         remarc: r.remarc,
-        activ: state[r.aktiv],
+        activ: states[r.aktiv],
         zip: r.zip,
         city: r.city,
         street: r.street,
@@ -29,17 +28,20 @@ class MigrateReferentsToUsers < ActiveRecord::Migration
         blz: r.blz,
         konto: r.konto,
         honorar: r.honorar,
-        username: r.email.strip
+        username: email
       )
 
-      if !user.save
-        my_logger_file.info("\n\n\nReferent ID #{r.id}")
-        my_logger_file.info("\n#{user.inspect}")
-        user.errors.each do |k, v|
-          my_logger_file.info("\n#{k}: #{v}")
-        end
-      end
+      write_log_file(r.id, user) unless user.save
+    end
+  end
 
+  def write_log_file(referent_id, user)
+    my_logger_file = Logger.new("#{Rails.root}/log/migration_log.log")
+
+    my_logger_file.info("\n\n\nReferent ID #{ referent_id }")
+    my_logger_file.info("\n#{ user.inspect }")
+    user.errors.each do |key, value|
+      my_logger_file.info("\n#{ key }: #{ value }")
     end
   end
 end

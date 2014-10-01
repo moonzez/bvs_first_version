@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  before_filter :require_login
+  before_action :require_login
 
   helper_method :current_user, :admin?, :dbuser?, :reader?, :accounter?, :referent?
 
@@ -22,6 +22,6 @@ class ApplicationController < ActionController::Base
   end
 
   %w(admin dbuser reader accounter referent).each do |role|
-    define_method(role + "?") { current_user.roles.include?(Role.find_by(title: role)) }
+    define_method(role + '?') { current_user.roles.include?(Role.find_by(title: role)) }
   end
 end
