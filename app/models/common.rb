@@ -7,10 +7,6 @@ module Common
     error_text.join('; ')
   end
 
-  def self.present_abc(attribute)
-    all.map(&(attribute.to_sym)).map(&:first).uniq.sort
-  end
-
   def can_be_deleted(what)
     if users.any?
       errors.add(:base, I18n.t('is_in_use', what: self[what]))
