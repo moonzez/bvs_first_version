@@ -34,13 +34,21 @@ RSpec.describe ReferentsController, type: :controller do
 
       it 'assigns all users to @users' do
         referent1 = FactoryGirl.create(:referent, lastname: 'Achti')
+        FactoryGirl.create(:dbuser, lastname: 'Bachti')
         get :index
         expect(assigns(:referents)).to match_array [referent1]
-        expect(assigns(:all_letters)).not_to be_nil
+      end
+
+      it 'assigns only referents first latter to all_letters' do
+        referent1 = FactoryGirl.create(:referent, lastname: 'Achti')
+        FactoryGirl.create(:dbuser, lastname: 'Bachti')
+        get :index
+        expect(assigns(:referents)).to match_array [referent1]
+        expect(assigns(:all_letters)).to eql ['*', 'A']
       end
     end
 
-    it 'renders "index" template' do
+    it 'renders index template' do
       get :index
       expect(response).to render_template :index
     end

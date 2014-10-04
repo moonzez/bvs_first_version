@@ -10,6 +10,7 @@ Feature:
     And I should see "Nutzer"
     And I should see "Nutzer anlegen"
     And I should see "Referenten"
+    And I should see "Referenten anlegen"
     And I should see "Lizenzen"
     And I should see "Sprachen"
     And I should see "Abmelden"
@@ -20,6 +21,7 @@ Feature:
     And I am on the homepage
     Then I should see "Home"
     And I should see "Referenten"
+    And I should see "Referenten anlegen"
     And I should see "Lizenzen"
     And I should see "Sprachen"
     And I should see "Abmelden"
@@ -38,6 +40,7 @@ Feature:
     And I should not see "Nutzer"
     And I should not see "Nutzer anlegen"
     And I should not see "Referenten"
+    And I should not see "Referenten anlegen"
     And I should not see "Lizenzen"
     And I should not see "Sprachen"
 
@@ -46,6 +49,7 @@ Feature:
     And I am on the homepage
     Then I should see "Home"
     And I should see "Referenten"
+    And I should see "Referenten anlegen"
     And I should see "Lizenzen"
     And I should see "Sprachen"
     And I should see "Abmelden"
@@ -64,5 +68,6 @@ Feature:
     And I should not see "Nutzer"
     And I should not see "Nutzer anlegen"
     And I should not see "Referenten"
+    And I should not see "Referenten anlegen"
     And I should not see "Lizenzen"
     And I should not see "Sprachen"

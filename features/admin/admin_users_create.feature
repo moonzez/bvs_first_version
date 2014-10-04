@@ -11,6 +11,7 @@ Feature: Creating new users
     Given I follow "Nutzer anlegen"
 
   Scenario: create not referent with valid data
+    Then I should see title "BVS - Nutzer anlegen"
     When I choose("user_gender_herr")
     And I fill in "Vorname" with "John"
     And I fill in "Nachname" with "Doe"

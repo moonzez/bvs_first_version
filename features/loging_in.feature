@@ -9,11 +9,12 @@ Feature:
       |john.doe|password|
     Given I am on the login
 
-  Scenario: Log in with valid data
+    Then I should see title "BVS - Anmelden"
     When I fill in "Login" with "john.doe"
     And I fill in "Password" with "password"
     And I press "Anmelden"
     Then I should see "Sie sind angemeldet"
+    Then I should see title "BVS - Home"
     And I follow "Abmelden"
     Then I should see "Sie sind abgemeldet"
     And I should see "Anmelden"
@@ -22,12 +23,14 @@ Feature:
 
 
   Scenario: Log in with invalid password
+    Then I should see title "BVS - Anmelden"
     When I fill in "Login" with "john.doe"
     And I fill in "Password" with "wrong password"
     And I press "Anmelden"
     Then I should see "Password ist falsch"
 
   Scenario: Log in with invalid login
+    Then I should see title "BVS - Anmelden"
     When I fill in "Login" with "johndoe"
     And I fill in "Password" with "password"
     And I press "Anmelden"

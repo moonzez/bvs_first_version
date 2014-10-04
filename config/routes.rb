@@ -6,7 +6,11 @@ Rails.application.routes.draw do
 
   resources :users, except: [:show]
 
-  resources :referents, except: [:new, :create, :edit, :update, :show, :destroy]
+  resources :referents, except: [:show] do
+    member do
+      delete :remove
+    end
+  end
 
   resources :user_sessions, except: [:update, :edit, :show, :index]
 

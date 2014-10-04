@@ -80,9 +80,9 @@ RSpec.describe LicensesController, type: :controller do
     context 'with valid attributes' do
 
       it 'saves a new license in the database' do
-        expect {
+        expect do
           post :create, license: { title: 'HTS License', shortcut: 'hts' }
-        }.to change(License, :count).by 1
+        end.to change(License, :count).by 1
       end
 
       it 'redirects to license_path' do

@@ -1,6 +1,7 @@
-<h1>Referents</h1>
+<%= title('Alle Referenten') %>
+<h1>Alle Referenten</h1>
 
-<div id="tabs">
+<div id='tabs'>
   <ul>
     <% @all_letters.each do |letter| %>
       <li id="<%= (letter == @selected_letter) ? 'selected' : '' %>"><%= link_to letter, referents_path(selected_letter: letter) %></li>
@@ -8,29 +9,43 @@
   </ul>
 </div>
 
-<div id= "tab_content">
-  <table id ="form">
+<div id= 'tab_content'>
+  <table id ='form'>
     <thead>
       <tr>
         <th>Nachname</th>
         <th>Vorname</th>
-        <th>Email</th>
+        <th>Anrede</th>
         <th>Telefon</th>
-        <th>Rechte</th>
-        <th colspan="2"></th>
+        <th>Email</th>
+        <th>Lizenzen</th>
+        <th>TODO: Button to multiple MAIL</th>
+        <th>Sprachen</th>
+        <th>Bemerkungen</th>
+        <th colspan='5'>Optionen</th>
       </tr>
     </thead>
-
-    <tbody id="scrollable">
+    <tbody id='scrollable'>
       <% @referents.each do |referent| %>
-        <tr>
-          <td><%= link_to referent.lastname, edit_referent_path(referent), :name => referent.lastname.first %></td>
+        <% if referent.temporary? %>
+          <tr title='Temporär deaktiviert' style='color: grey;'>
+        <% else %>
+          <tr>
+        <% end %>
+          <td><%= referent.lastname %></td>
           <td><%= referent.firstname %></td>
+          <td><%= t("title.#{referent.gender}") %></td>
+          <td><%= referent.tel %><% if referent.tel2? %> (<%= referent.tel2 %>)<% end %></td>
           <td><%= referent.email %></td>
-          <td><%= referent.tel %></td>
-          <td><%= referent.roles.collect(&:title).join(", ") %></td>
-          <td><%= link_to 'Bearbeiten', edit_user_path(referent) %></td>
-          <td><%= link_to 'Löschen', referent, method: :delete, data: { confirm: "#{ referent.full_name } löschen?" } %></td>
+          <td><%= referent.licenses.map(&:shortcut).join(', ') %></td>
+          <td>TODO</td>
+          <td><%= referent.languages.map(&:language).join(', ') %></td>
+          <td><%= referent.remarc %></td>
+          <td><%= link_to(image_tag('activate.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
+          <td><%= link_to(image_tag('deactivate.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
+          <td><%= link_to(image_tag('temporary.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
+          <td><%= link_to(image_tag('edit.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
+          <td><%= link_to(image_tag('delete.png', size: '20'), remove_referent_path(referent.id), title: 'Löschen', method: :delete, data: { confirm: "#{ referent.full_name } löschen?" } ) %></td>
         </tr>
       <% end %>
     </tbody>

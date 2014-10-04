@@ -1,4 +1,6 @@
 module Common
+  extend ActiveSupport::Concern
+
   def generate_errors_for_remote
     error_text = []
     errors.each do |attr, msg|

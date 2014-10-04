@@ -1,36 +1,39 @@
+<%= title('Alle Nutzer') %>
 <h1>Alle Nutzer</h1>
 
-<div id="tabs">
+<div id='tabs'>
   <ul>
     <% @all_letters.each do |letter| %>
-      <li id="<%= (letter == @selected_letter) ? 'selected' : '' %>"><%= link_to letter, users_path(selected_letter: letter) %></li>
+      <li id='<%= (letter == @selected_letter) ? 'selected' : '' %>'><%= link_to letter, users_path(selected_letter: letter) %></li>
     <% end %>
   </ul>
 </div>
 
-<div id= "tab_content">
-  <table id ="form">
+<div id= 'tab_content'>
+  <table id ='form'>
     <thead>
       <tr>
         <th>Nachname</th>
         <th>Vorname</th>
+        <th>Anrede</th>
         <th>Email</th>
         <th>Telefon</th>
         <th>Rechte</th>
-        <th colspan="2"></th>
+        <th colspan='2'></th>
       </tr>
     </thead>
 
-    <tbody id="scrollable">
+    <tbody>
       <% @users.each do |user| %>
         <tr>
           <td><%= user.lastname %></td>
           <td><%= user.firstname %></td>
+          <td><%= t("title.#{user.gender}") %></td>
           <td><%= user.email %></td>
           <td><%= user.tel %></td>
-          <td><%= user.roles.collect(&:title).join(", ") %></td>
-          <td><%= link_to(image_tag("edit.png", size: "20"), edit_user_path(user), title: "Bearbeiten")  %></td>
-          <td><%= link_to(image_tag("delete.png", size: "20"), user, title: "Löschen", method: :delete, data: { confirm: "#{ user.full_name } löschen?" } ) %></td>
+          <td><%= user.roles.collect(&:title).join(', ') %></td>
+          <td><%= link_to(image_tag('edit.png', size: '20'), edit_user_path(user), title: 'Bearbeiten')  %></td>
+          <td><%= link_to(image_tag('delete.png', size: '20'), user, title: 'Löschen', method: :delete, data: { confirm: "#{ user.full_name } löschen?" } ) %></td>
         </tr>
       <% end %>
     </tbody>

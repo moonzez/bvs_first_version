@@ -47,14 +47,26 @@ Given(/^I am logged in as an (.+)$/) do |user|
     Then I should see "Sie sind angemeldet"
   ))
 end
-Then(/^I should see link_image "(.+)" to user "(.+)"$/) do |title, email|
+Then(/^I should see link_image "(.+)" to "(.+)" "(.+)"$/) do |title, ressource, email|
   user = User.find_by(email: email)
-  expect(page).to have_xpath("//a[@title='#{title}'] [@href='/users/#{user.id}/edit']")
+  if title == 'Bearbeiten'
+    expect(page).to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/edit']")
+  elsif (ressource == 'referent')
+    expect(page).to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/remove']")
+  else
+    expect(page).to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}']")
+  end
 end
 
-Then(/^I should not see link_image "(.+)" to user "(.+)"$/) do |title, email|
+Then(/^I should not see link_image "(.+)" to "(.+)" "(.+)"$/) do |title, ressource, email|
   user = User.find_by(email: email)
-  expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='/users/#{user.id}/edit']")
+  if title == 'Bearbeiten'
+    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/edit']")
+  elsif (ressource == 'referent')
+    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/remove']")
+  else
+    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}']")
+  end
 end
 
 Then(/^I follow link_image "(.*?)" to user "(.*?)"$/) do |title, email|
@@ -73,4 +85,8 @@ end
 
 When(/^I check\("(.*?)"\)$/) do |checkbox|
   find(:css, "##{checkbox}").set(true)
+end
+
+Then(/^(?:|I )should see title "([^"]*)"$/) do |text|
+  expect(page).to have_title(text)
 end
