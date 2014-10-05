@@ -79,11 +79,11 @@ Then(/^I follow link_image "(.*?)" to user "(.*?)"$/) do |title, email|
   find("//a[@title='#{title}'] [@href='" + link + "']").click
 end
 
-When(/^I choose\("(.*?)"\)$/) do |radio|
+When(/^I choose \("(.*?)"\)$/) do |radio|
   choose(radio)
 end
 
-When(/^I check\("(.*?)"\)$/) do |checkbox|
+When(/^(?:|I )check \("(.*?)"\)$/) do |checkbox|
   find(:css, "##{checkbox}").set(true)
 end
 

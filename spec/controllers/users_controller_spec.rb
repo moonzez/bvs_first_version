@@ -144,7 +144,7 @@ RSpec.describe UsersController, type: :controller do
       describe 'with languages given' do
 
         it 'does not call assign_languages on User instance' do
-          german = FactoryGirl.build(:german)
+          german = FactoryGirl.create(:german)
           expect_any_instance_of(User).not_to receive(:assign_languages).with([german.id])
           post :create, user: @invalid_user_attrs, languages: [german.id.to_param]
         end

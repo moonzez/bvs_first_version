@@ -53,4 +53,14 @@ RSpec.describe Language, type: :model do
       expect(Language.count).to eql(0)
     end
   end
+
+  context 'default_scope' do
+    it 'oders language after alphabet' do
+      german = FactoryGirl.create(:language, language: 'Deutsch')
+      arabic = FactoryGirl.create(:language, language: 'Arabisch')
+      spanish = FactoryGirl.create(:language, language: 'Spanisch')
+
+      expect(Language.all).to eq([arabic, german, spanish])
+    end
+  end
 end

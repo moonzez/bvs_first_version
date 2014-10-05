@@ -54,4 +54,70 @@ RSpec.describe ReferentsController, type: :controller do
     end
   end
 
+  describe 'GET #new' do
+
+    it 'assigns a new user as @referent' do
+      get :new
+      expect(assigns(:referent)).to be_a_new(User)
+    end
+
+    it 'assigns all languages to @languages' do
+      german = FactoryGirl.create(:german)
+      english = FactoryGirl.create(:english)
+      get :new
+      expect(assigns(:languages)).to match_array [german, english]
+    end
+
+    it 'renders new template' do
+      get :new
+      expect(response).to render_template :new
+    end
+  end
+
+  describe 'POST #create' do
+
+    before do
+      @referent_attributes = FactoryGirl.attributes_for(:referent)
+    end
+
+    describe 'with valid params' do
+      it 'creates a new referent User' do
+        expect { post :create, referent: @referent_attributes }.to change(User, :count).by(1)
+      end
+
+      it 'assigns a newly created user as @referent' do
+        post :create, referent: @referent_attributes
+        expect(assigns(:referent)).to be_a(User)
+        expect(assigns(:referent)).to be_persisted
+      end
+
+      it 'redirects to all referents' do
+        post :create, referent: @referent_attributes
+        expect(flash[:notice]).to eql "Referent #{ User.last.full_name } wurde angelegt"
+        expect(response).to redirect_to(referents_path)
+      end
+
+      it 'calls save_referent_with_params with languages array' do
+        german = FactoryGirl.create(:german)
+        expect_any_instance_of(User).to receive(:save_referent_with_params).with([german.id.to_param])
+        post :create, referent: @referent_attributes, languages: [german.id]
+      end
+    end
+
+    describe 'with invalid params' do
+      before do
+        @invalid_user_attrs = FactoryGirl.attributes_for(:invalid_user)
+      end
+
+      it 'assigns a newly created but unsaved user as @referent' do
+        post :create, referent: @invalid_user_attrs
+        expect(assigns(:referent)).to be_a_new(User)
+      end
+
+      it 're-renders the "new" template' do
+        post :create, referent: @invalid_user_attrs
+        expect(response).to render_template('new')
+      end
+    end
+  end
 end

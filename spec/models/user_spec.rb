@@ -320,6 +320,27 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'save_referent_with_params' do
+    before do
+      @referent = FactoryGirl.build(:referent)
+    end
+
+    it 'return false if no referent role is given' do
+      Role.find_by(title: 'referent').destroy
+      expect(@referent.save_referent_with_params).to eql false
+    end
+
+    it 'returns true if save_with_params returns true' do
+      allow(@referent).to receive(:save_with_params).and_return(false)
+      expect(@referent.save_referent_with_params).to eql false
+    end
+
+    it 'returns false if save_with_params returns false' do
+      allow(@referent).to receive(:save_with_params).and_return(true)
+      expect(@referent.save_referent_with_params).to eql true
+    end
+  end
+
   context 'identic?' do
     before do
       @user = FactoryGirl.create(:user)

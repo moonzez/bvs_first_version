@@ -1,6 +1,6 @@
 Feature: Viewing all referents
   In order to manage referents
-  As an admin
+  As an admin, dbuser or accounter
   I want to see the list of all referents
 
   Background:

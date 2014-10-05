@@ -77,6 +77,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def save_referent_with_params(languages = nil)
+    return false unless role = Role.find_by(title: 'referent')
+    save_with_params([role.id], languages)
+  end
+
   def identic?(user)
     self == user
   end
