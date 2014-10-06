@@ -354,4 +354,42 @@ RSpec.describe User, type: :model do
       expect(@user.identic?(FactoryGirl.create(:user))).to eql false
     end
   end
+
+  context 'change_activ' do
+
+    before do
+      @activ_referent = FactoryGirl.create(:referent, activ: 'activ')
+    end
+
+    it 'sets temporary as activ state' do
+      @activ_referent.change_activ('temporary')
+      expect(@activ_referent.temporary?).to eql true
+    end
+
+    it 'sets inactiv as activ state' do
+      @activ_referent.change_activ('inactiv')
+      expect(@activ_referent.inactiv?).to eql true
+    end
+
+    it 'sets activ as activ state' do
+      inactiv_referent = FactoryGirl.create(:referent, activ: 'inactiv')
+      inactiv_referent.change_activ('activ')
+      expect(inactiv_referent.activ?).to eql true
+    end
+
+    it 'ads error if activ state does not exist' do
+      @activ_referent.firstname = nil
+      @activ_referent.change_activ('inactiv')
+      expect(@activ_referent.errors[:firstname]).to eql ['darf nicht leer sein']
+    end
+  end
+
+  context 'all_except_inactiv' do
+    it 'returns only activ and temporary inactiv users' do
+      activ_referent = FactoryGirl.create(:referent, activ: 'activ')
+      FactoryGirl.create(:referent, activ: 'inactiv')
+      temporary_referent = FactoryGirl.create(:referent, activ: 'temporary')
+      expect(User.all_except_inactiv).to match_array [activ_referent, temporary_referent]
+    end
+  end
 end

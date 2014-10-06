@@ -22,7 +22,7 @@
         <th>TODO: Button to multiple MAIL</th>
         <th>Sprachen</th>
         <th>Bemerkungen</th>
-        <th colspan='5'>Optionen</th>
+        <th colspan='4'>Optionen</th>
       </tr>
     </thead>
     <tbody id='scrollable'>
@@ -41,9 +41,14 @@
           <td>TODO</td>
           <td><%= referent.languages.map(&:language).join(', ') %></td>
           <td><%= referent.remarc %></td>
-          <td><%= link_to(image_tag('activate.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
-          <td><%= link_to(image_tag('deactivate.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
-          <td><%= link_to(image_tag('temporary.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
+          <td>
+            <% if referent.temporary? %>
+              <%= link_to(image_tag('activate.png', size: '20'), change_activ_referent_path(referent, :activ => 'activ'), title: 'Aktivieren', :remote => true, method: :put)  %>
+            <% else %>
+              <%= link_to(image_tag('temporary.png', size: '20'), change_activ_referent_path(referent, :activ => 'temporary'), title: 'Temporär deaktivieren', :remote => true, method: :put) %>
+            <% end %>
+          </td>
+          <td><%= link_to(image_tag('deactivate.png', size: '20'), change_activ_referent_path(referent, :activ => 'inactiv'), title: 'Deaktivieren', :remote => true, method: :put) %></td>
           <td><%= link_to(image_tag('edit.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
           <td><%= link_to(image_tag('delete.png', size: '20'), remove_referent_path(referent.id), title: 'Löschen', method: :delete, data: { confirm: "#{ referent.full_name } löschen?" } ) %></td>
         </tr>

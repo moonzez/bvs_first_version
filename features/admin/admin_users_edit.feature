@@ -16,7 +16,7 @@ Feature: Editing users
 
   Scenario: edit user data with valid data
     Then I should see title "BVS - Alle Nutzer"
-    When I follow link_image "Bearbeiten" to user "aba.dbuser@bvs.de"
+    When I follow image_link "Bearbeiten" to user "aba.dbuser@bvs.de"
     Then I should see title "BVS - Nutzer bearbeiten"
     And I should see "Nutzer bearbeiten"
     When I fill in "Nachname" with "Married"
@@ -24,7 +24,7 @@ Feature: Editing users
     Then I should see "Nutzerdaten für Aba Married wurden geändert"
 
   Scenario: edit user data with invalid data
-    When I follow link_image "Bearbeiten" to user "aba.dbuser@bvs.de"
+    When I follow image_link "Bearbeiten" to user "aba.dbuser@bvs.de"
     And I should see "Nutzer bearbeiten"
     When I fill in "Nachname" with ""
     When I fill in "Vorname" with ""
@@ -40,7 +40,7 @@ Feature: Editing users
     And I should see "Telefon darf nicht leer sein"
 
   Scenario: deleting bank data for referent
-    When I follow link_image "Bearbeiten" to user "deba.referent@bvs.de"
+    When I follow image_link "Bearbeiten" to user "deba.referent@bvs.de"
     And I should see "Nutzer bearbeiten"
     When I fill in "Bank" with ""
     When I fill in "IBAN" with ""

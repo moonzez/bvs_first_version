@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :referents, except: [:show] do
     member do
       delete :remove
+      put :change_activ
     end
   end
 

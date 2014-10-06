@@ -6,68 +6,68 @@ Feature:
   Scenario: Navi for admin
     Given I am logged in as an admin
     And I am on the homepage
-    Then I should see "Home"
-    And I should see "Nutzer"
-    And I should see "Nutzer anlegen"
-    And I should see "Referenten"
-    And I should see "Referenten anlegen"
-    And I should see "Lizenzen"
-    And I should see "Sprachen"
-    And I should see "Abmelden"
-    And I should see "Profil ändern"
+    Then I should see "Home" link
+    And I should see "Nutzer" link
+    And I should see "Nutzer anlegen" link
+    And I should see "Referenten" link
+    And I should see "Referenten anlegen" link
+    And I should see "Lizenzen" link
+    And I should see "Sprachen" link
+    And I should see "Abmelden" link
+    And I should see "Profil ändern" link
 
   Scenario: Navi for dbuser
     Given I am logged in as an dbuser
     And I am on the homepage
-    Then I should see "Home"
-    And I should see "Referenten"
-    And I should see "Referenten anlegen"
-    And I should see "Lizenzen"
-    And I should see "Sprachen"
-    And I should see "Abmelden"
-    And I should see "Profil ändern"
+    Then I should see "Home" link
+    And I should see "Referenten" link
+    And I should see "Referenten anlegen" link
+    And I should see "Lizenzen" link
+    And I should see "Sprachen" link
+    And I should see "Abmelden" link
+    And I should see "Profil ändern" link
 
-    And I should not see "Nutzer"
-    And I should not see "Nutzer anlegen"
+    And I should not see "Nutzer" link
+    And I should not see "Nutzer anlegen" link
 
   Scenario: Navi for referent
     Given I am logged in as an referent
     And I am on the homepage
-    Then I should see "Home"
-    And I should see "Abmelden"
-    And I should see "Profil ändern"
+    Then I should see "Home" link
+    And I should see "Abmelden" link
+    And I should see "Profil ändern" link
 
-    And I should not see "Nutzer"
-    And I should not see "Nutzer anlegen"
-    And I should not see "Referenten"
-    And I should not see "Referenten anlegen"
-    And I should not see "Lizenzen"
-    And I should not see "Sprachen"
+    And I should not see "Nutzer" link
+    And I should not see "Nutzer anlegen" link
+    And I should not see "Referenten" link
+    And I should not see "Referenten anlegen" link
+    And I should not see "Lizenzen" link
+    And I should not see "Sprachen" link
 
   Scenario: Navi for accounter
     Given I am logged in as an accounter
     And I am on the homepage
-    Then I should see "Home"
-    And I should see "Referenten"
-    And I should see "Referenten anlegen"
-    And I should see "Lizenzen"
-    And I should see "Sprachen"
-    And I should see "Abmelden"
-    And I should see "Profil ändern"
+    Then I should see "Home" link
+    And I should see "Referenten" link
+    And I should see "Referenten anlegen" link
+    And I should see "Lizenzen" link
+    And I should see "Sprachen" link
+    And I should see "Abmelden" link
+    And I should see "Profil ändern" link
 
-    And I should not see "Nutzer"
-    And I should not see "Nutzer anlegen"
+    And I should not see "Nutzer" link
+    And I should not see "Nutzer anlegen" link
 
   Scenario: Navi for reader
     Given I am logged in as an reader
     And I am on the homepage
-    Then I should see "Home"
-    And I should see "Abmelden"
-    And I should see "Profil ändern"
+    Then I should see "Home" link
+    And I should see "Abmelden" link
+    And I should see "Profil ändern" link
 
-    And I should not see "Nutzer"
-    And I should not see "Nutzer anlegen"
-    And I should not see "Referenten"
-    And I should not see "Referenten anlegen"
-    And I should not see "Lizenzen"
-    And I should not see "Sprachen"
+    And I should not see "Nutzer" link
+    And I should not see "Nutzer anlegen" link
+    And I should not see "Referenten" link
+    And I should not see "Referenten anlegen" link
+    And I should not see "Lizenzen" link
+    And I should not see "Sprachen" link

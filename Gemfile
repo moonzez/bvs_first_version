@@ -38,4 +38,5 @@ group :test do
   gem 'factory_girl_rails'
   gem 'factory_girl'
   gem 'simplecov', require: false
+  gem 'selenium-webdriver'
 end

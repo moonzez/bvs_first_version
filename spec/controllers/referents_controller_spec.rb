@@ -48,6 +48,14 @@ RSpec.describe ReferentsController, type: :controller do
       end
     end
 
+    it 'gets only activ and temporary inactiv referents' do
+      activ = FactoryGirl.create(:referent, activ: 'activ')
+      temporary_inactiv = FactoryGirl.create(:referent, activ: 'temporary')
+      FactoryGirl.create(:referent, activ: 'inactiv')
+      get :index
+      expect(assigns(:referents)).to match_array [activ, temporary_inactiv]
+    end
+
     it 'renders index template' do
       get :index
       expect(response).to render_template :index
@@ -118,6 +126,27 @@ RSpec.describe ReferentsController, type: :controller do
         post :create, referent: @invalid_user_attrs
         expect(response).to render_template('new')
       end
+    end
+  end
+
+  describe 'GET #change_activ' do
+    before do
+      @referent = FactoryGirl.create(:referent, activ: 'temporary')
+    end
+    it 'assigns referent' do
+      put :change_activ, activ: 'activ', id: @referent.id, format: :js
+      expect(assigns(:referent)).to be_a_kind_of User
+    end
+
+    it 'calls change_activ on referent' do
+      expect_any_instance_of(User).to receive(:change_activ).with('activ')
+      put :change_activ, activ: 'activ', id: @referent.id, format: :js
+    end
+
+    it 'renders change_activ.js.erb' do
+      put :change_activ, activ: 'activ', id: @referent.id, format: :js
+      expect(response.content_type).to eql 'text/javascript'
+      expect(response).to render_template :change_activ
     end
   end
 end

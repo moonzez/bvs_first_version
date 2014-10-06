@@ -47,37 +47,6 @@ Given(/^I am logged in as an (.+)$/) do |user|
     Then I should see "Sie sind angemeldet"
   ))
 end
-Then(/^I should see link_image "(.+)" to "(.+)" "(.+)"$/) do |title, ressource, email|
-  user = User.find_by(email: email)
-  if title == 'Bearbeiten'
-    expect(page).to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/edit']")
-  elsif (ressource == 'referent')
-    expect(page).to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/remove']")
-  else
-    expect(page).to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}']")
-  end
-end
-
-Then(/^I should not see link_image "(.+)" to "(.+)" "(.+)"$/) do |title, ressource, email|
-  user = User.find_by(email: email)
-  if title == 'Bearbeiten'
-    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/edit']")
-  elsif (ressource == 'referent')
-    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}/remove']")
-  else
-    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='/#{ressource}s/#{user.id}']")
-  end
-end
-
-Then(/^I follow link_image "(.*?)" to user "(.*?)"$/) do |title, email|
-  user = User.find_by(email: email)
-  if title == 'Bearbeiten'
-    link = "/users/#{user.id}/edit"
-  elsif title == 'Löschen'
-    link = "/users/#{user.id}"
-  end
-  find("//a[@title='#{title}'] [@href='" + link + "']").click
-end
 
 When(/^I choose \("(.*?)"\)$/) do |radio|
   choose(radio)
@@ -89,4 +58,91 @@ end
 
 Then(/^(?:|I )should see title "([^"]*)"$/) do |text|
   expect(page).to have_title(text)
+end
+
+Then(/^I should see "(.*?)" link$/) do |text|
+  expect(page).to have_css('a', text: text)
+end
+
+Then(/^I should not see "(.*?)" link$/) do |text|
+  expect(page).not_to have_css('a', text: text)
+end
+
+Then(/^I should see image_link "(.*?)" to "(.*?)" user "(.*?)"$/) do |title, action, email|
+  user = User.find_by(email: email)
+  if action == 'edit'
+    expect(page).to have_xpath("//a[@title='#{title}'] [@href='#{ edit_user_path(user) }']")
+  elsif action == 'destroy'
+    expect(page).to have_xpath("//a[@title='#{title}'] [@href='#{user_path(user)}'] [@data-method='delete']")
+  end
+end
+
+Then(/^I should not see image_link "(.*?)" to "(.*?)" user "(.*?)"$/) do |title, action, email|
+  user = User.find_by(email: email)
+  if action == 'edit'
+    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='#{ edit_user_path(user) }']")
+  elsif action == 'destroy'
+    xpath = "//a[@title='#{title}'] [@href='#{user_path(user)}'] [@data-method='delete']"
+    expect(page).not_to have_xpath(xpath)
+  end
+end
+
+When(/^I follow image_link "(.*?)" to user "(.*?)"$/) do |title, email|
+  user = User.find_by(email: email)
+  if title == 'Bearbeiten'
+    link = edit_user_path(user)
+    find("//a[@title='#{ title }'] [@href='" + link + "']").click
+  elsif title == 'Löschen'
+    link = user_path(user)
+    find("//a[@title='#{title}'] [@href='" + link + "'] [@data-method='delete']").click
+  end
+end
+
+Then(/^I should see image_link "(.*?)" for referent "(.*?)"$/) do |title, email|
+  referent = User.find_by(email: email)
+  if title == 'Temporär deaktivieren'
+    href = change_activ_referent_path(referent, activ: 'temporary')
+  elsif title == 'Deaktivieren'
+    href = change_activ_referent_path(referent, activ: 'inactiv')
+  elsif title == 'Aktivieren'
+    href = change_activ_referent_path(referent, activ: 'activ')
+  elsif title == 'Bearbeiten'
+    href = edit_referent_path(referent)
+  elsif title == 'Löschen'
+    href = remove_referent_path(referent)
+  end
+  expect(page).to have_xpath("//a[@title='#{ title }'] [@href='#{ href }']")
+end
+
+Then(/^I should not see image_link "(.*?)" for referent "(.*?)"$/) do |title, email|
+  referent = User.find_by(email: email)
+  if title == 'Temporär deaktivieren'
+    href = change_activ_referent_path(referent, activ: 'temporary')
+  elsif title == 'Deaktivieren'
+    href = change_activ_referent_path(referent, activ: 'inactiv')
+  elsif title == 'Aktivieren'
+    href = change_activ_referent_path(referent, activ: 'activ')
+  elsif title == 'Bearbeiten'
+    href = edit_referent_path(referent)
+  elsif title == 'Löschen'
+    href = remove_referent_path(referent)
+  end
+  expect(page).not_to have_xpath("//a[@title='#{ title }'] [@href='#{ href }']")
+end
+
+When(/^I follow image_link "(.*?)" for referent "(.*?)"$/) do |title, email|
+  referent = User.find_by(email: email)
+  if title == 'Temporär deaktivieren'
+    link = change_activ_referent_path(referent, activ: 'temporary')
+  elsif title == 'Deaktivieren'
+    link = change_activ_referent_path(referent, activ: 'inactiv')
+  elsif title == 'Aktivieren'
+    link = change_activ_referent_path(referent, activ: 'activ')
+  elsif title == 'Bearbeiten'
+    link = edit_referent_path(referent)
+  elsif action == 'Löschen'
+    link = remove_referent_path(referent)
+  end
+
+  find(:xpath, "//a[@href='#{link}'][@title='#{title}']").click
 end

@@ -86,6 +86,13 @@ class User < ActiveRecord::Base
     self == user
   end
 
+  def change_activ(new_state)
+    method_name = new_state + '!'
+    valid? # check before set activotherwice Exception will be thrown
+    return false if errors.present?
+    send(method_name)
+  end
+
   def self.ordered_by_name(letter)
     if letter != '*'
       where('lastname LIKE :search', search: letter + '%').order(:lastname, :firstname)
@@ -101,5 +108,9 @@ class User < ActiveRecord::Base
 
   def self.referents
     Role.find_by(title: 'referent').users
+  end
+
+  def self.all_except_inactiv
+    where(activ: [activs[:activ], activs[:temporary]])
   end
 end

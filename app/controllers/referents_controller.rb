@@ -1,9 +1,10 @@
 class ReferentsController < ApplicationController
-  before_action :find_languages, only: [:new, :create, :edit, :update, :show]
+  before_action :find_languages, only: [:new]
+  before_action :find_referent, only: [:change_activ]
 
   def index
     @selected_letter = params[:selected_letter] || '*'
-    all_referents = User.referents
+    all_referents = User.referents.all_except_inactiv
     @referents = all_referents.ordered_by_name(@selected_letter)
     @all_letters = all_referents.present_abc
   end
@@ -21,6 +22,11 @@ class ReferentsController < ApplicationController
     end
   end
 
+  def change_activ
+    new_state = params[:activ]
+    @referent.change_activ(new_state)
+  end
+
   private
 
   def find_languages
@@ -29,5 +35,9 @@ class ReferentsController < ApplicationController
 
   def referent_params
     params.require(:referent).permit(User.column_names.map(&:to_sym) - [:id] + [:password])
+  end
+
+  def find_referent
+    @referent = User.referents.find(params[:id])
   end
 end
