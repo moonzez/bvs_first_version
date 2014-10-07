@@ -157,7 +157,7 @@ RSpec.describe ReferentsController, type: :controller do
 
     it 'assigns referent' do
       get :edit, id: @referent.id
-      expect(assigns(:referent)).to  eql @referent
+      expect(assigns(:referent)).to eql @referent
     end
 
     it 'renders edit template' do
@@ -195,7 +195,7 @@ RSpec.describe ReferentsController, type: :controller do
     end
 
     it 'renders edit id errors' do
-      put :update, id: @referent.id, referent: { firstname: ''}
+      put :update, id: @referent.id, referent: { firstname: '' }
       expect(response).to render_template :edit
     end
   end

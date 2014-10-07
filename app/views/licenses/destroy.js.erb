@@ -1,1 +1,2 @@
-$('#license_<%= @license.id %>').remove();
+errors = '<%= @license.errors.values.join(', ')-%>'
+errors.length > 0 ? alert(errors) : $('#license_<%= @license.id %>').remove()

@@ -1,6 +1,2 @@
-var language_err = "<%=@language.errors.values.join(', ')-%>";
-if (language_err.length > 0) {
-  alert(language_err);
-} else {
-  $('#language_<%= @language.id %>').remove();
-}
+errors = '<%= @language.errors.values.join(', ')-%>'
+errors.length > 0 ? alert(errors) : $("#language_<%= @language.id %>").remove()

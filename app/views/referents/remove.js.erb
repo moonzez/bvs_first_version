@@ -1,7 +1,7 @@
-referent_err = '<%= generate_errors_string(@referent) %>'
+referent_err = "<%= generate_errors_string(@referent) %>"
 if (referent_err.length > 0)
   alert(referent_err)
-else
-  tr = $("tr#<%= @referent.id %>")
-  tr.remove()
-  alert('Referent <%= @referent.full_name %> wurde gelöscht')
+else {
+  tr = $("tr#<%= @referent.id %>").remove()
+  alert("Referent <%= @referent.full_name %> wurde gelöscht")
+}
