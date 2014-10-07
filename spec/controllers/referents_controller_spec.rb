@@ -149,4 +149,72 @@ RSpec.describe ReferentsController, type: :controller do
       expect(response).to render_template :change_activ
     end
   end
+
+  describe 'GET #edit' do
+    before do
+      @referent = FactoryGirl.create(:referent, activ: 'temporary')
+    end
+
+    it 'assigns referent' do
+      get :edit, id: @referent.id
+      expect(assigns(:referent)).to  eql @referent
+    end
+
+    it 'renders edit template' do
+      get :edit, id: @referent.id
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'PUT #update' do
+    before do
+      @referent = FactoryGirl.create(:referent, activ: 'temporary')
+    end
+
+    context 'on success' do
+      before do
+        @update_attrs = { lastname: 'Married' }
+      end
+
+      it 'assignes referent' do
+        put :update, id: @referent.id, referent: @update_attrs
+        expect(assigns(:referent)).to eql @referent
+      end
+
+      it 'calls assigne_languages' do
+        expect_any_instance_of(User).to receive(:assign_languages).with(nil)
+        put :update, id: @referent.id, referent: @update_attrs
+      end
+
+      it 'redirects_to referents index' do
+        put :update, id: @referent.id, referent: @update_attrs
+        expect(response).to redirect_to(referents_path)
+        @referent.reload
+        expect(flash[:notice]).to eql "Referentendaten für #{ @referent.full_name } wurden geändert"
+      end
+    end
+
+    it 'renders edit id errors' do
+      put :update, id: @referent.id, referent: { firstname: ''}
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'DELETE #remove' do
+    before do
+      @referent = FactoryGirl.create(:referent, activ: 'temporary')
+    end
+
+    it 'assignes referent' do
+      delete :remove, id: @referent.id, format: :js
+      expect(assigns(:referent)).to eql @referent
+    end
+
+    it 'renders remove.js.erb template' do
+      delete :remove, id: @referent.id, format: :js
+      expect(response.content_type).to eql 'text/javascript'
+      expect(response).to render_template :remove
+    end
+
+  end
 end

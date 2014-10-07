@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  before_action :find_user, only: [:show, :edit, :update, :destroy]
-  before_action :find_languages, only: [:new, :create, :edit, :update, :show]
-  before_action :find_roles, only: [:new, :create, :edit, :update, :show]
+  before_action :find_user, only: [:edit, :update, :destroy]
+  before_action :find_languages, only: [:new, :create, :edit, :update]
+  before_action :find_roles, only: [:new, :create, :edit, :update]
 
   def home; end
 
@@ -38,14 +38,10 @@ class UsersController < ApplicationController
 
   def destroy
     if @user.identic?(current_user)
-      flash[:alert] = 'Sie können eigenes Profil nicht löschen'
-    elsif @user.can_be_removed
-      @user.destroy
-      flash[:notice] = 'Nutzer wurde gelöscht'
+      @user.errors.add(:base, 'Sie können eigenes Profil nicht löschen')
     else
-      flash[:alert] = "#{ @user.full_name } darf nicht gelöscht werden"
+      @user.destroy
     end
-    redirect_to users_path
   end
 
   private

@@ -1,4 +1,4 @@
-<%= form_for(@referent, as: :referent, url: referents_path(@referent)) do |f| %>
+<%= form_for(@referent, as: :referent, url: url) do |f| %>
   <% if @referent.errors.any? %>
     <div id='error_explanation'>
       <h2><%= @referent.errors.count %> Fehler aufgetreten:</h2>
@@ -58,7 +58,7 @@
 
     <tr>
       <td><%= f.label :remarc %></td>
-      <td><%= f.text_area :remarc %></td>
+      <td><%= f.text_area :remarc%></td>
     </tr>
 
     <tr>

@@ -28,9 +28,9 @@
     <tbody id='scrollable'>
       <% @referents.each do |referent| %>
         <% if referent.temporary? %>
-          <tr title='Temporär deaktiviert' style='color: grey;'>
+          <tr title='Temporär deaktiviert' style='color: grey;' id="<%= referent.id%>">
         <% else %>
-          <tr>
+          <tr id="<%= referent.id %>">
         <% end %>
           <td><%= referent.lastname %></td>
           <td><%= referent.firstname %></td>
@@ -50,7 +50,7 @@
           </td>
           <td><%= link_to(image_tag('deactivate.png', size: '20'), change_activ_referent_path(referent, :activ => 'inactiv'), title: 'Deaktivieren', :remote => true, method: :put) %></td>
           <td><%= link_to(image_tag('edit.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
-          <td><%= link_to(image_tag('delete.png', size: '20'), remove_referent_path(referent.id), title: 'Löschen', method: :delete, data: { confirm: "#{ referent.full_name } löschen?" } ) %></td>
+          <td><%= link_to(image_tag('delete.png', size: '20'), remove_referent_path(referent.id), title: 'Löschen', method: :delete, data: { confirm: "#{ referent.full_name } löschen?", remote: true } ) %></td>
         </tr>
       <% end %>
     </tbody>

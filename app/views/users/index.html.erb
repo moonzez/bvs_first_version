@@ -25,7 +25,7 @@
 
     <tbody>
       <% @users.each do |user| %>
-        <tr>
+        <tr id="<%= user.id %>">
           <td><%= user.lastname %></td>
           <td><%= user.firstname %></td>
           <td><%= t("title.#{user.gender}") %></td>
@@ -33,7 +33,7 @@
           <td><%= user.tel %></td>
           <td><%= user.roles.collect(&:title).join(', ') %></td>
           <td><%= link_to(image_tag('edit.png', size: '20'), edit_user_path(user), title: 'Bearbeiten')  %></td>
-          <td><%= link_to(image_tag('delete.png', size: '20'), user, title: 'Löschen', method: :delete, data: { confirm: "#{ user.full_name } löschen?" } ) %></td>
+          <td><%= link_to(image_tag('delete.png', size: '20'), user, title: 'Löschen', method: :delete, data: { confirm: "#{ user.full_name } löschen?", remote: true } ) %></td>
         </tr>
       <% end %>
     </tbody>

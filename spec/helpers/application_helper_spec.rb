@@ -34,5 +34,11 @@ RSpec.describe ApplicationHelper, type: :helper do
       @invalid_user.valid?
       expect(generate_errors_string(@invalid_user)).to eql expected_str
     end
+
+    it 'remove empty strings from beginning and end odf the message' do
+      @invalid_user.firstname = 'Given'
+      @invalid_user.errors.add(:base, ' Some new error ')
+      expect(generate_errors_string(@invalid_user)).to eql 'Some new error'
+    end
   end
 end

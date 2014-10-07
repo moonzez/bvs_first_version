@@ -212,30 +212,19 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context 'can_be_removed' do
+  context 'can_be_removed?' do
 
-    [:accounter, :reader, :dbuser].each do |role|
+    [:admin, :accounter, :reader, :dbuser].each do |role|
       it "returns true for #{ role } role" do
         user = FactoryGirl.create(role)
-        expect(user.can_be_removed).to eql true
+        expect(user.can_be_removed?).to eql true
       end
-    end
-
-    it 'return true if user is not the only admin' do
-      admin_user = FactoryGirl.create(:admin)
-      FactoryGirl.create(:admin)
-      expect(admin_user.can_be_removed).to eql true
-    end
-
-    it 'return false if user is the only admn' do
-      admin_user = FactoryGirl.create(:admin)
-      expect(admin_user.can_be_removed).to eql false
     end
 
     it 'returns false if user is referent with events assigned' do
       # TODO: implement later
       referent_user = FactoryGirl.create(:referent)
-      expect(referent_user.can_be_removed).to eql false
+      expect(referent_user.can_be_removed?).to eql false
     end
 
     it 'returns true if user is referent but have no events assigned' do

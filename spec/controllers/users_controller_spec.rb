@@ -261,47 +261,40 @@ RSpec.describe UsersController, type: :controller do
   describe 'DELETE destroy' do
 
     context 'deleting myself' do
-      it 'does not destroy the requested user' do
-        expect { delete :destroy, id: User.first }.to change(User, :count).by(0)
+      it 'assigns user to @user' do
+        delete :destroy, id: User.first, format: :js
+        expect(assigns(:user)).to eql User.first
       end
 
-      it 'redirects to the users list' do
-        delete :destroy, id: User.first
-        expect(flash[:alert]).to eql 'Sie können eigenes Profil nicht löschen'
-        expect(response).to redirect_to(users_url)
+      it 'does not destroy the current user' do
+        expect { delete :destroy, id: User.first, format: :js }.to change(User, :count).by(0)
+      end
+
+      it 'adds error to @user' do
+        delete :destroy, id: User.first, format: :js
+        expect(assigns(:user).errors[:base]).to eql ['Sie können eigenes Profil nicht löschen']
+      end
+
+      it 'renders destroj.js.erb' do
+        delete :destroy, id: User.first, format: :js
+        expect(response.content_type).to eql 'text/javascript'
+        expect(response).to render_template :destroy
       end
     end
 
-    context 'can_be_removed' do
+    context 'delete user' do
       before do
         @user = FactoryGirl.create(:reader)
       end
 
       it 'destroys the requested user' do
-        expect { delete :destroy, id: @user }.to change(User, :count).by(-1)
+        expect { delete :destroy, id: @user, format: :js }.to change(User, :count).by(-1)
       end
 
-      it 'redirects to the users list' do
-        delete :destroy, id: @user
-        expect(flash[:notice]).to eql 'Nutzer wurde gelöscht'
-        expect(response).to redirect_to(users_url)
-      end
-    end
-
-    context 'not can_be_removed' do
-
-      before do
-        @admin = FactoryGirl.create(:admin)
-      end
-
-      it 'does not destroy the requested user' do
-        expect { delete :destroy, id: @admin }.to change(User, :count).by(0)
-      end
-
-      it 'redirects to the users list' do
-        delete :destroy, id: @admin
-        expect(flash[:alert]).to eql "#{ @admin.full_name } darf nicht gelöscht werden"
-        expect(response).to redirect_to(users_url)
+      it 'renders destroj.js.erb' do
+        delete :destroy, id: @user.id, format: :js
+        expect(response.content_type).to eql 'text/javascript'
+        expect(response).to render_template :destroy
       end
     end
   end

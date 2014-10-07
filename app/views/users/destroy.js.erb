@@ -1,0 +1,7 @@
+user_err = '<%= generate_errors_string(@user) %>'
+if (user_err.length > 0)
+  alert(user_err)
+else
+  tr = $("tr#<%= @user.id %>")
+  tr.remove()
+  alert('Nutzer <%= @user.full_name %> wurde gelöscht')

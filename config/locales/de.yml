@@ -30,6 +30,7 @@ de:
         blz: BIC
         konto: IBAN
         honorar: Honorar
+        base: ''
 
     errors:
       messages:

@@ -16,7 +16,7 @@ Feature: Editing users
 
   Scenario: edit user data with valid data
     Then I should see title "BVS - Alle Nutzer"
-    When I follow image_link "Bearbeiten" to user "aba.dbuser@bvs.de"
+    When I follow image_link "Bearbeiten" for user "aba.dbuser@bvs.de"
     Then I should see title "BVS - Nutzer bearbeiten"
     And I should see "Nutzer bearbeiten"
     When I fill in "Nachname" with "Married"
@@ -24,7 +24,7 @@ Feature: Editing users
     Then I should see "Nutzerdaten für Aba Married wurden geändert"
 
   Scenario: edit user data with invalid data
-    When I follow image_link "Bearbeiten" to user "aba.dbuser@bvs.de"
+    When I follow image_link "Bearbeiten" for user "aba.dbuser@bvs.de"
     And I should see "Nutzer bearbeiten"
     When I fill in "Nachname" with ""
     When I fill in "Vorname" with ""
@@ -32,7 +32,7 @@ Feature: Editing users
     When I fill in "Email" with ""
     When I fill in "Telefon" with ""
     And I press "Speichern"
-    Then I should not see "Nutzerdaten für Aba Married wurden geändert"
+    And I should not see "wurden geändert"
     And I should see "Nachname darf nicht leer sein"
     And I should see "Vorname darf nicht leer sein"
     And I should see "Login darf nicht leer sein"
@@ -40,13 +40,13 @@ Feature: Editing users
     And I should see "Telefon darf nicht leer sein"
 
   Scenario: deleting bank data for referent
-    When I follow image_link "Bearbeiten" to user "deba.referent@bvs.de"
+    When I follow image_link "Bearbeiten" for user "deba.referent@bvs.de"
     And I should see "Nutzer bearbeiten"
     When I fill in "Bank" with ""
     When I fill in "IBAN" with ""
     When I fill in "BIC" with ""
     And I press "Speichern"
-    Then I should not see "Nutzerdaten für Deba Married wurden geändert"
+    Then I should not see "Nutzerdaten für Deba Referent wurden geändert"
     And I should see "Bank für Referenten darf nicht leer sein"
     And I should see "IBAN für Referenten darf nicht leer sein"
     And I should see "BIC für Referenten darf nicht leer sein"

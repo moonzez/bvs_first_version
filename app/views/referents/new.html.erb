@@ -1,4 +1,4 @@
 <%= title('Referenten anlegen') %>
 <h1>Referenten anlegen</h1>
 
-<%= render 'form' %>
+<%= render partial: 'form', locals: { url: referents_path(@referent) } %>

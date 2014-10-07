@@ -1,6 +1,6 @@
 class ReferentsController < ApplicationController
-  before_action :find_languages, only: [:new]
-  before_action :find_referent, only: [:change_activ]
+  before_action :find_languages, only: [:new, :create, :edit, :update]
+  before_action :find_referent, only: [:change_activ, :edit, :update, :remove]
 
   def index
     @selected_letter = params[:selected_letter] || '*'
@@ -20,6 +20,21 @@ class ReferentsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def edit; end
+
+  def update
+    if @referent.update(referent_params)
+      @referent.assign_languages(params[:languages])
+      redirect_to referents_path, notice: "Referentendaten für #{ @referent.full_name } wurden geändert"
+    else
+      render :edit
+    end
+  end
+
+  def remove
+    @referent.destroy
   end
 
   def change_activ

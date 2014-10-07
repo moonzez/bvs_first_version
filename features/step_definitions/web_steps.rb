@@ -27,7 +27,15 @@ When(/^I follow "(.*?)"$/) do |link|
 end
 
 Given(/^I am logged in as (.*) "(.+)"$/) do |user, email|
-  @user = FactoryGirl.create(user.to_sym, email: email)
+  name = email.split('@').first
+  firstname, lastname = name.split('.').map(&:downcase).map(&:capitalize)
+  if firstname && lastname
+    @user = FactoryGirl.create(
+      user.to_sym, email: email, firstname: firstname, lastname: lastname
+    )
+  else
+    @user = FactoryGirl.create(user.to_sym, email: email, firstname: firstname)
+  end
   steps(%(
     Given I am on the login
     When I fill in "Login" with "#{@user.username}"
@@ -87,15 +95,15 @@ Then(/^I should not see image_link "(.*?)" to "(.*?)" user "(.*?)"$/) do |title,
   end
 end
 
-When(/^I follow image_link "(.*?)" to user "(.*?)"$/) do |title, email|
+When(/^I follow image_link "(.*?)" for user "(.*?)"$/) do |title, email|
   user = User.find_by(email: email)
   if title == 'Bearbeiten'
     link = edit_user_path(user)
-    find("//a[@title='#{ title }'] [@href='" + link + "']").click
   elsif title == 'Löschen'
     link = user_path(user)
-    find("//a[@title='#{title}'] [@href='" + link + "'] [@data-method='delete']").click
   end
+
+  find(:xpath, "//a[@href='#{link}'][@title='#{title}']").click
 end
 
 Then(/^I should see image_link "(.*?)" for referent "(.*?)"$/) do |title, email|
@@ -140,7 +148,7 @@ When(/^I follow image_link "(.*?)" for referent "(.*?)"$/) do |title, email|
     link = change_activ_referent_path(referent, activ: 'activ')
   elsif title == 'Bearbeiten'
     link = edit_referent_path(referent)
-  elsif action == 'Löschen'
+  elsif title == 'Löschen'
     link = remove_referent_path(referent)
   end
 

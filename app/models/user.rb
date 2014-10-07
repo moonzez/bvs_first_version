@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_and_belongs_to_many :licenses
 
+  before_destroy :can_be_removed?
+
   ACTIVITY = { activ: 'aktiv', inactiv: 'nicht aktiv', temporary: 'vorübergehend nicht aktiv' }
 
   acts_as_authentic do |config |
@@ -46,10 +48,9 @@ class User < ActiveRecord::Base
     "#{ firstname } #{ lastname }"
   end
 
-  def can_be_removed
-    if is_admin?
-      return !Role.the_only_admin(self)
-    elsif is_referent?
+  def can_be_removed?
+    if is_referent?
+      errors.add(:base, "Referent #{ full_name } darf nicht gelöscht werden")
       return false
     end
     true
