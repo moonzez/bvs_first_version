@@ -9,8 +9,10 @@ Feature: Creating new referents
     And There is a language "Deutsch"
     And There is a language "English"
     And There is a language "Italienisch"
+    And There is a license "This is a new license A" "License A"
+    And There is a license "This is a new license B" "License B"
     And I am on the homepage
-    Given I follow "Referenten anlegen"
+    And I follow "Referenten anlegen"
 
   Scenario: create referent with invalid data
     Then I should see title "BVS - Referenten anlegen"
@@ -42,9 +44,12 @@ Feature: Creating new referents
     And I fill in "BIC" with "982429348293"
     And I check language "Deutsch"
     And I check language "Italienisch"
+    And I check license "License A"
     And I press "Speichern"
     Then I should see "Referent John Doe wurde angelegt"
     And I should see "john.doe@bvs.de"
     And I should see "Deutsch"
     And I should see "Italienisch"
     And I should not see "Englisch"
+    And I should see "License A"
+    And I should not see "License B"

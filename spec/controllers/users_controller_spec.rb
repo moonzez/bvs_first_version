@@ -65,6 +65,13 @@ RSpec.describe UsersController, type: :controller do
       expect(assigns(:roles)).to match_array [admin, referent]
     end
 
+    it 'assigns all licenses to @licenses' do
+      license_a = FactoryGirl.create(:license)
+      license_b = FactoryGirl.create(:license)
+      get :new
+      expect(assigns(:licenses)).to match_array [license_a, license_b]
+    end
+
     it 'renders new template' do
       get :new
       expect(response).to render_template :new
@@ -90,6 +97,13 @@ RSpec.describe UsersController, type: :controller do
       referent = FactoryGirl.create(:referent_role)
       get :edit, id: @user
       expect(assigns(:roles)).to match_array [admin, referent]
+    end
+
+    it 'assigns all licenses to @licenses' do
+      license_a = FactoryGirl.create(:license)
+      license_b = FactoryGirl.create(:license)
+      get :edit, id: @user
+      expect(assigns(:licenses)).to match_array [license_a, license_b]
     end
 
     it 'renders edit template' do
@@ -120,6 +134,55 @@ RSpec.describe UsersController, type: :controller do
         expect(flash[:notice]).to eql "Nutzer #{ User.last.full_name } wurde angelegt"
         expect(response).to redirect_to(users_path)
       end
+
+      it 'assigns all languages to @languages' do
+        german = FactoryGirl.create(:german)
+        english = FactoryGirl.create(:english)
+        post :create, user: @user_attributes
+        expect(assigns(:languages)).to match_array [german, english]
+      end
+
+      it 'assigns all roles to @roles' do
+        admin = FactoryGirl.create(:admin_role)
+        referent = FactoryGirl.create(:referent_role)
+        post :create, user: @user_attributes
+        expect(assigns(:roles)).to match_array [admin, referent]
+      end
+
+      it 'assigns all licenses to @licenses' do
+        license_a = FactoryGirl.create(:license)
+        license_b = FactoryGirl.create(:license)
+        post :create, user: @user_attributes
+        expect(assigns(:licenses)).to match_array [license_a, license_b]
+      end
+
+      context 'save_with_params' do
+        it 'calls with roles, languages, licenses if given' do
+          admin_role = FactoryGirl.create(:admin_role)
+          german = FactoryGirl.build(:german)
+          license = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:save_with_params)
+            .with([admin_role.id.to_param], [german.id.to_param], [license.id.to_param])
+          post :create, user: @user_attributes,
+            roles: [admin_role.id], languages: [german.id], licenses: [license.id]
+        end
+
+        it 'calls with roles, nil, nil if no language and no licenses given' do
+          admin_role = FactoryGirl.create(:admin_role)
+          expect_any_instance_of(User).to receive(:save_with_params)
+            .with([admin_role.id.to_param], nil, nil)
+          post :create, user: @user_attributes, roles: [admin_role.id]
+        end
+
+        it 'calls with roles, nil, licenses if given' do
+          admin_role = FactoryGirl.create(:admin_role)
+          license = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:save_with_params)
+            .with([admin_role.id.to_param], nil, [license.id.to_param])
+          post :create, user: @user_attributes, roles: [admin_role.id],
+            roles: [admin_role.id], licenses: [license.id]
+        end
+      end
     end
 
     describe 'with invalid params' do
@@ -130,24 +193,6 @@ RSpec.describe UsersController, type: :controller do
       it 'assigns a newly created but unsaved user as @user' do
         post :create, user: @invalid_user_attrs
         expect(assigns(:user)).to be_a_new(User)
-      end
-
-      describe 'with roles given' do
-
-        it 'does not call assign_roles on User instance' do
-          admin_role = FactoryGirl.create(:admin_role)
-          expect_any_instance_of(User).not_to receive(:assign_roles).with([admin_role.id.to_param])
-          post :create, user: @invalid_user_attrs, roles: [admin_role.id]
-        end
-      end
-
-      describe 'with languages given' do
-
-        it 'does not call assign_languages on User instance' do
-          german = FactoryGirl.create(:german)
-          expect_any_instance_of(User).not_to receive(:assign_languages).with([german.id])
-          post :create, user: @invalid_user_attrs, languages: [german.id.to_param]
-        end
       end
 
       it 're-renders the "new" template' do
@@ -191,16 +236,52 @@ RSpec.describe UsersController, type: :controller do
         expect(assigns(:user)).to eq @referent
       end
 
-      it 'calls assign_roles on User instance' do
-        admin_role = FactoryGirl.create(:admin_role)
-        expect_any_instance_of(User).to receive(:assign_roles).with([admin_role.id.to_param])
-        put :update, id: @referent, user: new_attributes, roles: [admin_role.id]
+      it 'assigns all languages to @languages' do
+        german = FactoryGirl.create(:german)
+        english = FactoryGirl.create(:english)
+        put :update, id: @referent, user: new_attributes
+        expect(assigns(:languages)).to match_array [german, english]
       end
 
-      it 'calls assign_languages on User instance' do
-        german = FactoryGirl.build(:german)
-        expect_any_instance_of(User).to receive(:assign_languages).with([german.id])
-        put :update, id: @referent, user: new_attributes, languages: [german.id]
+      it 'assigns all roles to @roles' do
+        admin = FactoryGirl.create(:admin_role)
+        referent = (Role.find_by(title: 'referent') || FactoryGirl.create(:referent_role))
+        put :update, id: @referent, user: new_attributes
+        expect(assigns(:roles)).to match_array [admin, referent]
+      end
+
+      it 'assigns all licenses to @licenses' do
+        license_a = FactoryGirl.create(:license)
+        license_b = FactoryGirl.create(:license)
+        put :update, id: @referent, user: new_attributes
+        expect(assigns(:licenses)).to match_array [license_a, license_b]
+      end
+
+      context 'update_with_params' do
+        it 'calls with roles, languages, licenses if given' do
+          admin_role = FactoryGirl.create(:admin_role)
+          german = FactoryGirl.build(:german)
+          license = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:update_with_params)
+            .with(new_attributes, [admin_role.id.to_param], [german.id.to_param], [license.id.to_param])
+          put :update, id: @referent, user: new_attributes, roles: [admin_role.id],
+            languages: [german.id], licenses: [license.id]
+        end
+
+        it 'calls with roles, nil, nil if no language and no licenses given' do
+          admin_role = FactoryGirl.create(:admin_role)
+          expect_any_instance_of(User).to receive(:update_with_params)
+            .with(new_attributes, [admin_role.id.to_param], nil, nil)
+          put :update, id: @referent, user: new_attributes, roles: [admin_role.id]
+        end
+
+        it 'calls with roles, nil, licenses if given' do
+          admin_role = FactoryGirl.create(:admin_role)
+          license = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:update_with_params)
+            .with(new_attributes, [admin_role.id.to_param], nil, [license.id.to_param])
+          put :update, id: @referent, user: new_attributes, roles: [admin_role.id], licenses: [license.id]
+        end
       end
 
       it 'redirects to the users_path' do
@@ -224,6 +305,18 @@ RSpec.describe UsersController, type: :controller do
         put :update, id: @referent, user: invalid_attributes
         @referent.reload
         expect(@referent.username).not_to eql ''
+      end
+
+      it 'does not assign roles, languages, licenses' do
+        admin_role = FactoryGirl.create(:admin_role)
+        german = FactoryGirl.build(:german)
+        license = FactoryGirl.create(:license)
+        put :update, id: @referent, user: invalid_attributes, roles: [admin_role.id],
+          languages: [german.id], licenses: [license.id]
+        @referent.reload
+        expect(@referent.roles).to match_array [Role.find_by(title: 'referent')]
+        expect(@referent.languages).to match_array []
+        expect(@referent.licenses).to match_array []
       end
 
       it 'does not call assign_roles on User instance' do

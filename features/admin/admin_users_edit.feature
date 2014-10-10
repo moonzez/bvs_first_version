@@ -50,3 +50,14 @@ Feature: Editing users
     And I should see "Bank für Referenten darf nicht leer sein"
     And I should see "IBAN für Referenten darf nicht leer sein"
     And I should see "BIC für Referenten darf nicht leer sein"
+
+  Scenario: checking licenses for referent
+    Given There is a license "This is a new license A" "License A"
+    When I follow image_link "Bearbeiten" for user "deba.referent@bvs.de"
+    And I check license "License A"
+    And I press "Speichern"
+    Then I should see "Nutzerdaten für Deba Referent wurden geändert"
+    When I follow "Referenten"
+    And I follow "R"
+    Then I should see "deba.referent@bvs.de"
+    And I should see "License A"

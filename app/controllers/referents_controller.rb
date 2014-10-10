@@ -1,5 +1,6 @@
 class ReferentsController < ApplicationController
   before_action :find_languages, only: [:new, :create, :edit, :update]
+  before_action :find_licenses, only: [:new, :create, :edit, :update]
   before_action :find_referent, only: [:change_activ, :edit, :update, :remove]
 
   def index
@@ -15,7 +16,7 @@ class ReferentsController < ApplicationController
 
   def create
     @referent = User.new(referent_params)
-    if @referent.save_referent_with_params(params[:languages])
+    if @referent.save_referent_with_params(params[:languages], params[:licenses])
       redirect_to referents_path, notice: "Referent #{ @referent.full_name } wurde angelegt"
     else
       render :new
@@ -25,8 +26,7 @@ class ReferentsController < ApplicationController
   def edit; end
 
   def update
-    if @referent.update(referent_params)
-      @referent.assign_languages(params[:languages])
+    if @referent.update_referent_with_params(referent_params, params[:languages], params[:licenses])
       redirect_to referents_path, notice: "Referentendaten für #{ @referent.full_name } wurden geändert"
     else
       render :edit
@@ -46,6 +46,10 @@ class ReferentsController < ApplicationController
 
   def find_languages
     @languages = Language.all
+  end
+
+  def find_licenses
+    @licenses = License.all
   end
 
   def referent_params

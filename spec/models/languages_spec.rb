@@ -31,7 +31,7 @@ RSpec.describe Language, type: :model do
     expect(language.errors.messages[:language].first).to eql(error_message)
   end
 
-  context 'can_be_deleeted' do
+  context 'can_be_deleted' do
     before do
       @language = FactoryGirl.create(:language)
     end

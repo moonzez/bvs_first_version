@@ -44,6 +44,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def assign_licenses(licenses_ids)
+    licenses.delete_all
+    return nil if licenses_ids.blank?
+    licenses_ids.each do |license_id|
+      license = License.find(license_id)
+      licenses << license
+    end
+  end
+
   def full_name
     "#{ firstname } #{ lastname }"
   end
@@ -68,20 +77,37 @@ class User < ActiveRecord::Base
     !errors.present?
   end
 
-  def save_with_params(roles = nil, languages = nil)
+  def save_with_params(roles = nil, languages = nil, licenses = nil)
     if check_referent(roles) && save
       assign_roles(roles)
       assign_languages(languages)
+      assign_licenses(licenses)
       return true
     else
       return false
     end
   end
 
-  def save_referent_with_params(languages = nil)
+  def save_referent_with_params(languages = nil, licenses = nil)
     return false unless role = Role.find_by(title: 'referent')
-    save_with_params([role.id], languages)
+    save_with_params([role.id], languages, licenses)
   end
+
+  def update_referent_with_params(referent_params, languages = nil, licenses = nil)
+    return false unless update(referent_params)
+    assign_languages(languages)
+    assign_licenses(licenses)
+    true
+  end
+
+  def update_with_params(user_params, roles = nil, languages = nil, licenses = nil)
+    return false unless update(user_params)
+    assign_roles(roles)
+    assign_languages(languages)
+    assign_licenses(licenses)
+    true
+  end
+
 
   def identic?(user)
     self == user

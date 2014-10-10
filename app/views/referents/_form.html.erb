@@ -118,5 +118,14 @@
       <% end %>
   <% end %>
 
+  <% if @licenses %>
+    <p>Referent hat Lizenzen:</p>
+      <% @licenses.each do |license| %>
+        <%= check_box_tag "license_#{ license.id }", license.id,
+          @referent.licenses.include?(license), :name => 'licenses[]', title: license.title %>
+        <%= label_tag :licenses, license.shortcut, title: license.title %>
+      <% end %>
+  <% end %>
+
   <p><%= f.submit %></p>
 <% end %>

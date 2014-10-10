@@ -69,6 +69,13 @@ RSpec.describe ReferentsController, type: :controller do
       expect(assigns(:referent)).to be_a_new(User)
     end
 
+    it 'assigns all licenses to @licenses' do
+      license_a = FactoryGirl.create(:license)
+      license_b = FactoryGirl.create(:license)
+      get :new
+      expect(assigns(:licenses)).to match_array [license_a, license_b]
+    end
+
     it 'assigns all languages to @languages' do
       german = FactoryGirl.create(:german)
       english = FactoryGirl.create(:english)
@@ -88,9 +95,23 @@ RSpec.describe ReferentsController, type: :controller do
       @referent_attributes = FactoryGirl.attributes_for(:referent)
     end
 
-    describe 'with valid params' do
+    context 'with valid params' do
       it 'creates a new referent User' do
         expect { post :create, referent: @referent_attributes }.to change(User, :count).by(1)
+      end
+
+      it 'assigns all licenses to @licenses' do
+        license_a = FactoryGirl.create(:license)
+        license_b = FactoryGirl.create(:license)
+        post :create, referent: @referent_attributes
+        expect(assigns(:licenses)).to match_array [license_a, license_b]
+      end
+
+      it 'assigns all languages to @languages' do
+        german = FactoryGirl.create(:german)
+        english = FactoryGirl.create(:english)
+        post :create, referent: @referent_attributes
+        expect(assigns(:languages)).to match_array [german, english]
       end
 
       it 'assigns a newly created user as @referent' do
@@ -105,14 +126,32 @@ RSpec.describe ReferentsController, type: :controller do
         expect(response).to redirect_to(referents_path)
       end
 
-      it 'calls save_referent_with_params with languages array' do
-        german = FactoryGirl.create(:german)
-        expect_any_instance_of(User).to receive(:save_referent_with_params).with([german.id.to_param])
-        post :create, referent: @referent_attributes, languages: [german.id]
+      context 'save_referent_with_params' do
+
+        it 'calls with languages and nil when no license' do
+          german = FactoryGirl.create(:german)
+          expect_any_instance_of(User).to receive(:save_referent_with_params).with([german.id.to_param], nil)
+          post :create, referent: @referent_attributes, languages: [german.id]
+        end
+
+        it 'calls with nil and licenses when no languages' do
+          license_a = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:save_referent_with_params)
+            .with(nil, [license_a.id.to_param])
+          post :create, referent: @referent_attributes, licenses: [license_a.id]
+        end
+
+        it 'calls with languages and licenses' do
+          german = FactoryGirl.create(:german)
+          license_a = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:save_referent_with_params)
+            .with([german.id.to_param], [license_a.id.to_param])
+          post :create, referent: @referent_attributes, languages: [german.id], licenses: [license_a.id]
+        end
       end
     end
 
-    describe 'with invalid params' do
+    context 'with invalid params' do
       before do
         @invalid_user_attrs = FactoryGirl.attributes_for(:invalid_user)
       end
@@ -133,6 +172,7 @@ RSpec.describe ReferentsController, type: :controller do
     before do
       @referent = FactoryGirl.create(:referent, activ: 'temporary')
     end
+
     it 'assigns referent' do
       put :change_activ, activ: 'activ', id: @referent.id, format: :js
       expect(assigns(:referent)).to be_a_kind_of User
@@ -160,6 +200,20 @@ RSpec.describe ReferentsController, type: :controller do
       expect(assigns(:referent)).to eql @referent
     end
 
+    it 'assigns all licenses to @licenses' do
+      license_a = FactoryGirl.create(:license)
+      license_b = FactoryGirl.create(:license)
+      get :edit, id: @referent.id
+      expect(assigns(:licenses)).to match_array [license_a, license_b]
+    end
+
+    it 'assigns all languages to @languages' do
+      german = FactoryGirl.create(:german)
+      english = FactoryGirl.create(:english)
+      get :edit, id: @referent.id
+      expect(assigns(:languages)).to match_array [german, english]
+    end
+
     it 'renders edit template' do
       get :edit, id: @referent.id
       expect(response).to render_template :edit
@@ -181,16 +235,55 @@ RSpec.describe ReferentsController, type: :controller do
         expect(assigns(:referent)).to eql @referent
       end
 
-      it 'calls assigne_languages' do
-        expect_any_instance_of(User).to receive(:assign_languages).with(nil)
+      it 'assigns all licenses to @licenses' do
+        license_a = FactoryGirl.create(:license)
+        license_b = FactoryGirl.create(:license)
         put :update, id: @referent.id, referent: @update_attrs
+        expect(assigns(:licenses)).to match_array [license_a, license_b]
+      end
+
+      it 'assigns all languages to @languages' do
+        german = FactoryGirl.create(:german)
+        english = FactoryGirl.create(:english)
+        put :update, id: @referent.id, referent: @update_attrs
+        expect(assigns(:languages)).to match_array [german, english]
+      end
+
+      it 'updates referent object' do
+        put :update, id: @referent.id, referent: @update_attrs
+        @referent.reload
+        expect(@referent.lastname).to eql 'Married'
+      end
+
+      context 'update_referent_with_params' do
+        it 'calls with languages and nil when no licenses given' do
+          german = FactoryGirl.create(:german)
+          expect_any_instance_of(User).to receive(:update_referent_with_params)
+            .with(@update_attrs, [german.id.to_param], nil)
+          put :update, id: @referent.id, referent: @update_attrs, languages: [german.id]
+        end
+
+        it 'calls with nil and licenses when no language given' do
+          license_a = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:update_referent_with_params)
+            .with(@update_attrs, nil, [license_a.id.to_param])
+          put :update, id: @referent.id, referent: @update_attrs, licenses: [license_a.id]
+        end
+
+        it 'calls with languages and licenses' do
+          german = FactoryGirl.create(:german)
+          license_a = FactoryGirl.create(:license)
+          expect_any_instance_of(User).to receive(:update_referent_with_params)
+            .with(@update_attrs, [german.id.to_param], [license_a.id.to_param])
+          put :update, id: @referent.id, referent: @update_attrs,
+              languages: [german.id], licenses: [license_a.id]
+        end
       end
 
       it 'redirects_to referents index' do
         put :update, id: @referent.id, referent: @update_attrs
         expect(response).to redirect_to(referents_path)
-        @referent.reload
-        expect(flash[:notice]).to eql "Referentendaten für #{ @referent.full_name } wurden geändert"
+        expect(flash[:notice]).to eql "Referentendaten für #{ @referent.reload.full_name } wurden geändert"
       end
     end
 

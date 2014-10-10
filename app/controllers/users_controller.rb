@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :find_user, only: [:edit, :update, :destroy]
   before_action :find_languages, only: [:new, :create, :edit, :update]
   before_action :find_roles, only: [:new, :create, :edit, :update]
+  before_action :find_licenses, only: [:new, :create, :edit, :update]
 
   def home; end
 
@@ -19,7 +20,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save_with_params(params[:roles], params[:languages])
+    if @user.save_with_params(params[:roles], params[:languages], params[:licenses])
       redirect_to users_path, notice: "Nutzer #{ @user.full_name } wurde angelegt"
     else
       render :new
@@ -27,9 +28,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
-      @user.assign_roles(params[:roles])
-      @user.assign_languages(params[:languages])
+    if @user.update_with_params(user_params, params[:roles], params[:languages], params[:licenses])
       redirect_to users_path, notice: "Nutzerdaten für #{ @user.full_name } wurden geändert"
     else
       render :edit
@@ -52,6 +51,10 @@ class UsersController < ApplicationController
 
   def find_roles
     @roles = Role.all
+  end
+
+  def find_licenses
+    @licenses = License.all
   end
 
   def user_params

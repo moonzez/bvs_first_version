@@ -58,7 +58,7 @@ RSpec.describe License, type: :model do
     end
 
     it 'should be trigger on destroy license' do
-      expect(@license).to receive(:can_be_deleted).with(:title)
+      expect(@license).to receive(:can_be_deleted).with(:shortcut)
       @license.destroy
     end
 
@@ -72,6 +72,16 @@ RSpec.describe License, type: :model do
     it 'should destroy license if can_be_deleted returns true' do
       @license.destroy
       expect(License.count).to eql(0)
+    end
+  end
+
+  context 'default_scope' do
+    it 'oders licenses by shortcut after alphabet' do
+      b_license = FactoryGirl.create(:license, shortcut: 'Lizense B')
+      a_license = FactoryGirl.create(:license, shortcut: 'Lizense A')
+      c_license = FactoryGirl.create(:license, shortcut: 'Lizense C')
+
+      expect(License.all).to eq([a_license, b_license, c_license])
     end
   end
 end

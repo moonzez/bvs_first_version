@@ -20,3 +20,5 @@ AllCops:
 Metrics/LineLength:
   Max: 110
 
+Metrics/ClassLength:
+  Max: 200

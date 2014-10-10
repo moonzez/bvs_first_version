@@ -114,6 +114,45 @@ RSpec.describe User, type: :model do
     end
   end
 
+  context 'assign_licenses' do
+
+    before do
+      @user = FactoryGirl.create(:user)
+    end
+
+    it 'assignes given licenses to himself' do
+      a_license = FactoryGirl.create(:license)
+      b_license = FactoryGirl.create(:license)
+      FactoryGirl.create(:license)
+
+      expect(@user.licenses.count).to eql(0)
+      @user.assign_licenses([a_license.id, b_license.id])
+
+      expect(@user.licenses.count).to eql(2)
+      expect(@user.licenses).to match_array [a_license, b_license]
+    end
+
+    it 'reassigns licenses from himself if empty array given' do
+      a_license = FactoryGirl.create(:license)
+      @user.licenses << a_license
+      expect(@user.licenses.count).to eql(1)
+
+      @user.assign_licenses([])
+
+      expect(@user.licenses.count).to eql(0)
+    end
+
+    it 'reassigns licenses if nil given' do
+      a_license = FactoryGirl.create(:license)
+      @user.licenses << a_license
+      expect(@user.licenses.count).to eql(1)
+
+      @user.assign_licenses(nil)
+
+      expect(@user.licenses.count).to eql(0)
+    end
+  end
+
   context 'has role' do
 
     before do
@@ -289,23 +328,30 @@ RSpec.describe User, type: :model do
       expect(@user).not_to be_persisted
     end
 
-    it 'returns true if user valid' do
-      expect(@user.save_with_params).to eql true
-      expect(@user).to be_persisted
-    end
+    context 'user valid' do
 
-    it 'assignes languages to user if user valid' do
-      language = FactoryGirl.create(:language)
-      @user.save_with_params([], [language.id])
-      expect(@user).to be_persisted
-      expect(@user.languages).to match_array [language]
-    end
+      it 'saves user' do
+        expect(@user.save_with_params).to eql true
+        expect(@user).to be_persisted
+      end
 
-    it 'assignes roles to user if user valid' do
-      dbuser = FactoryGirl.create(:dbuser_role)
-      @user.save_with_params([dbuser.id])
-      expect(@user).to be_persisted
-      expect(@user.roles).to match_array [dbuser]
+      it 'assignes languages to user' do
+        language = FactoryGirl.create(:language)
+        @user.save_with_params(nil, [language.id])
+        expect(@user.languages).to match_array([language])
+      end
+
+      it 'assignes roles to user' do
+        dbuser = FactoryGirl.create(:dbuser_role)
+        @user.save_with_params([dbuser.id])
+        expect(@user.roles).to match_array([dbuser])
+      end
+
+      it 'assignes licenses to user' do
+        license = FactoryGirl.create(:license)
+        @user.save_with_params(nil, nil, [license.id])
+        expect(@user.licenses).to match_array([license])
+      end
     end
   end
 
@@ -379,6 +425,67 @@ RSpec.describe User, type: :model do
       FactoryGirl.create(:referent, activ: 'inactiv')
       temporary_referent = FactoryGirl.create(:referent, activ: 'temporary')
       expect(User.all_except_inactiv).to match_array [activ_referent, temporary_referent]
+    end
+  end
+
+  describe '#update_with_params' do
+    before do
+      @user = FactoryGirl.create(:user)
+    end
+
+    it 'updates user' do
+      user_params = { lastname: 'Married' }
+      @user.update_with_params(user_params)
+      expect(@user.lastname).to eql 'Married'
+    end
+
+    it 'assignes languages to user' do
+      language = FactoryGirl.create(:language)
+      @user.update_with_params({}, nil, [language.id])
+      expect(@user.languages).to match_array([language])
+    end
+
+    it 'assignes roles to user' do
+      dbuser = FactoryGirl.create(:dbuser_role)
+      @user.update_with_params({}, [dbuser.id])
+      expect(@user.roles).to match_array([dbuser])
+    end
+
+    it 'assignes licenses to user' do
+      license = FactoryGirl.create(:license)
+      @user.update_with_params({}, nil, nil, [license.id])
+      expect(@user.licenses).to match_array([license])
+    end
+  end
+
+  describe '#update_referent_with_params' do
+    before do
+      @referent = FactoryGirl.create(:referent)
+    end
+
+    it 'updates referent' do
+      user_params = { lastname: 'Married' }
+      @referent.update_with_params(user_params)
+      expect(@referent.lastname).to eql 'Married'
+    end
+
+    it 'assignes languages to user' do
+      language = FactoryGirl.create(:language)
+      @referent.update_referent_with_params({}, [language.id])
+      expect(@referent.languages).to match_array([language])
+    end
+
+    it 'assignes licenses to user' do
+      license = FactoryGirl.create(:license)
+      @referent.update_referent_with_params({}, nil, [license.id])
+      expect(@referent.licenses).to match_array([license])
+    end
+
+    it 'does not reassign roles from user' do
+      language = FactoryGirl.create(:language)
+      license = FactoryGirl.create(:license)
+      @referent.update_referent_with_params({}, [language.id], [license.id])
+      expect(@referent.roles).to match_array([Role.find_by(title: 'referent')])
     end
   end
 end

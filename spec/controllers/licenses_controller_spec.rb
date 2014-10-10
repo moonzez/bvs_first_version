@@ -43,7 +43,7 @@ RSpec.describe LicensesController, type: :controller do
       it 'adds error to license' do
         @user.licenses << @license
         delete :destroy, id: @license, format: :js
-        expect(assigns(:license).errors[:base]).to include(I18n.t('is_in_use', what: @license.title))
+        expect(assigns(:license).errors[:base]).to include(I18n.t('is_in_use', what: @license.shortcut))
       end
 
       it 'renders the destroy.js.erb' do

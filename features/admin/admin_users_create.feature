@@ -8,6 +8,8 @@ Feature: Creating new users
     And There is a role "dbuser"
     And There is a role "referent"
     And I am on the homepage
+    And There is a license "This is a new license A" "License A"
+    And There is a license "This is a new license B" "License B"
     Given I follow "Nutzer anlegen"
 
   Scenario: create not referent with valid data
@@ -70,7 +72,12 @@ Feature: Creating new users
     And I fill in "IBAN" with "SOMEIBAN"
     And I fill in "BIC" with "982429348293"
     And I check ("role_referent")
+    And I check license "License B"
     And I press "Speichern"
     Then I should see "Nutzer John Doe wurde angelegt"
     And I should see "john.doe@bvs.de"
     And I should see "referent"
+    When I follow "Referenten"
+    And I follow "D"
+    Then I should see "john.doe@bvs.de"
+    And I should see "License B"
