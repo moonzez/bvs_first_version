@@ -488,4 +488,25 @@ RSpec.describe User, type: :model do
       expect(@referent.roles).to match_array([Role.find_by(title: 'referent')])
     end
   end
+
+  describe '#update_myself' do
+    it 'should call update_with_params if admin' do
+      user_attrs = { lastname: 'Newname' }
+      admin = FactoryGirl.create(:admin)
+      role_id = Role.find_by(title: 'admin').id
+      language = FactoryGirl.create(:language)
+      expect(admin).to receive(:update_with_params).with(user_attrs, [role_id], [language.id], nil)
+
+      admin.update_myself(user_attrs, [role_id], [language.id])
+    end
+
+    it 'should call update_referent_with_params if not admin' do
+      user_attrs = { lastname: 'Newname' }
+      user = FactoryGirl.create(:user)
+      language = FactoryGirl.create(:language)
+      expect(user).to receive(:update_referent_with_params).with(user_attrs, [language.id], nil)
+
+      user.update_myself(user_attrs, nil, [language.id])
+    end
+  end
 end

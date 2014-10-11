@@ -1,10 +1,12 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
+<%= title('BVS - Profil') %>
+<h1>Profil bearbeiten</h1>
+<%= form_for(@profile, as: :profile, url: profile_path(@profile)) do |f| %>
+  <% if @profile.errors.any? %>
     <div id='error_explanation'>
-      <h2><%= @user.errors.count %> Fehler aufgetreten:</h2>
+      <h2><%= @profile.errors.count %> Fehler aufgetreten:</h2>
 
       <ul>
-        <% @user.errors.full_messages.each do |message| %>
+        <% @profile.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -63,14 +65,12 @@
   <% if admin? %>
     <p>Rollen:</p>
     <% @roles.each do |role| %>
-      <%= check_box_tag "role_#{role.title}", role.id, @user.roles.include?(role), name: 'roles[]' %>
+      <%= check_box_tag "role_#{role.title}", role.id, @profile.roles.include?(role), name: 'roles[]' %>
       <%= label_tag :roles, role.title %>
     <% end %>
   <% end %>
 
-  <% if @user.is_referent? || !@user.persisted? %>
-    <h2>Referentendaten:</p><h2>
-
+  <% if @profile.is_referent? %>
     <table>
       <tr>
         <td><%= f.label :remarc %></td>
@@ -131,7 +131,7 @@
     <% if @languages %>
       <p>Referent spricht:</p>
       <% @languages.each do |language| %>
-        <%= check_box_tag "language_#{language.id}", language.id, @user.languages.include?(language), :name => 'languages[]' %>
+        <%= check_box_tag "language_#{language.id}", language.id, @profile.languages.include?(language), :name => 'languages[]' %>
         <%= label_tag :languages, language.language %>
       <% end %>
     <% end %>
@@ -140,7 +140,7 @@
     <p>Referent hat Lizenzen:</p>
       <% @licenses.each do |license| %>
         <%= check_box_tag "license_#{ license.id }", license.id,
-          @user.licenses.include?(license), :name => 'licenses[]', title: license.title %>
+          @profile.licenses.include?(license), :name => 'licenses[]', title: license.title %>
         <%= label_tag :licenses, license.shortcut, title: license.title %>
       <% end %>
     <% end %>

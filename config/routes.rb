@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :users, except: [:show]
 
-  resources :referents, except: [:show] do
+  resources :referents, except: [:show, :destroy] do
     member do
       delete :remove
       put :change_activ
@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :languages, except: [:new, :update, :edit, :show]
 
-  # resources :roles
-
   resources :licenses, except: [:new, :update, :edit, :show]
+
+  resources :profile, only: [:edit, :update]
 end

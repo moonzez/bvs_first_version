@@ -108,6 +108,7 @@ de:
     shortcut_explanation: Diese Abkürzung wird als Spaltenname in der Referentenübersichtstabelle verwendet
 
   is_in_use: "%{what} kann nicht gelöscht werden: ist in Verwendung"
+  only_own_profile: Sie können nur eigenes Profil ändern
 
   helpers:
     submit:

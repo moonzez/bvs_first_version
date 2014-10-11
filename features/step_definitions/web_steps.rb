@@ -6,6 +6,10 @@ When(/^I fill in "(.*?)" with "(.*?)"$/) do |field, value|
   fill_in(field, with: value)
 end
 
+Then(/^I should see field "(.*?)" with "(.*?)"$/) do |field, value|
+  find("input[id='profile_#{field}'][value='#{value}']")
+end
+
 When(/^I press "(.*?)"$/) do |button|
   click_button(button)
 end

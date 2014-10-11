@@ -108,6 +108,13 @@ class User < ActiveRecord::Base
     true
   end
 
+  def update_myself(user_params, roles = nil, languages = nil, licenses = nil)
+    if is_admin?
+      update_with_params(user_params, roles, languages, licenses)
+    else
+      update_referent_with_params(user_params, languages, licenses)
+    end
+  end
 
   def identic?(user)
     self == user
