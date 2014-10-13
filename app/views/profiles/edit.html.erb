@@ -1,6 +1,6 @@
-<%= title('BVS - Profil') %>
+<%= title('Profil') %>
 <h1>Profil bearbeiten</h1>
-<%= form_for(@profile, as: :profile, url: profile_path(@profile)) do |f| %>
+<%= form_for(@profile, as: :profile, url: profile_path) do |f| %>
   <% if @profile.errors.any? %>
     <div id='error_explanation'>
       <h2><%= @profile.errors.count %> Fehler aufgetreten:</h2>

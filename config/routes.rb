@@ -19,5 +19,5 @@ Rails.application.routes.draw do
 
   resources :licenses, except: [:new, :update, :edit, :show]
 
-  resources :profile, only: [:edit, :update]
+  resource :profile, only: [:edit, :update]
 end

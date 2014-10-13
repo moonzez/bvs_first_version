@@ -1,4 +1,4 @@
-class ProfileController < ApplicationController
+class ProfilesController < ApplicationController
   before_action :find_profile
   before_action :find_languages, only: [:edit, :update]
   before_action :find_roles, only: [:edit, :update]
@@ -18,8 +18,7 @@ class ProfileController < ApplicationController
   private
 
   def find_profile
-    @profile = User.find(params[:id])
-    redirect_to root_path, alert: I18n.t('only_own_profile') unless @profile.identic?(current_user)
+    @profile = current_user
   end
 
   def find_languages
