@@ -1,4 +1,6 @@
 class LanguagesController < ApplicationController
+  before_action :authorize_dbuser!
+
   def destroy
     @language = Language.find(params[:id])
     @language.destroy

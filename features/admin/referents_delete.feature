@@ -1,7 +1,7 @@
 @javascript
 Feature: Deleting referents
   In order to remove unneeded referents
-  As an accounter, admin or dbuser
+  As an admin
   I want to be able to delete referent
 
   Background:

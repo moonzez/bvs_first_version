@@ -4,9 +4,21 @@ RSpec.describe ReferentsController, type: :controller do
   setup :activate_authlogic
 
   before do
-    @user = FactoryGirl.create(:user, lastname: 'Baba')
-    UserSession.create(username: @user.username, password: @user.password)
+    @dbuser = FactoryGirl.create(:dbuser, lastname: 'Baba')
+    UserSession.create(username: @dbuser.username, password: @dbuser.password)
     FactoryGirl.create(:referent_role)
+  end
+
+  describe 'when not dbuser' do
+    it 'redirects to root' do
+      user_session = UserSession.find
+      user_session.destroy
+      @reader = FactoryGirl.create(:reader)
+      UserSession.create(username: @reader.username, password: @reader.password)
+      get :index
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eql 'Diese Aktion darf nur vom admin, dbuser oder accounter ausgeführt werden.'
+    end
   end
 
   describe 'GET #index' do

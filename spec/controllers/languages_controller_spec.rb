@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe LanguagesController, type: :controller do
-
   setup :activate_authlogic
 
   before do
-    @user = FactoryGirl.create(:user)
-    UserSession.create(username: @user.username, password: @user.password)
+    @dbuser = FactoryGirl.create(:dbuser)
+    UserSession.create(username: @dbuser.username, password: @dbuser.password)
     @language = FactoryGirl.create(:language)
   end
 
@@ -16,6 +15,18 @@ RSpec.describe LanguagesController, type: :controller do
       user_session.destroy
       get :index
       expect(response).to redirect_to login_path
+    end
+  end
+
+  describe 'when not dbuser' do
+    it 'redirects to root' do
+      user_session = UserSession.find
+      user_session.destroy
+      @reader = FactoryGirl.create(:reader)
+      UserSession.create(username: @reader.username, password: @reader.password)
+      get :index
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eql 'Diese Aktion darf nur vom admin oder dbuser ausgeführt werden.'
     end
   end
 

@@ -109,6 +109,9 @@ de:
 
   is_in_use: "%{what} kann nicht gelöscht werden: ist in Verwendung"
   only_own_profile: Sie können nur eigenes Profil ändern
+  only_admin: Diese Aktion darf nur vom admin ausgeführt werden
+  only_dbuser: Diese Aktion darf nur vom admin oder dbuser ausgeführt werden
+  only_dbuser_or_accounter: Diese Aktion darf nur vom admin, dbuser oder accounter ausgeführt werden
 
   helpers:
     submit:

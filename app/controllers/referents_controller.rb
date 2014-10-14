@@ -1,7 +1,9 @@
 class ReferentsController < ApplicationController
+  before_action :authorize_dbuser_or_accounter!
   before_action :find_languages, only: [:new, :create, :edit, :update]
   before_action :find_licenses, only: [:new, :create, :edit, :update]
   before_action :find_referent, only: [:change_activ, :edit, :update, :remove]
+  before_action :authorize_admin!, only: [:remove]
 
   def index
     @selected_letter = params[:selected_letter] || '*'

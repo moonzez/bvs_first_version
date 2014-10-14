@@ -4,7 +4,7 @@
 <div id='tabs'>
   <ul>
     <% @all_letters.each do |letter| %>
-      <li id='<%= (letter == @selected_letter) ? 'selected' : '' %>'><%= link_to letter, users_path(selected_letter: letter) %></li>
+      <li id='<%= (letter == @selected_letter) ? 'selected' : '' %>'><%= link_to letter, admin_users_path(selected_letter: letter) %></li>
     <% end %>
   </ul>
 </div>
@@ -32,8 +32,8 @@
           <td><%= user.email %></td>
           <td><%= user.tel %></td>
           <td><%= user.roles.collect(&:title).join(', ') %></td>
-          <td><%= link_to(image_tag('edit.png', size: '20'), edit_user_path(user), title: 'Bearbeiten')  %></td>
-          <td><%= link_to(image_tag('delete.png', size: '20'), user, title: 'Löschen', method: :delete, data: { confirm: "#{ user.full_name } löschen?", remote: true } ) %></td>
+          <td><%= link_to(image_tag('edit.png', size: '20'), edit_admin_user_path(user), title: 'Bearbeiten')  %></td>
+          <td><%= link_to(image_tag('delete.png', size: '20'), admin_user_path(user), title: 'Löschen', method: :delete, data: { confirm: "#{ user.full_name } löschen?", remote: true } ) %></td>
         </tr>
       <% end %>
     </tbody>

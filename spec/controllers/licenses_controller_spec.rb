@@ -4,8 +4,8 @@ RSpec.describe LicensesController, type: :controller do
   setup :activate_authlogic
 
   before do
-    @user = FactoryGirl.create(:user)
-    UserSession.create(username: @user.username, password: @user.password)
+    @dbuser = FactoryGirl.create(:dbuser)
+    UserSession.create(username: @dbuser.username, password: @dbuser.password)
     @license = FactoryGirl.create(:license)
   end
 
@@ -15,6 +15,18 @@ RSpec.describe LicensesController, type: :controller do
       user_session.destroy
       get :index
       expect(response).to redirect_to login_path
+    end
+  end
+
+  describe 'when not dbuser' do
+    it 'redirects to root' do
+      user_session = UserSession.find
+      user_session.destroy
+      @reader = FactoryGirl.create(:reader)
+      UserSession.create(username: @reader.username, password: @reader.password)
+      get :index
+      expect(response).to redirect_to root_path
+      expect(flash[:alert]).to eql 'Diese Aktion darf nur vom admin oder dbuser ausgeführt werden.'
     end
   end
 
@@ -36,18 +48,18 @@ RSpec.describe LicensesController, type: :controller do
     context 'license is_in_use' do
 
       it 'does not delete the license' do
-        @user.licenses << @license
+        @dbuser.licenses << @license
         expect { delete :destroy, id: @license, format: :js }.to change(License, :count).by 0
       end
 
       it 'adds error to license' do
-        @user.licenses << @license
+        @dbuser.licenses << @license
         delete :destroy, id: @license, format: :js
         expect(assigns(:license).errors[:base]).to include(I18n.t('is_in_use', what: @license.shortcut))
       end
 
       it 'renders the destroy.js.erb' do
-        @user.licenses << @license
+        @dbuser.licenses << @license
         delete :destroy, id: @license, format: :js
         expect(response.content_type).to eql 'text/javascript'
         expect(response).to render_template :destroy

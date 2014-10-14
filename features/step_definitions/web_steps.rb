@@ -79,18 +79,19 @@ end
 Then(/^I should see image_link "(.*?)" to "(.*?)" user "(.*?)"$/) do |title, action, email|
   user = User.find_by(email: email)
   if action == 'edit'
-    expect(page).to have_xpath("//a[@title='#{title}'] [@href='#{ edit_user_path(user) }']")
+    expect(page).to have_xpath("//a[@title='#{title}'] [@href='#{ edit_admin_user_path(user) }']")
   elsif action == 'destroy'
-    expect(page).to have_xpath("//a[@title='#{title}'] [@href='#{user_path(user)}'] [@data-method='delete']")
+    xpath = "//a[@title='#{title}'] [@href='#{admin_user_path(user)}'] [@data-method='delete']"
+    expect(page).to have_xpath(xpath)
   end
 end
 
 Then(/^I should not see image_link "(.*?)" to "(.*?)" user "(.*?)"$/) do |title, action, email|
   user = User.find_by(email: email)
   if action == 'edit'
-    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='#{ edit_user_path(user) }']")
+    expect(page).not_to have_xpath("//a[@title='#{title}'] [@href='#{ edit_admin_user_path(user) }']")
   elsif action == 'destroy'
-    xpath = "//a[@title='#{title}'] [@href='#{user_path(user)}'] [@data-method='delete']"
+    xpath = "//a[@title='#{title}'] [@href='#{admin_user_path(user)}'] [@data-method='delete']"
     expect(page).not_to have_xpath(xpath)
   end
 end
@@ -98,9 +99,9 @@ end
 When(/^I follow image_link "(.*?)" for user "(.*?)"$/) do |title, email|
   user = User.find_by(email: email)
   if title == 'Bearbeiten'
-    link = edit_user_path(user)
+    link = edit_admin_user_path(user)
   elsif title == 'Löschen'
-    link = user_path(user)
+    link = admin_user_path(user)
   end
 
   find(:xpath, "//a[@href='#{link}'][@title='#{title}']").click

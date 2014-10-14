@@ -24,4 +24,16 @@ class ApplicationController < ActionController::Base
   %w(admin dbuser reader accounter referent).each do |role|
     define_method(role + '?') { current_user.roles.include?(Role.find_by(title: role)) }
   end
+
+  def authorize_admin!
+    redirect_to root_path, alert: I18n.t('only_admin') unless admin?
+  end
+
+  def authorize_dbuser!
+    redirect_to root_path, alert: I18n.t('only_dbuser') unless admin? || dbuser?
+  end
+
+  def authorize_dbuser_or_accounter!
+    redirect_to root_path, alert: I18n.t('only_dbuser_or_accounter') unless admin? || dbuser? || accounter?
+  end
 end

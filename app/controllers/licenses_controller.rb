@@ -1,4 +1,6 @@
 class LicensesController < ApplicationController
+  before_action :authorize_dbuser!
+
   def destroy
     @license = License.find(params[:id])
     @license.destroy

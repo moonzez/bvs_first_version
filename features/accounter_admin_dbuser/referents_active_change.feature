@@ -41,7 +41,7 @@ Feature: Change referents activ status
   Scenario: activate inactiv referent
     Then I should not see "hidden.person@bvs.de"
     When I follow "Deaktivierten Referenten"
-    Then I should not see "hidden.person@bvs.de"
+    Then I should see "hidden.person@bvs.de"
     When I follow image_link "Aktivieren" for referent "hidden.person@bvs.de"
     Then I should see alert "Referent Hidden Person wurde aktiviert"
     And I should not see "hidden.person@bvs.de"

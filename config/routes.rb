@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   root to: 'users#home'
 
-  resources :users, except: [:show]
+  namespace :admin do
+    resources :users, except: [:show]
+  end
 
   resources :referents, except: [:show, :destroy] do
     collection do

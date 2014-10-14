@@ -13,7 +13,7 @@ Feature: Viewing inactiv referents
       |John |Doe|john.doe@bvs.de|55555555|temporary|
       |Some|Person|some.person@bvs.de|444444|inactiv|
       |Very|Important|very.important@bvs.de|666666|inactiv|
-    Given I am logged in as an admin
+    Given I am logged in as an dbuser
     And I am on the homepage
     Given I follow "Deaktivierten Referenten"
 
@@ -26,7 +26,7 @@ Feature: Viewing inactiv referents
     And I should see "444444"
     And I should see image_link "Aktivieren" for referent "some.person@bvs.de"
     And I should see image_link "Bearbeiten" for referent "some.person@bvs.de"
-    And I should see image_link "Löschen" for referent "some.person@bvs.de"
+    And I should not see image_link "Löschen" for referent "some.person@bvs.de"
 
     And I should see "Very"
     And I should see "Important"
@@ -34,7 +34,7 @@ Feature: Viewing inactiv referents
     And I should see "666666"
     And I should see image_link "Aktivieren" for referent "some.person@bvs.de"
     And I should see image_link "Bearbeiten" for referent "some.person@bvs.de"
-    And I should see image_link "Löschen" for referent "very.important@bvs.de"
+    And I should not see image_link "Löschen" for referent "very.important@bvs.de"
 
   Scenario: not see activ or temporary inactiv referents
     Then I should not see "Meba"
@@ -54,7 +54,6 @@ Feature: Viewing inactiv referents
     And I should not see "1234567"
     And I should not see image_link "Aktivierent" for referent "aba.dbuser@bvs.de"
     And I should not see image_link "Bearbeiten" for referent "aba.dbuser@bvs.de"
-    And I should not see image_link "Löschen" for referent "aba.dbuser@bvs.de"
 
   Scenario: see only users with selected letter
     When I follow "P"
@@ -64,4 +63,4 @@ Feature: Viewing inactiv referents
     And I should see "444444"
     And I should see image_link "Aktivieren" for referent "some.person@bvs.de"
     And I should see image_link "Bearbeiten" for referent "some.person@bvs.de"
-    And I should see image_link "Löschen" for referent "some.person@bvs.de"
+    And I should not see image_link "Löschen" for referent "some.person@bvs.de"
