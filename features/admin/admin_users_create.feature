@@ -22,7 +22,7 @@ Feature: Creating new users
     And I fill in "Password wiederholen" with "johndoe"
     And I fill in "Email" with "john.doe@bvs.de"
     And I fill in "Telefon" with "6366437376"
-    And I check ("role_dbuser")
+    And I check role "dbuser"
     And I press "Speichern"
     Then I should see "Nutzer John Doe wurde angelegt"
     And I should see "john.doe@bvs.de"
@@ -52,7 +52,7 @@ Feature: Creating new users
     And I fill in "Password wiederholen" with "johndoe"
     And I fill in "Email" with "john.doe@bvs.de"
     And I fill in "Telefon" with "6366437376"
-    And I check ("role_referent")
+    And I check role "referent"
     And I press "Speichern"
     Then I should not see "Nutzer John Doe wurde angelegt"
     And I should see "Bank für Referenten darf nicht leer sein"
@@ -71,7 +71,7 @@ Feature: Creating new users
     And I fill in "Bank" with "Some bank"
     And I fill in "IBAN" with "SOMEIBAN"
     And I fill in "BIC" with "982429348293"
-    And I check ("role_referent")
+    And I check role "referent"
     And I check license "License B"
     And I press "Speichern"
     Then I should see "Nutzer John Doe wurde angelegt"

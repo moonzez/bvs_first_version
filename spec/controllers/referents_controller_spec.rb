@@ -32,7 +32,7 @@ RSpec.describe ReferentsController, type: :controller do
         expect(assigns(:selected_letter)).to eql '*'
       end
 
-      it 'assigns all users to @users' do
+      it 'assigns all referents to @referents' do
         referent1 = FactoryGirl.create(:referent, lastname: 'Achti')
         FactoryGirl.create(:dbuser, lastname: 'Bachti')
         get :index
@@ -309,5 +309,49 @@ RSpec.describe ReferentsController, type: :controller do
       expect(response).to render_template :remove
     end
 
+  end
+
+  describe 'GET #inactiv' do
+    it 'assigns only inactiv referents to @referents' do
+      referent1 = FactoryGirl.create(:referent, lastname: 'Achti', activ: 'inactiv')
+      FactoryGirl.create(:dbuser, lastname: 'Bachti', activ: 'activ')
+      get :inactiv
+      expect(assigns(:referents)).to match_array [referent1]
+    end
+
+    context 'without selected_letter param' do
+      it 'assigns only referents first latter to all_letters' do
+        referent1 = FactoryGirl.create(:referent, lastname: 'Achti', activ: 'inactiv')
+        referent2 = FactoryGirl.create(:referent, lastname: 'Bachti', activ: 'inactiv')
+        get :inactiv
+        expect(assigns(:referents)).to match_array [referent1, referent2]
+        expect(assigns(:all_letters)).to eql ['*', 'A', 'B']
+      end
+
+      it 'assignes "*" to @selected_letter' do
+        get :inactiv
+        expect(assigns(:selected_letter)).to eql '*'
+      end
+    end
+
+    context 'with param selected_letter "A"' do
+      it 'assigns params @selected_letter' do
+        get :inactiv, selected_letter: 'A'
+        expect(assigns(:selected_letter)).to eql 'A'
+      end
+
+      it 'assigns inactiv referents with lastname starting with selected_letter to @referents' do
+        referent1 = FactoryGirl.create(:referent, lastname: 'Achti', activ: 'inactiv')
+        FactoryGirl.create(:referent, lastname: 'Bachti', activ: 'inactiv')
+        get :inactiv, selected_letter: 'A'
+        expect(assigns(:referents)).to match_array [referent1]
+        expect(assigns(:all_letters)).not_to be_nil
+      end
+    end
+
+    it 'renders inactiv template' do
+      get :inactiv
+      expect(response).to render_template :inactiv
+    end
   end
 end

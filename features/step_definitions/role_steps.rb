@@ -4,9 +4,11 @@ Given(/^There is a role "(.*?)"$/) do |role|
 end
 
 When(/^I check role "(.*?)"$/) do |title|
-  find(:css, "#role_#{title}").set(true)
+  role_id = Role.find_by(title: title).id
+  find(:css, "#role_#{role_id}").set(true)
 end
 
 When(/^I uncheck role "(.*?)"$/) do |title|
-  find(:css, "#role_#{title}").set(false)
+  role_id = Role.find_by(title: title).id
+  find(:css, "#role_#{role_id}").set(false)
 end

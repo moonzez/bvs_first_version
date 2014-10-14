@@ -147,4 +147,8 @@ class User < ActiveRecord::Base
   def self.all_except_inactiv
     where(activ: [activs[:activ], activs[:temporary]])
   end
+
+  def self.inactiv
+    where(activ: activs[:inactiv])
+  end
 end

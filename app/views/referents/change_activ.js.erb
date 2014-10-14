@@ -1,14 +1,19 @@
 referent_err = '<%= generate_errors_string(@referent) %>'
-if (referent_err.length > 0)
+if (referent_err.length > 0) {
   alert(referent_err)
-else
+} else {
   <% if @referent.activ? %>
     td = $("a[href='<%= change_activ_referent_path(@referent, activ: 'activ') %>']").parent()
-    td.parent().removeAttr('style')
-    td.html('')
-    new_content = '<%= build_activ_link(@referent, "temporary") %>'
-    td.append(new_content)
-    text = "Referent <%= @referent.full_name %> wurde aktiviert"
+    <% if @referent.previous_changes[:activ].first == 'inactiv' %>
+        td.parent().remove()
+        text = "Referent <%= @referent.full_name %> wurde aktiviert"
+    <% else %>
+      td.parent().removeAttr('style')
+      td.html('')
+      new_content = '<%= build_activ_link(@referent, "temporary") %>'
+      td.append(new_content)
+      text = "Referent <%= @referent.full_name %> wurde aktiviert"
+    <% end %>
   <% elsif @referent.temporary? %>
     td = $("a[href='<%= change_activ_referent_path(@referent, activ: 'temporary') %>']").parent()
     td.parent().attr('style', 'color:gray;')
@@ -21,3 +26,4 @@ else
     text = "Referent <%= @referent.full_name %> wurde deaktiviert"
   <% end %>
   alert(text)
+}

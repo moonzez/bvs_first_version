@@ -63,11 +63,13 @@
   <table>
 
   <% if admin? %>
-    <p>Rollen:</p>
-    <% @roles.each do |role| %>
-      <%= check_box_tag "role_#{role.title}", role.id, @profile.roles.include?(role), name: 'roles[]' %>
-      <%= label_tag :roles, role.title %>
-    <% end %>
+    <div>
+      <p>Rollen:</p>
+      <% @roles.each do |role| %>
+        <%= check_box_tag "role_#{role.id}", role.id, @profile.roles.include?(role), name: 'roles[]' %>
+        <%= label_tag :roles, role.title %>
+      <% end %>
+    </div>
   <% end %>
 
   <% if @profile.is_referent? %>

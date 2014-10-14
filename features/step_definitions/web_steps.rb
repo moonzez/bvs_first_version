@@ -27,7 +27,7 @@ Then(/^Show me the page$/) do
 end
 
 When(/^I follow "(.*?)"$/) do |link|
-  first(:link, link).click
+  find(:link, link).click
 end
 
 Given(/^I am logged in as (.*) "(.+)"$/) do |user, email|
@@ -62,10 +62,6 @@ end
 
 When(/^I choose \("(.*?)"\)$/) do |radio|
   choose(radio)
-end
-
-When(/^(?:|I )check \("(.*?)"\)$/) do |checkbox|
-  find(:css, "##{checkbox}").set(true)
 end
 
 Then(/^(?:|I )should see title "([^"]*)"$/) do |text|

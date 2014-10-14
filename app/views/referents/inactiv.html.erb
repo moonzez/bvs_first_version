@@ -1,0 +1,48 @@
+<%= title('Deaktivierten Referenten') %>
+<h1>Deaktivierten Referenten</h1>
+
+<div id='tabs'>
+  <ul>
+    <% @all_letters.each do |letter| %>
+      <li id="<%= (letter == @selected_letter) ? 'selected' : '' %>"><%= link_to letter, inactiv_referents_path(selected_letter: letter) %></li>
+    <% end %>
+  </ul>
+</div>
+
+<div id= 'tab_content'>
+  <table id ='form'>
+    <thead>
+      <tr>
+        <th>Nachname</th>
+        <th>Vorname</th>
+        <th>Anrede</th>
+        <th>Telefon</th>
+        <th>Email</th>
+        <th>Sprachen</th>
+        <th>Lizenzen</th>
+        <th colspan='3'>Optionen</th>
+      </tr>
+    </thead>
+    <tbody id='scrollable'>
+      <% @referents.each do |referent| %>
+        <% if referent.temporary? %>
+          <tr title='Temporär deaktiviert' style='color: grey;' id="<%= referent.id%>">
+        <% else %>
+          <tr id="<%= referent.id %>">
+        <% end %>
+          <td><%= referent.lastname %></td>
+          <td><%= referent.firstname %></td>
+          <td><%= t("title.#{referent.gender}") %></td>
+          <td><%= referent.tel %><% if referent.tel2? %> (<%= referent.tel2 %>)<% end %></td>
+          <td><%= referent.email %></td>
+          <td><%= referent.languages.map(&:language).join(', ') %></td>
+          <td><%= referent.licenses.map(&:shortcut).join(', ') %></td>
+          <td><%= link_to(image_tag('activate.png', size: '20'), change_activ_referent_path(referent, :activ => 'activ'), title: 'Aktivieren', :remote => true, method: :put) %></td>
+          <td><%= link_to(image_tag('edit.png', size: '20'), edit_referent_path(referent), title: 'Bearbeiten')  %></td>
+          <td><%= link_to(image_tag('delete.png', size: '20'), remove_referent_path(referent.id), title: 'Löschen', method: :delete, data: { confirm: "#{ referent.full_name } löschen?", remote: true } ) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <br>
+</div>

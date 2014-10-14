@@ -61,11 +61,13 @@
   <table>
 
   <% if admin? %>
-    <p>Rollen:</p>
-    <% @roles.each do |role| %>
-      <%= check_box_tag "role_#{role.title}", role.id, @user.roles.include?(role), name: 'roles[]' %>
-      <%= label_tag :roles, role.title %>
-    <% end %>
+    <div>
+      <p>Rollen:</p>
+      <% @roles.each do |role| %>
+        <%= check_box_tag "role_#{role.id}", role.id, @user.roles.include?(role), name: 'roles[]' %>
+        <%= label_tag :roles, role.title %>
+      <% end %>
+    </div>
   <% end %>
 
   <% if @user.is_referent? || !@user.persisted? %>
@@ -131,7 +133,7 @@
     <% if @languages %>
       <p>Referent spricht:</p>
       <% @languages.each do |language| %>
-        <%= check_box_tag "language_#{language.id}", language.id, @user.languages.include?(language), :name => 'languages[]' %>
+        <%= check_box_tag "language_#{language.id}", language.id, @user.languages.include?(language), name: 'languages[]' %>
         <%= label_tag :languages, language.language %>
       <% end %>
     <% end %>
@@ -140,7 +142,7 @@
     <p>Referent hat Lizenzen:</p>
       <% @licenses.each do |license| %>
         <%= check_box_tag "license_#{ license.id }", license.id,
-          @user.licenses.include?(license), :name => 'licenses[]', title: license.title %>
+          @user.licenses.include?(license), name: 'licenses[]', title: license.title %>
         <%= label_tag :licenses, license.shortcut, title: license.title %>
       <% end %>
     <% end %>

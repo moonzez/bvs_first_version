@@ -13,6 +13,7 @@ Feature:
     And I should see "Referenten anlegen" link
     And I should see "Lizenzen" link
     And I should see "Sprachen" link
+    And I should see "Deaktivierten Referenten" link
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
 
@@ -24,6 +25,7 @@ Feature:
     And I should see "Referenten anlegen" link
     And I should see "Lizenzen" link
     And I should see "Sprachen" link
+    And I should see "Deaktivierten Referenten" link
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
 
@@ -43,6 +45,7 @@ Feature:
     And I should not see "Referenten anlegen" link
     And I should not see "Lizenzen" link
     And I should not see "Sprachen" link
+    And I should not see "Deaktivierten Referenten" link
 
   Scenario: Navi for accounter
     Given I am logged in as an accounter
@@ -52,6 +55,7 @@ Feature:
     And I should see "Referenten anlegen" link
     And I should see "Lizenzen" link
     And I should see "Sprachen" link
+    And I should see "Deaktivierten Referenten" link
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
 
@@ -71,3 +75,4 @@ Feature:
     And I should not see "Referenten anlegen" link
     And I should not see "Lizenzen" link
     And I should not see "Sprachen" link
+    And I should not see "Deaktivierten Referenten" link

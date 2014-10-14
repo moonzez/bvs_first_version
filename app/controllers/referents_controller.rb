@@ -42,6 +42,13 @@ class ReferentsController < ApplicationController
     @referent.change_activ(new_state)
   end
 
+  def inactiv
+    @selected_letter = params[:selected_letter] || '*'
+    all_inactiv_referents = User.referents.inactiv
+    @referents = all_inactiv_referents.ordered_by_name(@selected_letter)
+    @all_letters = all_inactiv_referents.present_abc
+  end
+
   private
 
   def find_languages

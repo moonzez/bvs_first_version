@@ -1,6 +1,6 @@
 <%= title('Anmelden') %>
 <h1>Anmelden</h1>
-<%= form_for @user_session do |f| %>
+<%= form_for @user_session, url: post_login_path do |f| %>
   <% if @user_session.errors.any? %>
     <div id='error_explanation'>
       <h2><%= @user_session.errors.count %> Fehler aufgetreten:</h2>

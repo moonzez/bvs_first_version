@@ -489,8 +489,8 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#update_myself' do
-    it 'should call update_with_params if admin' do
+  describe 'update_myself' do
+    it 'calls update_with_params if admin' do
       user_attrs = { lastname: 'Newname' }
       admin = FactoryGirl.create(:admin)
       role_id = Role.find_by(title: 'admin').id
@@ -500,13 +500,23 @@ RSpec.describe User, type: :model do
       admin.update_myself(user_attrs, [role_id], [language.id])
     end
 
-    it 'should call update_referent_with_params if not admin' do
+    it 'calls update_referent_with_params if not admin' do
       user_attrs = { lastname: 'Newname' }
       user = FactoryGirl.create(:user)
       language = FactoryGirl.create(:language)
       expect(user).to receive(:update_referent_with_params).with(user_attrs, [language.id], nil)
 
       user.update_myself(user_attrs, nil, [language.id])
+    end
+  end
+
+  describe 'inactiv' do
+    it 'returns only inactiv user' do
+      FactoryGirl.create(:user, activ: 'activ')
+      inactiv1 = FactoryGirl.create(:user, activ: 'inactiv')
+      FactoryGirl.create(:user, activ: 'temporary')
+      inactiv2 = FactoryGirl.create(:user, activ: 'inactiv')
+      expect(User.inactiv).to match_array([inactiv1, inactiv2])
     end
   end
 end

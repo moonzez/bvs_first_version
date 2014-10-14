@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get 'login', to: 'user_sessions#new', as: 'login'
+  post 'login', to: 'user_sessions#create', as: 'post_login'
+
   get 'logout', to: 'user_sessions#destroy', as: 'logout'
 
   root to: 'users#home'
@@ -7,6 +9,9 @@ Rails.application.routes.draw do
   resources :users, except: [:show]
 
   resources :referents, except: [:show, :destroy] do
+    collection do
+      get :inactiv
+    end
     member do
       delete :remove
       put :change_activ
