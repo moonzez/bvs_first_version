@@ -1,6 +1,8 @@
 <%= title('Alle Referenten') %>
 <h1>Alle Referenten</h1>
 
+<div id='chrome_links'></div>
+
 <div id='tabs'>
   <ul>
     <% @all_letters.each do |letter| %>
@@ -9,7 +11,7 @@
   </ul>
 </div>
 
-<div id= 'tab_content'>
+<div id='tab_content'>
   <table id ='form'>
     <thead>
       <tr>
@@ -19,7 +21,7 @@
         <th>Telefon</th>
         <th>Email</th>
         <th>Lizenzen</th>
-        <th>TODO: Button to multiple MAIL</th>
+        <th><%= button_to 'Senden', '#', class: 'multiple_mailto' %>Senden<br/><%= check_box_tag("mail_all", false, false) %>an alle</th>
         <th>Sprachen</th>
         <th>Bemerkungen</th>
         <th colspan="<%= admin? ? 4 : 3 %>">Optionen</th>
@@ -38,7 +40,7 @@
           <td><%= referent.tel %><% if referent.tel2? %> (<%= referent.tel2 %>)<% end %></td>
           <td><%= referent.email %></td>
           <td><%= referent.licenses.map(&:shortcut).join(', ') %></td>
-          <td>TODO</td>
+          <td><%= check_box_tag "mailto_#{ referent.id }", referent.email %></td>
           <td><%= referent.languages.map(&:language).join(', ') %></td>
           <td><%= referent.remarc %></td>
           <td>
