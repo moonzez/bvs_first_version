@@ -26,7 +26,7 @@ RSpec.describe LanguagesController, type: :controller do
       UserSession.create(username: @reader.username, password: @reader.password)
       get :index
       expect(response).to redirect_to root_path
-      expect(flash[:alert]).to eql 'Diese Aktion darf nur vom admin oder dbuser ausgeführt werden.'
+      expect(flash[:alert]).to eql I18n.t('only_dbuser')
     end
   end
 

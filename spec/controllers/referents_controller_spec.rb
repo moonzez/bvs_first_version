@@ -17,7 +17,7 @@ RSpec.describe ReferentsController, type: :controller do
       UserSession.create(username: @reader.username, password: @reader.password)
       get :index
       expect(response).to redirect_to root_path
-      expect(flash[:alert]).to eql 'Diese Aktion darf nur vom admin, dbuser oder accounter ausgeführt werden.'
+      expect(flash[:alert]).to eql I18n.t('only_dbuser_or_accounter')
     end
   end
 
@@ -310,17 +310,31 @@ RSpec.describe ReferentsController, type: :controller do
       @referent = FactoryGirl.create(:referent, activ: 'temporary')
     end
 
-    it 'assignes referent' do
-      delete :remove, id: @referent.id, format: :js
-      expect(assigns(:referent)).to eql @referent
+    context 'not admin' do
+      it 'redirects to root' do
+        delete :remove, id: @referent.id, format: :js
+        expect(response).to redirect_to(root_path)
+      end
     end
 
-    it 'renders remove.js.erb template' do
-      delete :remove, id: @referent.id, format: :js
-      expect(response.content_type).to eql 'text/javascript'
-      expect(response).to render_template :remove
-    end
+    context 'as admin' do
+      before do
+        UserSession.find.destroy
+        @admin = FactoryGirl.create(:admin)
+        UserSession.create(username: @admin.username, password: @admin.password)
+      end
 
+      it 'assignes referent' do
+        delete :remove, id: @referent.id, format: :js
+        expect(assigns(:referent)).to eql @referent
+      end
+
+      it 'renders remove.js.erb template' do
+        delete :remove, id: @referent.id, format: :js
+        expect(response.content_type).to eql 'text/javascript'
+        expect(response).to render_template :remove
+      end
+    end
   end
 
   describe 'GET #inactiv' do

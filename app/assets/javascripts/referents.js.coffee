@@ -8,7 +8,7 @@ $(->
 
 build_link = (emails, number) ->
   link = document.createElement('a')
-  link.href = 'mailto:yuliya@kz-gedenkstaette-dachau.de?bcc=' + emails
+  link.href = 'mailto:bildung@kz-gedenkstaette-dachau.de?bcc=' + emails
   link.innerHTML = 'Email an die ' + number + '. Gruppe der Referenten senden'
   $('div#chrome_links').append(link, '<br>')
 
@@ -34,12 +34,12 @@ open_mailto = (all_elements) ->
   bcc_arr = []
   for mailto_element in all_elements
     if bcc_arr.length >= 40
-      location.href = 'mailto:yuliya@kz-gedenkstaette-dachau.de?bcc=' + bcc_arr.toString()
+      location.href = 'mailto:bildung@kz-gedenkstaette-dachau.de?bcc=' + bcc_arr.toString()
       bcc_arr = []
     bcc_arr.push(mailto_element.value)
 
   if bcc_arr.length > 0
-    location.href = 'mailto:yuliya@kz-gedenkstaette-dachau.de?bcc=' + bcc_arr.toString()
+    location.href = 'mailto:bildung@kz-gedenkstaette-dachau.de?bcc=' + bcc_arr.toString()
 
 $(->
   $('.multiple_mailto').click(->

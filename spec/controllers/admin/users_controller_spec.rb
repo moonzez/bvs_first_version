@@ -17,7 +17,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         UserSession.create(username: @not_admin.username, password: @not_admin.password)
         get :index
         expect(response).to redirect_to root_path
-        expect(flash[:alert]).to eql 'Diese Aktion darf nur vom admin durchgeführt werden'
+        expect(flash[:alert]).to eql I18n.t('only_admin')
       end
     end
 
