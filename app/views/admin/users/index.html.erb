@@ -10,19 +10,22 @@
 </div>
 
 <div id= 'tab_content'>
-  <table id ='form'>
+  <table id='users' class='display'>
     <thead>
       <tr>
-        <th>Nachname</th>
-        <th>Vorname</th>
-        <th>Anrede</th>
-        <th>Email</th>
-        <th>Telefon</th>
-        <th>Rechte</th>
-        <th colspan='2'></th>
+        <th rowspan="2">Nachname</th>
+        <th rowspan="2">Vorname</th>
+        <th rowspan="2">Anrede</th>
+        <th rowspan="2">Email</th>
+        <th rowspan="2">Telefon</th>
+        <th rowspan="2">Rechte</th>
+        <th colspan="2">Optionen</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
       </tr>
     </thead>
-
     <tbody>
       <% @users.each do |user| %>
         <tr id="<%= user.id %>">

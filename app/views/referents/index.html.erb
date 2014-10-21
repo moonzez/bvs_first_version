@@ -12,19 +12,27 @@
 </div>
 
 <div id='tab_content'>
-  <table id ='form'>
+  <table id ='referents' class='display'>
     <thead>
       <tr>
-        <th>Nachname</th>
-        <th>Vorname</th>
-        <th>Anrede</th>
-        <th>Telefon</th>
-        <th>Email</th>
-        <th>Lizenzen</th>
-        <th><%= button_to 'Senden', '#', class: 'multiple_mailto' %>Senden<br/><%= check_box_tag("mail_all", false, false) %>an alle</th>
-        <th>Sprachen</th>
-        <th>Bemerkungen</th>
+        <th rowspan="2">Nachname</th>
+        <th rowspan="2">Vorname</th>
+        <th rowspan="2">Anrede</th>
+        <th rowspan="2">Telefon</th>
+        <th rowspan="2">Email</th>
+        <th rowspan="2">Lizenzen</th>
+        <th rowspan="2"><%= button_to 'Senden', '#', class: 'multiple_mailto' %> <%= check_box_tag("mail_all", false, false) %>an alle</th>
+        <th rowspan="2">Sprachen</th>
+        <th rowspan="2">Bemerkungen</th>
         <th colspan="<%= admin? ? 4 : 3 %>">Optionen</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <% if admin? %>
+          <th></th>
+        <% end %>
       </tr>
     </thead>
     <tbody id='scrollable'>

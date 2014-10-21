@@ -14,6 +14,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'authlogic'
 gem 'scrypt'
 
+gem 'jquery-datatables-rails'
+gem 'jquery-ui-rails'
+
 group :development do
   gem 'spring'
   # checking code quality

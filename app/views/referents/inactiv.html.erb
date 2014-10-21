@@ -10,20 +10,27 @@
 </div>
 
 <div id= 'tab_content'>
-  <table id ='form'>
+  <table id ='inactiv_referents' class='display'>
     <thead>
       <tr>
-        <th>Nachname</th>
-        <th>Vorname</th>
-        <th>Anrede</th>
-        <th>Telefon</th>
-        <th>Email</th>
-        <th>Sprachen</th>
-        <th>Lizenzen</th>
+        <th rowspan="2">Nachname</th>
+        <th rowspan="2">Vorname</th>
+        <th rowspan="2">Anrede</th>
+        <th rowspan="2">Telefon</th>
+        <th rowspan="2">Email</th>
+        <th rowspan="2">Sprachen</th>
+        <th rowspan="2">Lizenzen</th>
         <th colspan="<%= admin? ? 3 : 2 %>">Optionen</th>
       </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <% if admin? %>
+          <th></th>
+        <% end %>
+      </tr>
     </thead>
-    <tbody id='scrollable'>
+    <tbody>
       <% @referents.each do |referent| %>
         <% if referent.temporary? %>
           <tr title='Temporär deaktiviert' style='color: grey;' id="<%= referent.id%>">

@@ -1,4 +1,17 @@
 $(->
+  set_base_datatable($('#referents'), referents_not_orderable())
+  set_base_datatable($('#inactiv_referents'), inactiv_referents_not_orderable())
+)
+
+referents_not_orderable = ->
+  th_count = $('#referents thead tr:last th').length
+  return if (th_count == 4) then [ 6, 9, 10, 11, 12] else [6, 9, 10, 11]
+
+inactiv_referents_not_orderable = ->
+  th_count = $('#inactiv_referents thead tr:last th').length
+  return if (th_count == 3) then [ 7, 8, 9] else [7, 8]
+
+$(->
   $('#mail_all').click(->
     selected = $('#mail_all').is(':checked')
     all_elements = $('[id^="mailto_"]')

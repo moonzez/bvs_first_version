@@ -1,3 +1,19 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require dataTables/src/demo_table_jui
+ *= require_tree .
+ *= require_self
+*/
 html {
     background:  #b2bed9;
 }
@@ -70,6 +86,10 @@ ul#navi {
   text-align: center;
 }
 
+#navi_crutch ul {
+  z-index:1000000;
+}
+
 ul#navi li {
   list-style: none;
   float: left;  /* ohne width - nach CSS 2.1 erlaubt */
@@ -120,11 +140,13 @@ ul#navi a {
   width: 8.6em;   /* Breite nach altem MS-Boxmodell für IE 5.x */
   w\idth: 6.4em;  /* korrekte Breite fuer den IE 6 im standardkonformen Modus */
 }
+
 ul#navi a:hover {
   border-color: white;
   border-left-color: black; border-top-color: black;
   color: white; background-color: #6795C9;
 }
+
 table#small {
     margin-left:auto; 
     margin-right:auto;        
@@ -236,5 +258,9 @@ table#stat {
 }
 #tab_content {
   clear: both;
+}
+
+table.display thead {
+  background-color:#cccccc;
 }
 
