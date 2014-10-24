@@ -14,7 +14,7 @@ Feature: Viewing all referents
 
   Scenario: see the list of activ or temporary referents and link to delte them
     Given I follow "Referenten"
-    Then I should see title "BVS - Alle Referenten"
+    Then I should see title "Alle Referenten"
     Then I should see "Meba"
     And I should see "Deba"
     And I should see "765432"

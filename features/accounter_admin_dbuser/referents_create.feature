@@ -15,8 +15,8 @@ Feature: Creating new referents
     And I follow "Referenten anlegen"
 
   Scenario: create referent with invalid data
-    Then I should see title "BVS - Referenten anlegen"
-    When I choose ("referent_gender_herr")
+    Then I should see title "Referenten anlegen"
+    When I choose "referent_gender_herr"
     And I fill in "Vorname" with "John"
     And I fill in "Nachname" with "Doe"
     And I fill in "Login" with "johndoe"
@@ -31,7 +31,7 @@ Feature: Creating new referents
     And I should see "BIC für Referenten darf nicht leer sein"
 
   Scenario: create referent with valid data
-    When I choose ("referent_gender_herr")
+    When I choose "referent_gender_herr"
     And I fill in "Vorname" with "John"
     And I fill in "Nachname" with "Doe"
     And I fill in "Login" with "johndoe"

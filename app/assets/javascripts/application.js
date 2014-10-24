@@ -12,7 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery-ui
+//= require jquery-ui/datepicker-de.js
 //= require datatables_base
+//= require application_base
 //= require dataTables/jquery.dataTables
 //= require turbolinks
 //= require jquery.turbolinks

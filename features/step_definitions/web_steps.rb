@@ -60,7 +60,7 @@ Given(/^I am logged in as an (.+)$/) do |user|
   ))
 end
 
-When(/^I choose \("(.*?)"\)$/) do |radio|
+When(/^I choose "(.*?)"$/) do |radio|
   choose(radio)
 end
 

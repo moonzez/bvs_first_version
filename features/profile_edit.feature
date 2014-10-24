@@ -14,7 +14,7 @@ Feature:
     Given I am logged in as an admin
     And I am on the homepage
     When I follow "Profil"
-    Then I should see title "BVS - Profil"
+    Then I should see title "Profil"
     And I should see "Profil bearbeiten"
     And I should not see "License A"
     And I should not see "License B"
@@ -26,7 +26,7 @@ Feature:
     And I check role "accounter"
     And I press "Speichern"
     Then I should see "Ihr Profil wurde geändert"
-    And I should see title "BVS - Home"
+    And I should see title "Home"
     When I follow "Nutzer"
     And I follow "M"
     Then I should see "Married"
@@ -46,7 +46,7 @@ Feature:
     Given I am logged in as an dbuser
     And I am on the homepage
     When I follow "Profil"
-    Then I should see title "BVS - Profil"
+    Then I should see title "Profil"
     And I should see "Profil bearbeiten"
     And I should not see "License A"
     And I should not see "License B"
@@ -58,7 +58,7 @@ Feature:
     When I fill in "Nachname" with "Married"
     And I press "Speichern"
     Then I should see "Ihr Profil wurde geändert"
-    And I should see title "BVS - Home"
+    And I should see title "Home"
     When I follow "Profil"
     Then I should see field "lastname" with "Married"
 
@@ -75,7 +75,7 @@ Feature:
     Given I am logged in as an referent
     And I am on the homepage
     When I follow "Profil"
-    Then I should see title "BVS - Profil"
+    Then I should see title "Profil"
     And I should see "Profil bearbeiten"
     And I should see "License A"
     And I should see "License B"
@@ -89,7 +89,7 @@ Feature:
     And I check license "License A"
     And I press "Speichern"
     Then I should see "Ihr Profil wurde geändert"
-    And I should see title "BVS - Home"
+    And I should see title "Home"
     When I follow "Profil"
     Then I should see field "lastname" with "Married"
     And I see checked language "Englisch"
@@ -112,7 +112,7 @@ Feature:
     Given I am logged in as an accounter
     And I am on the homepage
     When I follow "Profil"
-    Then I should see title "BVS - Profil"
+    Then I should see title "Profil"
     And I should see "Profil bearbeiten"
     And I should not see "License A"
     And I should not see "License B"
@@ -124,7 +124,7 @@ Feature:
     When I fill in "Vorname" with "Alejandro"
     And I press "Speichern"
     Then I should see "Ihr Profil wurde geändert"
-    And I should see title "BVS - Home"
+    And I should see title "Home"
     When I follow "Profil"
     Then I should see field "firstname" with "Alejandro"
 
@@ -141,7 +141,7 @@ Feature:
     Given I am logged in as an reader
     And I am on the homepage
     When I follow "Profil"
-    Then I should see title "BVS - Profil"
+    Then I should see title "Profil"
     And I should see "Profil bearbeiten"
     And I should not see "License A"
     And I should not see "License B"
@@ -153,7 +153,7 @@ Feature:
     When I fill in "Email" with "new.name@bvs.de"
     And I press "Speichern"
     Then I should see "Ihr Profil wurde geändert"
-    And I should see title "BVS - Home"
+    And I should see title "Home"
     When I follow "Profil"
     Then I should see field "email" with "new.name@bvs.de"
 

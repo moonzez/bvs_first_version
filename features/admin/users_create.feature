@@ -13,8 +13,8 @@ Feature: Creating new users
     Given I follow "Nutzer anlegen"
 
   Scenario: create not referent with valid data
-    Then I should see title "BVS - Nutzer anlegen"
-    When I choose ("user_gender_herr")
+    Then I should see title "Nutzer anlegen"
+    When I choose "user_gender_herr"
     And I fill in "Vorname" with "John"
     And I fill in "Nachname" with "Doe"
     And I fill in "Login" with "johndoe"
@@ -44,7 +44,7 @@ Feature: Creating new users
     And I should see "Telefon darf nicht leer sein"
 
   Scenario: create referent with invalid data
-    When I choose ("user_gender_herr")
+    When I choose "user_gender_herr"
     And I fill in "Vorname" with "John"
     And I fill in "Nachname" with "Doe"
     And I fill in "Login" with "johndoe"
@@ -60,7 +60,7 @@ Feature: Creating new users
     And I should see "BIC für Referenten darf nicht leer sein"
 
   Scenario: create referent with valid data
-    When I choose ("user_gender_herr")
+    When I choose "user_gender_herr"
     And I fill in "Vorname" with "John"
     And I fill in "Nachname" with "Doe"
     And I fill in "Login" with "johndoe"

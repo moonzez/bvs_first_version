@@ -11,7 +11,7 @@ Feature: Viewing all licenses
     And I follow "Lizenzen"
 
   Scenario: see the list of all lizenses
-    Then I should see title "BVS - Alle Lizenzen für Referenten"
+    Then I should see title "Alle Lizenzen für Referenten"
     And I should see "This is a new license A"
     And I should see "Licinse A"
     And I should see "This is a new license B"

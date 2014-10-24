@@ -17,7 +17,7 @@ Feature: Viewing all referents
     Given I follow "Referenten"
 
   Scenario: see the list of activ or temporary referents
-    Then I should see title "BVS - Alle Referenten"
+    Then I should see title "Alle Referenten"
     Then I should see "Meba"
     And I should see "Deba"
     And I should see "765432"

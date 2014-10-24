@@ -15,9 +15,9 @@ Feature: Editing users
     Given I follow "Nutzer"
 
   Scenario: edit user data with valid data
-    Then I should see title "BVS - Alle Nutzer"
+    Then I should see title "Alle Nutzer"
     When I follow image_link "Bearbeiten" for user "aba.dbuser@bvs.de"
-    Then I should see title "BVS - Nutzer bearbeiten"
+    Then I should see title "Nutzer bearbeiten"
     And I should see "Nutzer bearbeiten"
     When I fill in "Nachname" with "Married"
     And I press "Speichern"

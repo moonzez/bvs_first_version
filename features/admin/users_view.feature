@@ -13,7 +13,7 @@ Feature: Viewing users
     Given I follow "Nutzer"
 
   Scenario: see the list of all users
-    Then I should see title "BVS - Alle Nutzer"
+    Then I should see title "Alle Nutzer"
     Then I should see "Aba"
     And I should see "Baba"
     And I should see "aba.baba@bvs.de"

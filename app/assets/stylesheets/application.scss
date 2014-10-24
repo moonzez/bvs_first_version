@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require dataTables/src/demo_table_jui
+ *= require jquery-ui
  *= require_tree .
  *= require_self
 */
@@ -264,3 +265,14 @@ table.display thead {
   background-color:#cccccc;
 }
 
+div.save_field {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+}
+
+table#unten{ border-spacing: 0px; }
+table#unten td{ background: #8795A8; padding-bottom: 1px; padding-top: 3px; padding-right: 5px; padding-left: 5px; }
+
+.big_button { font-size: 20px;}

@@ -27,4 +27,6 @@ Rails.application.routes.draw do
   resources :licenses, except: [:new, :update, :edit, :show]
 
   resource :profile, only: [:edit, :update]
+
+  resources :guidedtours, except: [:show]
 end

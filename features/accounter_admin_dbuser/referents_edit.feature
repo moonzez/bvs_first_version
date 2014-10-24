@@ -15,9 +15,9 @@ Feature: Editing referents
     And I am logged in as an dbuser
     And I am on the homepage
     And I follow "Referenten"
-    Then I should see title "BVS - Alle Referenten"
+    Then I should see title "Alle Referenten"
     When I follow image_link "Bearbeiten" for referent "deba.meba@bvs.de"
-    Then I should see title "BVS - Referenten bearbeiten"
+    Then I should see title "Referenten bearbeiten"
     And I should see "Referenten bearbeiten"
 
   Scenario: edit referent data with valid data

@@ -18,7 +18,7 @@ Feature: Viewing inactiv referents
     Given I follow "Deaktivierten Referenten"
 
   Scenario: see the list of inactiv referents
-    Then I should see title "BVS - Deaktivierten Referenten"
+    Then I should see title "Deaktivierten Referenten"
     And I should see "Deaktivierten Referenten"
     And I should see "Some"
     And I should see "Person"

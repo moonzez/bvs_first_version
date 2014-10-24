@@ -15,7 +15,7 @@ Feature: Mailing to referents list
     Given I follow "Referenten"
 
   Scenario: see not checked checkboxes for all referents
-    Then I should see title "BVS - Alle Referenten"
+    Then I should see title "Alle Referenten"
     And I should see unchecked mailto_box for referent "deba.meba@bvs.de"
     And I should see unchecked mailto_box for referent "john.doe@bvs.de"
     And I should see unchecked mailto_box for referent "some.person@bvs.de"

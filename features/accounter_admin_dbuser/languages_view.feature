@@ -11,6 +11,6 @@ Feature: Viewing all languages
     And I follow "Sprachen"
 
   Scenario: see the list of all languages
-    Then I should see title "BVS - Alle Sprachen für Referenten"
+    Then I should see title "Alle Sprachen für Referenten"
     Then I should see "Deutsch"
     And I should see "Englisch"

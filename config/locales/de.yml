@@ -4,6 +4,7 @@ de:
       user: Nutzer
       language: Sprache
       license: Lizenz
+      guidedtour: Geführter Rundgang
     attributes:
       language:
         language: Sprache
@@ -31,6 +32,45 @@ de:
         konto: IBAN
         honorar: Honorar
         base: ''
+      guidedtour:
+        gender: Anrede
+        firstname: Vorname
+        lastname: Nachname
+        telbus: Tel. dienstlich
+        telbus_time: Uhrzeit
+        telpriv: Tel. privat
+        telpriv_time: Uhrzeit
+        email: E-mail
+        fax: Fax
+        schoolname: Name
+        schooltype: Schultyp
+        street: Strasse/Hausnummer
+        city: Ort
+        zip: PLZ
+        country: Land
+        date1: am
+        from1: von
+        to1: bis
+        date2: am
+        from2: von
+        to2: bis
+        date3: am
+        from3: von
+        to3: bis
+        language: In welcher Sprache soll die Führung stattfinden?
+        cellphone: Handynummer der Begleitperson
+        participants: Teilnehmeranzahl
+        male_count: davon männlich
+        female_count: davon weiblich
+        age: Alter (min. 14 Jahre)
+        schoolgrade: Schulstufe
+        teamleader: Anzahl Betreuer
+        havebeen: Kennen die TeilnehmerInnen die KZ-Gedenkstätte Dachau bereits?
+        reason: Was ist der Anlass für den Besuch der Gedenkstätte?
+        topic: Welche Themen sollen schwerpunktmäßig behandelt werden?
+        munichstay: Steht der Besuch der Gedenkstätte im Rahmen eines längeren Aufenthaltes in München?
+        wish: Sonstige Wünsche (z.B. Nachbesprechung)
+        remarc: Anmerkungen
 
     errors:
       messages:
@@ -65,6 +105,45 @@ de:
               blank: für Referenten darf nicht leer sein
             konto:
               blank: für Referenten darf nicht leer sein
+        guidedtour:
+          attributes:
+            gender:
+              blank: darf nicht leer sein
+            firstname:
+              blank: darf nicht leer sein
+            lastname:
+              blank: darf nicht leer sein
+            email:
+              blank: darf nicht leer sein
+              invalid: ist nicht gültig
+            schoolname:
+              blank: darf nicht leer sein
+            street:
+              blank: darf nicht leer sein
+            city:
+              blank: darf nicht leer sein
+            zip:
+              blank: darf nicht leer sein
+            country:
+              blank: darf nicht leer sein
+            date1:
+              blank: darf nicht leer sein
+            from1:
+              blank: darf nicht leer sein
+            cellphone:
+              blank: darf nicht leer sein
+            participants:
+              blank: darf nicht leer sein
+              not_a_number: ist keine nummer
+              greater_than_or_equal_to: muss grösser oder gleich 1 sein
+            age:
+              blank: darf nicht leer sein
+            hl_number:
+              blank: darf nicht leer sein
+            schoolgrade:
+              blank: darf nicht leer sein
+            topic:
+              blank: darf nicht leer sein
 
         language:
           attributes:
@@ -118,3 +197,76 @@ de:
       create: "Speichern"
       submit: "Speichern"
       update: "Speichern"
+
+  save: Speichern
+  back: Zurück
+
+  events:
+    time_of_day: Falls die Ansprechsperson unter einer angegebenen Nummer zu einer bestimmten Uhrzeit erreichbar ist, tragen Sie dies bitte unter 'Uhrzeit' ein
+    gender:
+      mr: Herr
+      mrs: Frau
+      miss: Frau
+      ms: Frau
+    havebeen:
+      'no': Nein
+      'yes': Ja
+      some: Zum Teil
+    paid:
+      not_paid: nein
+      transferred: ja, überwiesen
+      cash: ja, bar
+      costfree: kostenfrei
+  date:
+    abbr_day_names:
+    - So
+    - Mo
+    - Di
+    - Mi
+    - Do
+    - Fr
+    - Sa
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mär
+    - Apr
+    - Mai
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Okt
+    - Nov
+    - Dez
+    day_names:
+    - Sonntag
+    - Montag
+    - Dienstag
+    - Mittwoch
+    - Donnerstag
+    - Freitag
+    - Samstag
+    formats:
+      default: ! '%d.%m.%Y'
+      long: ! '%e. %B %Y'
+      short: ! '%e. %b'
+    month_names:
+    -
+    - Januar
+    - Februar
+    - März
+    - April
+    - Mai
+    - Juni
+    - Juli
+    - August
+    - September
+    - Oktober
+    - November
+    - Dezember
+    order:
+    - :day
+    - :month
+    - :year

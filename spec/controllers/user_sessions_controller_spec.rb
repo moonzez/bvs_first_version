@@ -9,6 +9,7 @@ RSpec.describe UserSessionsController, type: :controller do
 
   describe 'GET #new' do
     it 'assignes new session to @user_session' do
+      @user.destroy
       get :new
       expect(assigns(:user_session)).to be_new_record
     end

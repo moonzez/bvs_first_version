@@ -4,7 +4,7 @@ RSpec.describe UsersController, type: :controller do
   setup :activate_authlogic
 
   before do
-    @user = FactoryGirl.create(:user, lastname: 'Baba')
+    @user = FactoryGirl.create(:user)
     UserSession.create(username: @user.username, password: @user.password)
   end
 

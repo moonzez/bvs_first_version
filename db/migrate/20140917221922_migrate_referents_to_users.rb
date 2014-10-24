@@ -36,7 +36,7 @@ class MigrateReferentsToUsers < ActiveRecord::Migration
   end
 
   def write_log_file(referent_id, user)
-    my_logger_file = Logger.new("#{Rails.root}/log/migration_log.log")
+    my_logger_file = Logger.new("#{Rails.root}/log/referent_migration_log.log")
 
     my_logger_file.info("\n\n\nReferent ID #{ referent_id }")
     my_logger_file.info("\n#{ user.inspect }")
