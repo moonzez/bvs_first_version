@@ -8,3 +8,7 @@ end
 When(/^I fill in time "(.*?)" with "(.*?)"$/) do |time_id, _value|
   all("##{ time_id } option")[1].select_option
 end
+
+Then(/^I should see date "(.*?)"$/) do |date|
+  expect(page).to have_content(I18n.l(eval(date)))
+end

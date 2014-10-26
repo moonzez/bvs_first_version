@@ -23,16 +23,20 @@
           <%= render '/shared/admin_navi' %></li>
         <% end %>
 
-        <% if dbuser? %>
+        <% if admin? || dbuser? || accounter? %>
+          <%= render '/shared/dbuser_accounter_navi' %></li>
+        <% end %>
+
+        <% if admin? || dbuser? %>
           <%= render '/shared/dbuser_navi' %></li>
+        <% end %>
+
+        <% if admin? || accounter? %>
+          <%= render '/shared/accounter_navi' %></li>
         <% end %>
 
         <% if reader? %>
           <%= render '/shared/reader_navi' %></li>
-        <% end %>
-
-        <% if accounter? %>
-          <%= render '/shared/accounter_navi' %></li>
         <% end %>
 
         <% if referent? %>
@@ -42,7 +46,7 @@
         <li><%= link_to "Profil ändern", edit_profile_path %>
         <li><%= link_to "Abmelden", logout_path %></li>
         </ul>
-    <div></div>
+      <div></div>
     </div>
   <% end %>
 

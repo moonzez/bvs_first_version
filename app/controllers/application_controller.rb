@@ -5,6 +5,9 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :admin?, :dbuser?, :reader?, :accounter?, :referent?
 
+  def event_pdf(event)
+  end
+
   private
 
   def current_user_session

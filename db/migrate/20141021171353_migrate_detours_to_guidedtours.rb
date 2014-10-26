@@ -129,14 +129,13 @@ class MigrateDetoursToGuidedtours < ActiveRecord::Migration
         created_at: g.created_at,
         updated_at: g.updated_at
       )
-      write_log_file(g.id, gt) unless gt.valid?
-      gt.save(validation: false)
+      write_log_file(g.id, gt) unless gt.save
     end
   end
-# t.string   "zus_form",                                  default: "nein"
-# t.string   "zus_voll",                                  default: "nein"
-# t.date     "zf_date"
-# t.date     "zv_date"
+  # t.string   "zus_form",                                  default: "nein"
+  # t.string   "zus_voll",                                  default: "nein"
+  # t.date     "zf_date"
+  # t.date     "zv_date"
 
   def get_price_int(price)
     return 0 if price.nil? || price == 0.0

@@ -41,7 +41,7 @@ class CreateGuidedtours < ActiveRecord::Migration
       t.time     :confirmedfrom
       t.time     :confirmedto
 
-      t.integer  :language, default: 0
+      t.string   :language, default: 'de'
       t.integer  :havebeen, default: 0
       t.text     :reason
       t.text     :topic
@@ -52,7 +52,7 @@ class CreateGuidedtours < ActiveRecord::Migration
       t.integer  :lock_vers, default: 0
       t.integer  :state, default: 0
       t.string   :form_language, default: 'de'
-      t.integer  :film, default: 0
+      t.boolean  :film, default: 0
 
       t.string   :last_changed_by
       t.datetime :last_changed_on

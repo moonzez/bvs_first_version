@@ -5,7 +5,7 @@ Feature: create guidedtour
   I want to be able to create a new guidedtour internal
 
   Background:
-    Given I am logged in as an admin
+    Given I am logged in as an dbuser
     And I am on the homepage
     And I put mouseover "Rundgänge"
     When I follow "Rundgang anlegen"

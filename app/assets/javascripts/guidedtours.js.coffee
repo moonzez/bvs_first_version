@@ -32,3 +32,9 @@ check_is_numeric = (obj) ->
   if value != '' && !$.isNumeric(value)
     obj.value = ''
     alert('Dieses Feld darf nur Zahlen enthalten.')
+
+$(-> set_base_datatable($('#opened_guidedtours'), opened_tours_not_orderable(), [0, 3]))
+
+opened_tours_not_orderable = ->
+  th_count = $('#opened_guidedtours thead tr:last th').length
+  return if (th_count == 8) then [ 15, 16, 17] else [15, 16]

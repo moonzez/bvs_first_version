@@ -9,11 +9,17 @@ Feature:
     Then I should see "Home" link
     And I should see "Nutzer" link
     And I should see "Nutzer anlegen" link
+
+    And I should see "Rundgänge" link
+    And I should see "Offene Rundgänge" link
+    And I should see "Rundgang anlegen" link
+
     And I should see "Referenten" link
     And I should see "Referenten anlegen" link
     And I should see "Lizenzen" link
     And I should see "Sprachen" link
     And I should see "Deaktivierten Referenten" link
+
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
 
@@ -21,11 +27,17 @@ Feature:
     Given I am logged in as an dbuser
     And I am on the homepage
     Then I should see "Home" link
+
+    And I should see "Rundgänge" link
+    And I should see "Offene Rundgänge" link
+    And I should see "Rundgang anlegen" link
+
     And I should see "Referenten" link
     And I should see "Referenten anlegen" link
     And I should see "Lizenzen" link
     And I should see "Sprachen" link
     And I should see "Deaktivierten Referenten" link
+
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
 
@@ -39,6 +51,10 @@ Feature:
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
 
+    And I should not see "Rundgänge" link
+    And I should not see "Offene Rundgänge" link
+    And I should not see "Rundgang anlegen" link
+
     And I should not see "Nutzer" link
     And I should not see "Nutzer anlegen" link
     And I should not see "Referenten" link
@@ -51,11 +67,17 @@ Feature:
     Given I am logged in as an accounter
     And I am on the homepage
     Then I should see "Home" link
+
+    And I should see "Rundgänge" link
+    And I should see "Offene Rundgänge" link
+    And I should see "Rundgang anlegen" link
+
     And I should see "Referenten" link
     And I should see "Referenten anlegen" link
     And I should see "Lizenzen" link
     And I should see "Sprachen" link
     And I should see "Deaktivierten Referenten" link
+
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
 
@@ -68,6 +90,10 @@ Feature:
     Then I should see "Home" link
     And I should see "Abmelden" link
     And I should see "Profil ändern" link
+
+    And I should not see "Rundgänge" link
+    And I should not see "Offene Rundgänge" link
+    And I should not see "Rundgang anlegen" link
 
     And I should not see "Nutzer" link
     And I should not see "Nutzer anlegen" link

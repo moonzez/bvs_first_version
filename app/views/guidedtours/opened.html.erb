@@ -1,0 +1,67 @@
+<%= title('Offene Rundgänge') %>
+<h1>Offene Rundgänge</h1>
+
+<table id='opened_guidedtours' class='display'>
+  <thead>
+    <tr>
+      <th rowspan="2">Eingangsdatum</th>
+      <th colspan="2">Kontaktperson</th>
+      <th colspan="4">Angefragter Termin</th>
+      <th rowspan="2">Alternative Termine </th>
+      <th rowspan="2">Sprache/ Thema TE</th>
+      <th rowspan="2">TE</th>
+      <th rowspan="2">Schule/ Institution</th>
+      <th rowspan="2">Ort</th>
+      <th rowspan="2">TN</th>
+      <th rowspan="2">Gr.</th>
+      <th rowspan="2">Film</th>
+      <th colspan="<%= admin? ? 2 : 1 %>"></th>
+      <th rowspan="2">PDF</th>
+    </tr>
+    <tr>
+      <th>Anrede</th>
+      <th>Name</th>
+      <th>Datum</th>
+      <th></th>
+      <th>Von</th>
+      <th>Bis</th>
+      <% if admin? %>
+        <th></th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @opened_tours.each do |tour| %>
+      <tr class="<%= find_out_special_class(tour) %>">
+        <td><%= to_date(tour.created_at) %></td>
+        <td><%= get_gender(tour.gender) %></td>
+        <td><%=h tour.lastname %></td>
+        <td><%= to_date(tour.date1) %></td>
+        <td><%= get_day_name(tour.date1) %></td>
+        <td><%= get_hours_minutes(tour.from1) %></td>
+        <td><%= get_hours_minutes(tour.to1) %></td>
+        <td><% if tour.date2.present? or tour.date3.present? %> ja <% else %> nein <% end %></td>
+        <td>
+          <% if tour.themetour %>
+            <%=h tour.topic %>
+          <% else %>
+            <%= get_language(tour.language) %>
+          <% end %>
+        </td>
+        <td><%= 'X' if tour.themetour %></td>
+        <td><%=h tour.schoolname %></td>
+        <td><%=h tour.city %></td>
+        <td><%=h tour.participants %></td>
+        <td><%=h tour.groupnumber %></td>
+        <td><%=h get_film(tour.film) %></td>
+        <td><%= link_to(image_tag('edit.png', size: '20'), edit_guidedtour_path(tour), title: 'Bearbeiten')  %></td>
+        <% if admin? %>
+          <td><%= link_to(image_tag('delete.png', size: '20'), edit_guidedtour_path(tour.id), title: 'Löschen', method: :delete,
+                          data: { confirm: "Geführten Rundgang löschen?", remote: true } ) %></td>
+        <% end %>
+        <td><%= link_to(image_tag('pdf.jpg', size: '20'), event_pdf_guidedtour_path(tour), title: 'PDF- File') %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,9 +1,41 @@
-@set_base_datatable = (table, not_orderable) ->
+$(->
+  $.extend jQuery.fn.dataTableExt.oSort,
+    'de_date-asc': (a, b) ->
+      x = undefined
+      y = undefined
+      if $.trim(a) isnt ''
+        deDatea = $.trim(a).split('.')
+        x = (deDatea[2] + deDatea[1] + deDatea[0]) * 1
+      else
+        x = Infinity
+      if $.trim(b) isnt ''
+        deDateb = $.trim(b).split('.')
+        y = (deDateb[2] + deDateb[1] + deDateb[0]) * 1
+      else
+        y = Infinity
+      z = ((if (x < y) then -1 else ((if (x > y) then 1 else 0))))
+      z
+
+    'de_date-desc': (a, b) ->
+      x = undefined
+      y = undefined
+      if $.trim(a) isnt ''
+        deDatea = $.trim(a).split('.')
+        x = (deDatea[2] + deDatea[1] + deDatea[0]) * 1
+      else
+        x = Infinity
+      if $.trim(b) isnt ''
+        deDateb = $.trim(b).split('.')
+        y = (deDateb[2] + deDateb[1] + deDateb[0]) * 1
+      else
+        y = Infinity
+      z = ((if (x < y) then 1 else ((if (x > y) then -1 else 0))))
+      z
+)
+
+@set_base_datatable = (table, not_orderable, date_sort = false) ->
   table.dataTable
-    columnDefs: [ {
-      targets: not_orderable
-      orderable: false
-    } ]
+    columnDefs: get_column_defs(not_orderable, date_sort)
     pagingType: 'full_numbers'
     scrollX: true
     jQueryUI: true
@@ -27,3 +59,11 @@
       sLast: 'Letzte'
     }
 }
+
+get_column_defs = (not_orderable, date_sort) ->
+  defs = [ {
+    targets: not_orderable
+    orderable: false
+  } ]
+  defs.push({ type: 'de_date', targets: date_sort }) if date_sort
+  return defs

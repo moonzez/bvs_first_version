@@ -50,4 +50,18 @@ RSpec.describe GuidedtoursController, type: :controller do
       end
     end
   end
+
+  describe 'GET #opened' do
+    it 'assignes opened tours to @opened_tours' do
+      opened_tour = FactoryGirl.create(:guidedtour, state: :opened)
+      opened_tour2 = FactoryGirl.create(:guidedtour, state: :opened)
+      get :opened
+      expect(assigns(:opened_tours)).to match_array [opened_tour, opened_tour2]
+    end
+
+    it 'renders opened template' do
+      get :opened
+      expect(response).to render_template :opened
+    end
+  end
 end

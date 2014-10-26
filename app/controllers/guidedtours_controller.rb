@@ -17,6 +17,10 @@ class GuidedtoursController < ApplicationController
     end
   end
 
+  def opened
+    @opened_tours = Guidedtour.find_opened
+  end
+
   private
 
   def guidedtour_params

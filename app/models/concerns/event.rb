@@ -7,7 +7,7 @@ module Event
 
     enum gender: [:mr, :mrs, :miss, :ms]
     enum havebeen: [:no, :yes, :some]
-    enum status: [:opened, :confirmed, :canceled, :rejected]
+    enum state: [:opened, :confirmed, :canceled, :rejected]
     enum paid: [:not_paid, :transferred, :cash, :costfree]
   end
 

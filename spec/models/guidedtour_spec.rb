@@ -112,12 +112,22 @@ RSpec.describe Guidedtour, type: :model do
       expect(tour.groupnumber).to eql 2
     end
 
-    it 'does not set grooupnumber on update' do
+    it 'does not set groupnumber on update' do
       tour = FactoryGirl.create(:guidedtour, participants: 59)
       tour.update(participants: 13)
       expect(tour).not_to receive(:set_groupnumber)
       expect(tour.groupnumber).to eql 2
       expect(tour.participants).to eql 13
+    end
+  end
+
+  context 'find_opened' do
+    it 'returns all guidedtours in state opened' do
+      FactoryGirl.create(:guidedtour, state: :confirmed)
+      opened1 = FactoryGirl.create(:guidedtour, state: :opened)
+      opened2 = FactoryGirl.create(:guidedtour, state: :opened)
+      FactoryGirl.create(:guidedtour, state: :canceled)
+      expect(Guidedtour.find_opened).to match_array [opened1, opened2]
     end
   end
 end

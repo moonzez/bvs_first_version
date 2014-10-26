@@ -28,6 +28,10 @@ class Guidedtour < ActiveRecord::Base
   validates :age, presence: true, if: 'schooltype.present?', on: :create
   validates :cellphone, presence: true, on: :create
 
+  def self.find_opened
+    where(state: states[:opened])
+  end
+
   def self.tour_languages
     # TODO: build array [language, shortcut]
     Language.all.map(&:language)
