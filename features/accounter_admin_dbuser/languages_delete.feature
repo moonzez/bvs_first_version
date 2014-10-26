@@ -27,4 +27,5 @@ Feature: deleting referent language
     Then I should see "Deutsch"
     When I follow "Deutsch löschen"
     Then I should see alert "Deutsch kann nicht gelöscht werden: ist in Verwendung"
+    Then I accept alert
     And I should see "Deutsch"

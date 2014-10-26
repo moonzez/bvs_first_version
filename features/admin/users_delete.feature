@@ -18,17 +18,23 @@ Feature: Deleting users
   Scenario: remove myself
     When I follow image_link "Löschen" for user "suicide.me@bvs.de"
     Then I should see alert "Suicide Me löschen?"
+    And I accept alert
     And I should see alert "Sie können eigenes Profil nicht löschen"
+    And I accept alert
     And I should see "suicide.me@bvs.de"
 
   Scenario: removing referent
     When I follow image_link "Löschen" for user "deba.meba@bvs.de"
     Then I should see alert "Deba Meba löschen?"
+    And I accept alert
     And I should see alert "Referent Deba Meba darf nicht gelöscht werden"
+    And I accept alert
     And I should see "deba.meba@bvs.de"
 
   Scenario: removing dbuser
     When I follow image_link "Löschen" for user "aba.dbuser@bvs.de"
     Then I should see alert "Aba Dbuser löschen?"
+    And I accept alert
     And I should see alert "Nutzer Aba Dbuser wurde gelöscht"
+    And I accept alert
     Then I should not see "aba.dbuser@bvs.de"

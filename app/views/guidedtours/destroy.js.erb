@@ -1,0 +1,7 @@
+guidedtour_errors = '<%= generate_errors_string(@guidedtour) %>'
+if (guidedtour_errors.length > 0)
+  alert(guidedtour_errors)
+else
+  tr = $("tr#<%= @guidedtour.id %>")
+  tr.remove()
+  alert('Geführter Rundgang wurde gelöscht')

@@ -1,5 +1,6 @@
 class GuidedtoursController < ApplicationController
   before_action :authorize_dbuser_or_accounter!
+  before_action :find_guidedtour, only: [:edit, :destroy, :update]
 
   def index; end
 
@@ -17,6 +18,18 @@ class GuidedtoursController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    flash[:notice] = 'Geführter Rundgang wurde geändert'
+    redirect_to guidedtours_path
+  end
+
+  def destroy
+    @guidedtour.destroy
+  end
+
   def opened
     @opened_tours = Guidedtour.find_opened
   end
@@ -25,5 +38,9 @@ class GuidedtoursController < ApplicationController
 
   def guidedtour_params
     params.require(:guidedtour).permit(Guidedtour.permitted_params)
+  end
+
+  def find_guidedtour
+    @guidedtour = Guidedtour.find(params[:id])
   end
 end

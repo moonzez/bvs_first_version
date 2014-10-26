@@ -18,6 +18,7 @@ Feature: Change referents activ status
     Then I should not see image_link "Temporär deaktivieren" for referent "john.doe@bvs.de"
     When I follow image_link "Aktivieren" for referent "john.doe@bvs.de"
     Then I should see alert "Referent John Doe wurde aktiviert"
+    And I accept alert
     And I should see image_link "Temporär deaktivieren" for referent "john.doe@bvs.de"
     And I should see "john.doe@bvs.de"
 
@@ -25,12 +26,14 @@ Feature: Change referents activ status
     Then I should not see image_link "Aktivieren" for referent "deba.meba@bvs.de"
     When I follow image_link "Temporär deaktivieren" for referent "deba.meba@bvs.de"
     Then I should see alert "Referent Deba Meba wurde temporär deaktiviert"
+    And I accept alert
     And I should see image_link "Aktivieren" for referent "deba.meba@bvs.de"
     And I should see "deba.meba@bvs.de"
 
   Scenario: deactivate active referent
     When I follow image_link "Deaktivieren" for referent "deba.meba@bvs.de"
     Then I should see alert "Referent Deba Meba wurde deaktiviert"
+    And I accept alert
     And I should not see "deba.meba@bvs.de"
 
   Scenario: deactivate temporary inactiv referent
@@ -44,6 +47,7 @@ Feature: Change referents activ status
     Then I should see "hidden.person@bvs.de"
     When I follow image_link "Aktivieren" for referent "hidden.person@bvs.de"
     Then I should see alert "Referent Hidden Person wurde aktiviert"
+    And I accept alert
     And I should not see "hidden.person@bvs.de"
     When I follow "Referenten"
     Then I should see "hidden.person@bvs.de"

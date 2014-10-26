@@ -33,7 +33,7 @@
   </thead>
   <tbody>
     <% @opened_tours.each do |tour| %>
-      <tr class="<%= find_out_special_class(tour) %>">
+      <tr id="<%= tour.id %>" class="<%= find_out_special_class(tour) %>">
         <td><%= to_date(tour.created_at) %></td>
         <td><%= get_gender(tour.gender) %></td>
         <td><%=h tour.lastname %></td>
@@ -57,7 +57,7 @@
         <td><%=h get_film(tour.film) %></td>
         <td><%= link_to(image_tag('edit.png', size: '20'), edit_guidedtour_path(tour), title: 'Bearbeiten')  %></td>
         <% if admin? %>
-          <td><%= link_to(image_tag('delete.png', size: '20'), edit_guidedtour_path(tour.id), title: 'Löschen', method: :delete,
+          <td><%= link_to(image_tag('delete.png', size: '20'), guidedtour_path(tour), title: 'Löschen', method: :delete,
                           data: { confirm: "Geführten Rundgang löschen?", remote: true } ) %></td>
         <% end %>
         <td><%= link_to(image_tag('pdf.jpg', size: '20'), event_pdf_guidedtour_path(tour), title: 'PDF- File') %></td>

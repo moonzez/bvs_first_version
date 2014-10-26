@@ -18,12 +18,17 @@
       <td></td>
     <tr>
     <tr>
-      <td><%= f.radio_button :gender, :mr %><%= t('events.gender.mr') %> <%= f.radio_button :gender, :mrs %> <%= t('events.gender.mrs') %></td>
-      <td></td>
+      <td><%= f.radio_button :gender, :mr %><%= get_gender(:mr) %> <%= f.radio_button :gender, :mrs %> <%= get_gender(:mrs) %></td>
+      <td>
+        <div id='title_img'>
+          <%= image_tag('plus.png', size: '20x20', title: 'Titel hinzufügen', style: (@guidedtour.title? ? 'display:none;' : '')) %>
+          <%= image_tag('minus.png', size: '20x20', title: 'Titel entfernen', style: (@guidedtour.title? ? '': 'display:none;')) %>
+        <div>
+      </td>
     </tr>
-    <tr>
+    <tr id='hidden_title' style=<%= @guidedtour.title? ? '' : 'display:none;' %>>
       <td><%=f.label :title %></td>
-      <td><%= f.text_field :title %>
+      <td><%= f.text_field :title, size: 30, maxlength: 255 %>
     </tr>
     <tr>
       <td><%= f.label :firstname %>*</td>
@@ -102,7 +107,7 @@
     <tr>
       <td><%= f.label :date1 %>*</td>
       <td><%= f.text_field :date1, readonly: true %></td>
-      <td><%= link_to(image_tag('clear.png', size: '20'), '#', id: 'clear_1', title: 'Löschen')  %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_1') %></td>
       <td><%= f.label :from1 %>*</td>
       <td><%= f.select :from1, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true %></td>
       <td><%= f.label :to1 %></td>
@@ -113,7 +118,7 @@
     <tr>
       <td><%= f.label :date2 %>*</td>
       <td><%= f.text_field :date2, readonly: true %></td>
-      <td><%= link_to(image_tag('clear.png', size: '20'), '#', id: 'clear_2', title: 'Löschen')  %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_2') %></td>
       <td><%= f.label :from2 %></td>
       <td><%= f.select :from2, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true %></td>
       <td><%= f.label :to2 %></td>
@@ -124,7 +129,7 @@
     <tr>
       <td><%= f.label :date3 %>*</td>
       <td><%= f.text_field :date3, readonly: true %></td>
-      <td><%= link_to(image_tag('clear.png', size: '20'), '#', id: 'clear_3', title: 'Löschen')  %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_3') %></td>
       <td><%= f.label :from3 %></td>
       <td><%= f.select :from3, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true %></td>
       <td><%= f.label :to3 %></td>

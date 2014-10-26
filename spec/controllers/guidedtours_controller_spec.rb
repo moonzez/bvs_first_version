@@ -64,4 +64,49 @@ RSpec.describe GuidedtoursController, type: :controller do
       expect(response).to render_template :opened
     end
   end
+
+  describe 'GET #edit' do
+    it 'assigns guidedtour to @guidedtour' do
+      tour = FactoryGirl.create(:guidedtour)
+      get :edit, id: tour.id
+      expect(assigns(:guidedtour)).to eql tour
+    end
+
+    it 'renders edit template' do
+      tour = FactoryGirl.create(:guidedtour)
+      get :edit, id: tour.id
+      expect(response).to render_template :edit
+    end
+  end
+
+  describe 'PUT #update' do
+
+    it 'assigns guidedtour to @guidedtour' do
+      tour = FactoryGirl.create(:guidedtour)
+      put :update, id: tour.id, guidedtour: { lastname: 'Doe' }
+      expect(assigns(:guidedtour)).to eql tour
+    end
+
+    it 'redirects_to guidedtours' do
+      tour = FactoryGirl.create(:guidedtour)
+      put :update, id: tour.id, guidedtour: { lastname: 'Doe' }
+      expect(flash[:notice]).to eql 'Geführter Rundgang wurde geändert'
+      expect(response).to redirect_to(guidedtours_path)
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    it 'assigns guidedtour to @guidedtour' do
+      tour = FactoryGirl.create(:guidedtour)
+      delete :destroy, id: tour.id, format: :js
+      expect(assigns(:guidedtour)).to eql tour
+    end
+
+    it 'renders destroy.js template' do
+      tour = FactoryGirl.create(:guidedtour)
+      delete :destroy, id: tour.id, format: :js
+      expect(response.content_type).to eql 'text/javascript'
+      expect(response).to render_template :destroy
+    end
+  end
 end

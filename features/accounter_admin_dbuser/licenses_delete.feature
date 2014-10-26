@@ -28,4 +28,5 @@ Feature: deleting referent licenses
     Then I should see "License B"
     When I follow "License B löschen"
     Then I should see alert "License B kann nicht gelöscht werden: ist in Verwendung"
+    And I accept alert
     Then I should see "License B"

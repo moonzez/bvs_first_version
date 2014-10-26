@@ -16,7 +16,9 @@ Feature: Deleting referents
   Scenario: remove referent with assigned event
     When I follow image_link "Löschen" for referent "deba.withevent@bvs.de"
     And I should see alert "Deba Withevent löschen?"
+    And I accept alert
     And I should see alert "Referent Deba Withevent darf nicht gelöscht werden"
+    And I accept alert
     Then I should see "deba.withevent@bvs.de"
 
   Scenario: remove referent without assigned event

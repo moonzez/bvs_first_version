@@ -16,3 +16,11 @@
     maxDate: + 1825
     $.datepicker.regional['de']
   )
+
+$(->
+  $('#title_img').click(->
+    $('#hidden_title').toggle()
+    $(this).find('img').toggle()
+    $('input#guidedtour_title').val('')
+  )
+)
