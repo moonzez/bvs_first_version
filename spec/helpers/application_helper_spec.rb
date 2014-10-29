@@ -89,4 +89,23 @@ RSpec.describe ApplicationHelper, type: :helper do
       expect(get_film(true)).to eql 'Ja'
     end
   end
+
+  describe 'get_pdf_text' do
+    it 'returns value if given' do
+      expect(get_pdf_text('my value')).to eql 'my value'
+    end
+
+    it 'returns ___ if value nil or empty' do
+      expect(get_pdf_text(nil)).to eql '___'
+    end
+  end
+
+  describe 'get_havebeen' do
+    it 'returns localized value of havebeen' do
+      expect(get_havebeen(:no)).to eql 'Nein'
+      I18n.locale = :en
+      expect(get_havebeen(:no)).to eql 'No'
+      I18n.locale = :de
+    end
+  end
 end

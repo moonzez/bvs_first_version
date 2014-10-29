@@ -28,12 +28,9 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:edit, :update]
 
-  resources :guidedtours, except: [:show] do
+  resources :guidedtours do
     collection do
       get :opened
-    end
-    member do
-      get :event_pdf
     end
   end
 end

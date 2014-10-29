@@ -1,6 +1,6 @@
 class GuidedtoursController < ApplicationController
   before_action :authorize_dbuser_or_accounter!
-  before_action :find_guidedtour, only: [:edit, :destroy, :update]
+  before_action :find_guidedtour, only: [:edit, :destroy, :update, :show]
 
   def index; end
 
@@ -32,6 +32,19 @@ class GuidedtoursController < ApplicationController
 
   def opened
     @opened_tours = Guidedtour.find_opened
+  end
+
+  def show
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = render_to_string(
+          template: 'guidedtours/show', pdf: 'guidedtour', layout: 'pdf.html',
+          encoding: 'UTF-8', print_media_type: true
+        )
+        send_data(pdf, filename: "guided_tour_#{ @guidedtour.id }.pdf",  type: 'application/pdf')
+      end
+    end
   end
 
   private

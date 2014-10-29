@@ -1,0 +1,134 @@
+<div>
+  <%= wicked_pdf_image_tag('logo_dachau.jpg', align: 'right') %>
+</div>
+<br><br><br>
+
+<% tour = @guidedtour %>
+
+<div>
+  <h3>Anmeldung für den Besuch der KZ-Gedenkstätte Dachau</h3>
+
+  <p class='bold'>Ansprechperson</p>
+  <table>
+    <tr>
+      <th width='300'></th><th width='300'></th>
+      <th width='300'></th><th width='300'></th>
+    </tr>
+
+    <tr>
+      <td class='italic'>Anrede:</td><td><%= get_gender(tour.gender) %></td>
+      <td class='italic'>Titel:</td><td><%= get_pdf_text(tour.title) %></td>
+    </tr>
+
+    <tr>
+      <td class='italic'>Name:</td><td><%=h tour.lastname %></td>
+      <td class='italic'>Vorname:</td><td><%=h tour.firstname %></td>
+    </tr>
+
+    <tr>
+      <td class='italic'>Tel. dienstlich:</td><td><%= get_pdf_text(tour.telbus) %></td>
+      <td class='italic'>Uhrzeit:</td><td><%= get_pdf_text(tour.telbus_time) %></td>
+    </tr>
+
+    <tr>
+      <td class='italic'>Tel. privat:</td><td><%= get_pdf_text(tour.telpriv) %></td>
+      <td class='italic'>Uhrzeit:</td><td><%= get_pdf_text(tour.telpriv_time) %></td>
+    </tr>
+
+    <tr>
+      <td class='italic'>E-Mail:</td><td><%=h tour.email %></td>
+      <td class='italic'>Fax:</td><td><%= get_pdf_text(tour.fax) %></td>
+    </tr>
+  </table>
+
+  <p class='bold'>Schule/Institution</p>
+  <table>
+    <tr>
+      <th width='300'></th><th width='300'></th>
+      <th width='300'></th><th width='300'></th>
+    </tr>
+
+    <tr>
+      <td class='italic'>Name:</td><td><%= get_pdf_text(tour.schoolname) %></td>
+      <td class='italic'>Schultyp:</td><td><%= get_pdf_text(tour.schooltype) %></td>
+    </tr>
+
+    <tr>
+      <td class='italic'>Straße/Haus:</td><td><%= tour.street %></td>
+      <td class='italic'>Ort:</td><td><%= tour.city %></td>
+    </tr>
+
+    <tr>
+      <td class='italic'>PLZ:</td><td><%= tour.zip %></td>
+      <td class='italic'>Land:</td><td><%= tour.country %></td>
+    </tr>
+  </table>
+
+  <p class='bold'>Termin und Sprache</p>
+  <table>
+    <tr>
+      <th width='300'></th><th width='200'></th>
+      <th width='175'></th><th width='175'></th>
+      <th width='175'></th><th width='175'></th>
+    </tr>
+    <tr>
+      <td class='italic'>am:</td><td><%= to_date(tour.date1) %></td>
+      <td class='italic'>von:</td><td><%= get_hours_minutes(tour.from1) %></td>
+      <td class='italic'>bis:</td><td><%= get_hours_minutes(tour.to1) %></td>
+    </tr>
+    <% if !tour.date2.blank? %>
+      <tr>
+        <td class='italic'>am:</td><td><%= to_date(tour.date2) %></td>
+        <td class='italic'>von:</td><td><%= get_hours_minutes(tour.from2) %></td>
+        <td class='italic'>bis:</td><td><%= get_hours_minutes(tour.to2) %></td>
+      </tr>
+    <% end %>
+    <% if !tour.date3.blank? %>
+      <tr>
+        <td class='italic'>am:</td><td><%= to_date(tour.date3) %></td>
+        <td class='italic'>von:</td><td><%= get_hours_minutes(tour.from3) %></td>
+        <td class='italic'>bis:</td><td><%= get_hours_minutes(tour.to3) %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <p><i>In welcher Sprache soll der Rundgang stattfinden?</i> <%= get_language(tour.language) %></p>
+
+  <p class='bold'>Angaben zur Gruppe/Klasse</p>
+  <table>
+    <tr>
+      <th width='400'></th><th width='100'></th>
+      <th width='300'></th><th width='100'></th>
+      <th width='300'></th><th width='100'></th>
+    </tr>
+
+    <tr>
+      <td class='italic'>Anzahl TeilnehmerInnen:</td><td><%= tour.participants %></td>
+      <td class='italic'>davon männlich:</td><td><%= get_pdf_text(tour.male_count) %></td>
+      <td class='italic'>davon weiblich:</td><td><%= get_pdf_text(tour.female_count) %></td>
+    </tr>
+
+    <tr>
+      <td class='italic'>Alter (min. 14 Jahre):</td><td><%= get_pdf_text(tour.age) %></td>
+      <td class='italic'>Schulstufe:</td><td><%= get_pdf_text(tour.schoolgrade) %></td>
+      <td class='italic'>Anzahl Betreuer:</td><td><%= get_pdf_text(tour.teamleader) %></td>
+    </tr>
+  </table>
+
+  <p class='italic'>Kennen die TeilnehmerInnen die KZ-Gedenkstätte Dachau bereits? <%= get_havebeen(tour.havebeen) %></p>
+
+  <p class='italic'>Was ist der Anlass für den Besuch der Gedenkstätte?</p>
+  <p><%= get_pdf_text(tour.reason) %></p>
+
+  <p class='italic'>Welche Themen sollen schwerpunktmäßig in dem Seminar aufgegriffen und behandelt werden?</p>
+  <p><%= get_pdf_text(tour.topic) %></p>
+
+  <p class='bold'>Gewünschtes Angebot</p>
+  <p class='italic'>Filmbesuch, Dauer: 22 Minuten: <%= get_film(tour.film) %></p>
+
+  <p class='italic'>Sonstige Wünsche (z.B. Nachbesprechung)</p>
+  <p><%= get_pdf_text(tour.wish) %></p>
+
+  <p class='italic'>Anmerkungen</p>
+  <p><%= get_pdf_text(tour.remarc) %></p>
+</div>

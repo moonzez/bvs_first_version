@@ -6,8 +6,8 @@ en:
       miss: Miss
       ms: Miss
     havebeen:
-      'no': No
-      'yes': Yes
+      'no': 'No'
+      'yes': 'Yes'
       some: Some
   date:
     abbr_day_names:

@@ -1,3 +1,6 @@
 == README
 
-* coming soon
+BVS is a web application for managing different kinds of events on memorial place.
+It allows customers to book an event online while filling in a form.
+
+The largest part of application is meant for internal use. It allows to confirm or cancel events, send emails to participants and guides, show statistics and generate invoices and many other features.

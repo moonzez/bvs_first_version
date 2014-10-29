@@ -37,4 +37,13 @@ module ApplicationHelper
   def get_film(film)
     I18n.t("answers.#{film ? 'yes' : 'no' }")
   end
+
+  def get_pdf_text(value)
+    return '___' if value.blank?
+    value
+  end
+
+  def get_havebeen(value)
+    I18n.t("events.havebeen.#{ value }")
+  end
 end

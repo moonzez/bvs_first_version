@@ -17,6 +17,9 @@ gem 'scrypt'
 gem 'jquery-datatables-rails'
 gem 'jquery-ui-rails'
 
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
+
 group :development do
   gem 'spring'
   # checking code quality

@@ -284,3 +284,22 @@ tr.show_themetour td {
 tr.show_70_years td {
   background-color:#FF9999;
 }
+
+@media print {
+  html {
+    background: #FFF;
+  }
+
+  body {
+    font-family: verdana,  sans-serif;
+    font-size: 11px;
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  p.bold {
+    font-weight: bold;
+  }
+}

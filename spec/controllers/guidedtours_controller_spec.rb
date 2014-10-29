@@ -109,4 +109,28 @@ RSpec.describe GuidedtoursController, type: :controller do
       expect(response).to render_template :destroy
     end
   end
+
+  describe 'GET #show' do
+    it 'assigns guidedtour to @guidedtour' do
+      tour = FactoryGirl.create(:guidedtour)
+      get :show, id: tour.id
+      expect(assigns(:guidedtour)).to eql tour
+    end
+
+    context 'format html' do
+      it 'renders show template' do
+        tour = FactoryGirl.create(:guidedtour)
+        get :show, id: tour.id
+        expect(response).to render_template :show
+      end
+    end
+
+    context 'format pdf' do
+      it 'renders show template' do
+        tour = FactoryGirl.create(:guidedtour)
+        get :show, id: tour.id, format: :pdf
+        expect(response.content_type).to eql 'application/pdf'
+      end
+    end
+  end
 end
