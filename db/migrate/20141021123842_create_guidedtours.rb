@@ -37,9 +37,9 @@ class CreateGuidedtours < ActiveRecord::Migration
       t.integer  :teamleader
       t.string   :cellphone
 
-      t.date     :confirmeddate
-      t.time     :confirmedfrom
-      t.time     :confirmedto
+      t.date     :confirmed_date
+      t.time     :confirmed_from
+      t.time     :confirmed_to
 
       t.string   :language, default: 'de'
       t.integer  :havebeen, default: 0
@@ -67,7 +67,7 @@ class CreateGuidedtours < ActiveRecord::Migration
       t.boolean  :result_sent, default: false
 
       t.text     :comments
-      t.text     :infopoint
+      t.text     :infocenter
 
       t.integer  :invoice, default: 1
       t.string   :invoice_number

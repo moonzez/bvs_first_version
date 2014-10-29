@@ -49,7 +49,7 @@ class MigrateDetoursToGuidedtours < ActiveRecord::Migration
 
     havebeens = { 'zum Teil' => :some, 'nein' => :no, 'ja' => :yes, 'some' => :some }
 
-    theme_types = { nil => 0, 'Theme' => 1, 'Exkursion' => 2 }
+    theme_types = { nil => nil, 'Theme' => 'themetour', 'Exkursion' => 'excursion' }
 
     paids = {
       'nein' => :not_paid,
@@ -94,9 +94,9 @@ class MigrateDetoursToGuidedtours < ActiveRecord::Migration
         schoolgrade: g.schoolgrade,
         teamleader: g.teamleader,
         cellphone: g.cellphone,
-        confirmeddate: g.thedate,
-        confirmedfrom: g.thefrom,
-        confirmedto: g.theto,
+        confirmed_date: g.thedate,
+        confirmed_from: g.thefrom,
+        confirmed_to: g.theto,
         language: languages[g.language],
         havebeen: havebeens[g.havebeen],
         reason: g.reason,
@@ -116,7 +116,7 @@ class MigrateDetoursToGuidedtours < ActiveRecord::Migration
         themetour_type: theme_types[g.theme_type],
         result_sent: g.result_sent,
         comments: g.comments,
-        infopoint: g.infopoint,
+        infocenter: g.infocenter,
         invoice: g.invoice,
         invoice_number: g.invoice_number,
         paid: paids[g.paid],
@@ -129,7 +129,8 @@ class MigrateDetoursToGuidedtours < ActiveRecord::Migration
         created_at: g.created_at,
         updated_at: g.updated_at
       )
-      write_log_file(g.id, gt) unless gt.save
+      gt.save(validate: false)
+      #write_log_file(g.id, gt) unless gt.valid?
     end
   end
   # t.string   "zus_form",                                  default: "nein"

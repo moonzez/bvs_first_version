@@ -22,8 +22,12 @@ class GuidedtoursController < ApplicationController
   end
 
   def update
-    flash[:notice] = 'Geführter Rundgang wurde geändert'
-    redirect_to guidedtours_path
+    if @guidedtour.update(guidedtour_params)
+      flash[:notice] = 'Geführter Rundgang wurde geändert'
+      redirect_to guidedtours_path
+    else
+      render :edit
+    end
   end
 
   def destroy

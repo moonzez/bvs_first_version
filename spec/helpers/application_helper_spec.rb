@@ -72,6 +72,10 @@ RSpec.describe ApplicationHelper, type: :helper do
       noon = Time.new(1990, 4, 1, 12, 30, 0)
       expect(get_hours_minutes(noon)).to eql '12:30'
     end
+
+    it 'returns time value if blank' do
+      expect(get_hours_minutes('')).to eql nil
+    end
   end
 
   describe 'get_language' do

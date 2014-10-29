@@ -7,9 +7,9 @@ Feature: see othe list of opened guidedtours
     Given I am logged in as an dbuser
     And I am on the homepage
     And There are guidedtours:
-      |created_at|lastname|date1|date2|date3|language|themetour|schoolname|city|participants|topic|film|
-      |Time.now|Doe|Date.today + 4|Date.today + 5|Date.today + 6|en|0|Myschoolname|Mycity|12||0|
-      |Time.now - 2|First|Date.today + 10|||de|1|Firstschool|Bigcity|40|Very important topic|1|
+      |created_at|lastname|date1|date2|date3|language|themetour|schoolname|city|participants|topic|film|from2|from3|to2|to3|
+      |Time.now|Doe|Date.today + 4|Date.today + 5|Date.today + 6|en|0|Myschoolname|Mycity|12||0|Time.new|Time.new|Time.new|Time.new|
+      |Time.now - 2|First|Date.today + 10|||de|1|Firstschool|Bigcity|40|Very important topic|1|Time.new|Time.new|Time.new|Time.new|
     When I follow "Offene Rundgänge"
 
   Scenario: see the list of all opened quidedtours

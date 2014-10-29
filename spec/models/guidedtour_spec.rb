@@ -85,6 +85,30 @@ RSpec.describe Guidedtour, type: :model do
       expect(tour).to be_invalid
       expect(tour.errors.keys).to match_array [:age, :schoolgrade]
     end
+
+    it 'is invalid if date2 given but from2 not set' do
+      tour = FactoryGirl.build(:guidedtour, date2: Date.new(2015, 5, 3), to2: Time.new)
+      expect(tour).to be_invalid
+      expect(tour.errors.keys).to eql([:from2])
+    end
+
+    it 'is invalid if date2 given but to2 not set' do
+      tour = FactoryGirl.build(:guidedtour, date2: Date.new(2015, 5, 3), from2: Time.new)
+      expect(tour).to be_invalid
+      expect(tour.errors.keys).to eql([:to2])
+    end
+
+    it 'is invalid if date3 given but from3 not set' do
+      tour = FactoryGirl.build(:guidedtour, date3: Date.new(2015, 5, 3), to3: Time.new)
+      expect(tour).to be_invalid
+      expect(tour.errors.keys).to eql([:from3])
+    end
+
+    it 'is invalid if date3 given but to3 not set' do
+      tour = FactoryGirl.build(:guidedtour, date3: Date.new(2015, 5, 3), from3: Time.new)
+      expect(tour).to be_invalid
+      expect(tour.errors.keys).to eql([:to3])
+    end
   end
 
   context 'languages_array' do

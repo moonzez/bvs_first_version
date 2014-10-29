@@ -10,8 +10,8 @@ FactoryGirl.define do
     zip { Faker::Address.zip_code }
     country { Faker::Address.country }
     date1 { Faker::Date.forward(23).strftime('%Y-%m-%d') }
-    from1 { Faker::Time.forward(23, :day).strftime('%H:%M') }
-    to1 { Faker::Time.forward(23, :day).strftime('%H:%M') }
+    from1 { GT_FROMINTERN.sample }
+    to1 { GT_TOINTERN.sample }
     participants { Faker::Number.number(2) }
     cellphone { Faker::PhoneNumber.cell_phone }
   end

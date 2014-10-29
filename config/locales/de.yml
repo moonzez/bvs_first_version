@@ -57,6 +57,9 @@ de:
         date3: am
         from3: von
         to3: bis
+        confirmed_date: am
+        confirmed_from: von
+        confirmed_to: bis
         language: In welcher Sprache soll die Führung stattfinden?
         cellphone: Handynummer der Begleitperson
         participants: Teilnehmeranzahl
@@ -71,6 +74,7 @@ de:
         munichstay: Steht der Besuch der Gedenkstätte im Rahmen eines längeren Aufenthaltes in München?
         wish: Sonstige Wünsche (z.B. Nachbesprechung)
         remarc: Anmerkungen
+        state: Status
 
     errors:
       messages:
@@ -212,11 +216,19 @@ de:
       'no': Nein
       'yes': Ja
       some: Zum Teil
+    themetours:
+      excursion: Exkursion
+      themetour: Themenführung
     paid:
       not_paid: nein
       transferred: ja, überwiesen
       cash: ja, bar
       costfree: kostenfrei
+    states:
+      opened: offen
+      confirmed: bestätigt
+      canceled: abgesagt
+      rejected: storniert
 
   languages:
     full_name:

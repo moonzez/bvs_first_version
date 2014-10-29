@@ -86,6 +86,8 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.string   "theme_type"
     t.string   "set_paid_external"
     t.datetime "set_paid_date"
+    t.text     "infocenter"
+    t.string   "cellphone"
   end
 
   create_table "guidedtours", force: true do |t|
@@ -122,9 +124,9 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.string   "schoolgrade"
     t.integer  "teamleader"
     t.string   "cellphone"
-    t.date     "confirmeddate"
-    t.time     "confirmedfrom"
-    t.time     "confirmedto"
+    t.date     "confirmed_date"
+    t.time     "confirmed_from"
+    t.time     "confirmed_to"
     t.string   "language",         default: "de"
     t.integer  "havebeen",         default: 0
     t.text     "reason"
@@ -146,7 +148,7 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.string   "themetour_type"
     t.boolean  "result_sent",      default: false
     t.text     "comments"
-    t.text     "infopoint"
+    t.text     "infocenter"
     t.integer  "invoice",          default: 1
     t.string   "invoice_number"
     t.integer  "paid",             default: 0
@@ -231,6 +233,8 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.boolean  "result_sent",                               default: true
     t.string   "set_paid_external"
     t.datetime "set_paid_date"
+    t.text     "infocenter"
+    t.string   "cellphone"
   end
 
   create_table "htsreferents", force: true do |t|
@@ -298,6 +302,7 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.datetime "updated_at"
     t.integer  "participnumber", default: 0
     t.string   "opentype",       default: ""
+    t.text     "infocenter"
   end
 
   create_table "opentourwishes", force: true do |t|
@@ -345,7 +350,7 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.string "title"
   end
 
-  create_table "roles_users", force: true do |t|
+  create_table "roles_users", id: false, force: true do |t|
     t.integer "role_id"
     t.integer "user_id"
   end
@@ -451,6 +456,8 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.boolean  "result_sent",                               default: true
     t.string   "set_paid_external"
     t.datetime "set_paid_date"
+    t.text     "infocenter"
+    t.string   "cellphone"
   end
 
   create_table "ts_topics", force: true do |t|
@@ -555,37 +562,39 @@ ActiveRecord::Schema.define(version: 20141021171353) do
     t.string   "day"
     t.time     "thefrom"
     t.time     "theto"
-    t.string   "status",                                    default: "offen"
-    t.string   "referent",                                  default: ""
+    t.string   "status",                                     default: "offen"
+    t.string   "referent",                                   default: ""
     t.text     "comments"
-    t.string   "paid",                                      default: "nein"
-    t.string   "bill_sent",                                 default: "nein"
-    t.string   "denial_sent",                               default: "nein"
+    t.string   "paid",                                       default: "nein"
+    t.string   "bill_sent",                                  default: "nein"
+    t.string   "denial_sent",                                default: "nein"
     t.string   "room"
     t.string   "last_change"
     t.string   "hl_number"
-    t.string   "zus_form",                                  default: "nein"
-    t.string   "zus_voll",                                  default: "nein"
+    t.string   "zus_form",                                   default: "nein"
+    t.string   "zus_voll",                                   default: "nein"
     t.date     "zf_date"
     t.date     "zv_date"
     t.date     "denial_date"
-    t.integer  "vers",                                      default: 0
+    t.integer  "vers",                                       default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "mahnung",                                   default: 0
+    t.integer  "mahnung",                                    default: 0
     t.date     "mahnungdate"
     t.date     "date2"
     t.time     "from2"
     t.time     "to2"
-    t.string   "invoice",                                   default: "ja"
-    t.string   "storno_sent",                               default: "nein"
+    t.string   "invoice",                                    default: "ja"
+    t.string   "storno_sent",                                default: "nein"
     t.date     "storno_date"
     t.string   "invoice_number"
-    t.decimal  "given_price",       precision: 8, scale: 2
-    t.decimal  "paid_price",        precision: 8, scale: 2, default: 0.0
-    t.boolean  "result_sent",                               default: true
+    t.decimal  "given_price",       precision: 10, scale: 0
+    t.decimal  "paid_price",        precision: 10, scale: 0
+    t.boolean  "result_sent",                                default: true
     t.string   "set_paid_external"
     t.datetime "set_paid_date"
+    t.text     "infocenter"
+    t.string   "cellphone"
   end
 
 end

@@ -31,7 +31,8 @@ class MigrateReferentsToUsers < ActiveRecord::Migration
         username: email
       )
 
-      write_log_file(r.id, user) unless user.save
+      user.save(validate: false)
+      #write_log_file(r.id, user) unless user.valid?
     end
   end
 

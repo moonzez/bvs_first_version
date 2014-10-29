@@ -1,0 +1,9 @@
+<br>
+<% if guidedtour.opened? %>
+  Email zusage
+<% elsif guidedtour.canceled? %>
+  Email absage
+<% elsif guidedtour.rejected? %>
+    Email abgesagt
+<% end %>
+<hr/><br/>

@@ -13,6 +13,7 @@ class Guidedtour < ActiveRecord::Base
   validates :country, presence: true
   validates :date1, presence: true
   validates :from1, presence: true
+  validates :to1, presence: true
 
   validates :email, presence: true
   validates :email, format: {
@@ -27,6 +28,10 @@ class Guidedtour < ActiveRecord::Base
   validates :schoolgrade, presence: true, if: 'schooltype.present?', on: :create
   validates :age, presence: true, if: 'schooltype.present?', on: :create
   validates :cellphone, presence: true, on: :create
+  validates :from2, presence: true, if: 'date2.present?'
+  validates :to2, presence: true, if: 'date2.present?'
+  validates :from3, presence: true, if: 'date3.present?'
+  validates :to3, presence: true, if: 'date3.present?'
 
   def self.find_opened
     where(state: states[:opened])

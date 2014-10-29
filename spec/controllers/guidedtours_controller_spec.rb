@@ -87,11 +87,21 @@ RSpec.describe GuidedtoursController, type: :controller do
       expect(assigns(:guidedtour)).to eql tour
     end
 
-    it 'redirects_to guidedtours' do
-      tour = FactoryGirl.create(:guidedtour)
-      put :update, id: tour.id, guidedtour: { lastname: 'Doe' }
-      expect(flash[:notice]).to eql 'Geführter Rundgang wurde geändert'
-      expect(response).to redirect_to(guidedtours_path)
+    context 'on sucess' do
+      it 'redirects_to guidedtours' do
+        tour = FactoryGirl.create(:guidedtour)
+        put :update, id: tour.id, guidedtour: { lastname: 'Doe' }
+        expect(flash[:notice]).to eql 'Geführter Rundgang wurde geändert'
+        expect(response).to redirect_to(guidedtours_path)
+      end
+    end
+
+    context 'invalid update' do
+      it 'renders edit' do
+        tour = FactoryGirl.create(:guidedtour)
+        put :update, id: tour.id, guidedtour: { lastname: '' }
+        expect(response).to render_template :edit
+      end
     end
   end
 

@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def get_hours_minutes(time)
-    I18n.l time, format: :hours_minutes
+    I18n.l time, format: :hours_minutes unless time.blank?
   end
 
   def get_language(language)
@@ -45,5 +45,9 @@ module ApplicationHelper
 
   def get_havebeen(value)
     I18n.t("events.havebeen.#{ value }")
+  end
+
+  def get_theme_type(value)
+    I18n.t("events.themetours.#{ value }") unless value.blank?
   end
 end

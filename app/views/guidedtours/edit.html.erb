@@ -1,4 +1,262 @@
-<%= title('Geführten Rundgang bearbeiten') %>
-<h1>Geführten Rundgang bearbeiten</h1>
+<%= title('Rundgang - Datenänderung') %>
+<h1>Rundgang - Datenänderung <% if @guidedtour.themetour %>(<%= get_theme_type(@guidedtour.themetour_type) %>)<% end %></h1>
+<hr/>
 
-<%= render 'form' %>
+<%= form_for @guidedtour do |f| %>
+  <% if @guidedtour.errors.any? %>
+    <div id='error_explanation'>
+      <h2><%= @guidedtour.errors.count %> Fehler aufgetreten:</h2>
+      <ul>
+        <% @guidedtour.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if !@guidedtour.result_sent %>
+    <h3>Automatische Bestätigung an den Kunden wurde nicht versendet</h3>
+    <p>TODO: here button to manually send confirmation about getting request</p>
+    <hr>
+  <% end %>
+
+  <h2>Termine</h2>
+
+  <h3>Kundendefinierte Termine</h3>
+  <table>
+    <tr>
+      <tr>
+        <th width='100'></th><th width='40'></th><th width='130'></th>
+        <th width='40'></th><th width='40'></th><th width='80'></th>
+        <th width='40'></th><th width='80'></th><th width='50'></th>
+      </tr>
+      <td>1. Termin </td>
+      <td><%= f.label :date1 %>*</td>
+      <td><%= f.text_field :date1, readonly: true %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_1') %></td>
+      <td><%= f.label :from1 %>*</td>
+      <td><%= f.select :from1, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.from1) %></td>
+      <td><%= f.label :to1 %>*</td>
+      <td><%= f.select :to1, GT_TOINTERN.collect { |to| [to, to] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.to1) %></td>
+      <td><%= image_tag('date.png', width: '25', title: 'Daten für den bestätigten Termin verwenden', alt: 'Übernehmen', id: 'guidedtour_take_date1') %></td>
+    </tr>
+    <tr>
+      <td>2. Termin</td>
+      <td><%= f.label :date2 %></td>
+      <td><%= f.text_field :date2, readonly: true %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_2') %></td>
+      <td><%= f.label :from2 %></td>
+      <td><%= f.select :from2, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.from2)  %></td>
+      <td><%= f.label :to2 %></td>
+      <td><%= f.select :to2, GT_TOINTERN.collect { |to| [to, to] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.to2) %></td>
+      <td><%= image_tag('date.png', width: '25', title: 'Daten für den bestätigten Termin verwenden', alt: 'Übernehmen', id: 'guidedtour_take_date2') %></td>
+    </tr>
+    <tr>
+      <td>3. Termin</td>
+      <td><%= f.label :date3 %></td>
+      <td><%= f.text_field :date3, readonly: true %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_3') %></td>
+      <td><%= f.label :from3 %></td>
+      <td><%= f.select :from3, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.from3) %></td>
+      <td><%= f.label :to3 %></td>
+      <td><%= f.select :to3, GT_TOINTERN.collect { |to| [to, to] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.to3) %></td>
+      <td><%= image_tag('date.png', width: '25', title: 'Daten für den bestätigten Termin verwenden', alt: 'Übernehmen', id: 'guidedtour_take_date3') %></td>
+    </tr>
+  </table><br/>
+
+  <h3>Bestätigter Termin</h3>
+
+  <p>Bestätigter Termin wird auf null gesetzt, falls der Status auf "offen", "abgesagt" oder "storniert" gesetzt wird.</p>
+
+  <table>
+    <tr>
+      <th width='40'></th><th width='130'></th>
+      <th width='40'></th><th width='40'></th><th width='80'></th>
+      <th width='40'></th><th width='80'></th>
+    </tr>
+    <tr>
+      <td><%= f.label :confirmed_date %></td>
+      <td><%= f.text_field :confirmed_date, readonly: true %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_4') %></td>
+      <td><%= f.label :confirmed_from %></td>
+      <td><%= f.select :confirmed_from, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.confirmed_to) %></td>
+      <td><%= f.label :confirmed_to %></td>
+      <td><%= f.select :confirmed_to, GT_TOINTERN.collect { |to| [to, to] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.confirmed_to) %></td>
+    </tr>
+  </table><br/>
+
+  <table>
+    <tr>
+      <td><%= f.label :state %></td>
+      <td><%= f.select :state, Guidedtour.states.keys.map { |state| [I18n.t("events.states.#{ state }"), state]}, { onchange: "check_selected_status('detour_status', 'detour_thedate', 'detour_thefrom', 'detour_theto')"} %></td>
+    </tr>
+  </table>
+
+  <div id='emails'>
+    <%= render partial: 'emails', locals: { guidedtour: @guidedtour } %>
+  <div>
+
+  <table>
+    <tr>
+      <td><%= f.label :language %>
+      <td><%= f.select:language, ['TODO', 'TODO'] %></td>
+    </tr>
+  </table>
+
+  <h2>Ansprechperson</h2>
+
+  <table class='event_form'>
+    <tr>
+      <td><%=f.label :gender %>*</td>
+      <td></td>
+    <tr>
+    <tr>
+      <td><%= f.radio_button :gender, :mr %><%= get_gender(:mr) %> <%= f.radio_button :gender, :mrs %> <%= get_gender(:mrs) %></td>
+      <td>
+        <div id='title_img'>
+          <%= image_tag('plus.png', size: '20x20', title: 'Titel hinzufügen', style: (@guidedtour.title? ? 'display:none;' : '')) %>
+          <%= image_tag('minus.png', size: '20x20', title: 'Titel entfernen', style: (@guidedtour.title? ? '': 'display:none;')) %>
+        <div>
+      </td>
+    </tr>
+    <tr id='hidden_title' style=<%= @guidedtour.title? ? '' : 'display:none;' %>>
+      <td><%=f.label :title %></td>
+      <td><%= f.text_field :title, size: 30, maxlength: 255 %>
+    </tr>
+    <tr>
+      <td><%= f.label :firstname %>*</td>
+      <td><%= f.label :lastname %>*</td>
+    </tr>
+
+    <tr>
+      <td><%= f.text_field :firstname, size: 30, maxlength: 255 %></td>
+      <td><%= f.text_field :lastname, size: 30, maxlength: 255 %></td>
+    <tr>
+    <tr>
+      <td><%= f.label :telbus %></td>
+      <td><%= f.label :telbus_time %></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :telbus, size: 30, maxlength: 255 %></td>
+      <td><%= f.text_field :telbus_time, size: 30, maxlength: 255 %></td>
+      <td><%= image_tag('info.png', size: '20x20', title: t('events.time_of_day')) %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :telpriv %></td>
+      <td><%= f.label :telpriv_time %></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :telpriv, size: 30, maxlength: 255 %></td>
+      <td><%= f.text_field :telpriv_time, size: 30, maxlength: 255 %></td>
+      <td><%= image_tag('info.png', size: '20x20', title: t('events.time_of_day')) %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :email %>*</td>
+      <td><%= f.label :fax %></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :email, size: 30, maxlength: 255 %></td>
+      <td><%= f.text_field :fax, size: 30, maxlength: 255 %></td>
+      <td></td>
+    </tr>
+  </table><br/>
+
+  <h2>Schule/Institution</h2>
+
+  <table>
+    <tr>
+      <td><%= f.label :schoolname %>*</td>
+      <td><%= f.label :schooltype %></td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :schoolname, size: 30, maxlength: 255 %></td>
+      <td><%= f.text_field :schooltype, size: 30, maxlength: 255 %></td>
+    </tr>
+    <tr>
+      <td><%= f.label :street %>*</td>
+      <td><%= f.label :city %>*</td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :street, size: 30, maxlength: 255 %></td>
+      <td><%= f.text_field :city , size: 30, maxlength: 255%></td>
+    </tr>
+    <tr>
+      <td><%= f.label :zip %>*</td>
+      <td><%= f.label :country %>*</td>
+    </tr>
+    <tr>
+      <td><%= f.text_field :zip, size: 30, maxlength: 255 %></td>
+      <td><%= f.text_field :country, size: 30, maxlength: 255 %></td>
+    </tr>
+  </table><br/>
+
+  <h2>Termin und Sprache</h2>
+
+
+    <table>
+      <tr>
+        <td><%= f.label :language %>*</td>
+        <td><%= f.select(:language, Guidedtour.tour_languages) %></td>
+      </tr>
+    </table><br/>
+
+    <h2>Angaben zur Gruppe/Klasse</h2>
+    <table>
+      <tr>
+        <td><%= f.label :cellphone %>*</td>
+        <td><%= f.text_field :cellphone %></td>
+      </tr>
+      <tr>
+        <td><%= f.label :participants %>*</td>
+        <td><%= f.label :male_count %></td>
+        <td><%= f.label :female_count %></td>
+      </tr>
+      <tr>
+        <td><%= f.text_field :participants, size: 30, maxlength: 3 %></td>
+        <td><%= f.text_field :male_count, size: 30, maxlength: 3 %></td>
+        <td><%= f.text_field :female_count, size: 30, maxlength:3 %></td>
+      </tr>
+
+      <tr>
+        <td><%= f.label :age %>*</td>
+        <td><%= f.label :schoolgrade %></td>
+        <td><%= f.label :teamleader %></td>
+      </tr>
+      <tr>
+        <td><%= f.text_field :age, size: 30, maxlength: 255 %></td>
+        <td><%= f.text_field :schoolgrade, size: 30, maxlength: 255 %></td>
+        <td><%= f.text_field :teamleader, size: 30, maxlength: 3 %></td>
+      </tr>
+    </table><br/>
+
+    <table>
+      <tr><td><%= f.label :havebeen %>
+        <%= f.select(:havebeen, HAVEBEEN.keys.collect { |key| [t("events.havebeen.#{key}"), key] }, prompt: "Bitte wählen") %></tr>
+      <tr><td><%= f.label :reason %></td></tr>
+      <tr><td><%= f.text_area :reason, size: '94', maxlength: 255 %></td></tr>
+      <tr><td><%= f.label :topic %></td></tr>
+      <tr><td><%= f.text_area :topic, size: '94', maxlength: 255 %></td></tr>
+      <tr><td><%= f.label :munichstay %></td></tr>
+      <tr><td><%= f.text_area :munichstay, size: '94', maxlength: 255 %></td></tr>
+      <tr><td><%= f.label :wish %></td></tr>
+      <tr><td><%= f.text_area :wish, size: '94', maxlength: 255 %></td></tr>
+    </table><br/>
+
+    <h2><%= f.label :remarc %></h2>
+    <table>
+      <tr><td><%= f.text_area :remarc, size: '94', maxlength: 255 %></td></tr>
+    </table>
+    <br><br><br>
+
+    <div class="save_field">
+      <table id='unten'>
+        <tr>
+          <td width='100%'><%= f.submit t('save'), class: 'big_button' %></td>
+          <td><%= button_to t('back'), :back, class: 'big_button' %></td>
+        </tr>
+      </table>
+    </div>
+<% end %>
