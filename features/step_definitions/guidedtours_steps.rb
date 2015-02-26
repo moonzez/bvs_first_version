@@ -26,3 +26,7 @@ When(/^I follow image_link "(.*?)" for this guidedtour$/) do |title|
   end
   find(:xpath, "//a[@href='#{link}'][@title='#{title}']").click
 end
+
+Then(/^I should see for guidedtour field "(.*?)" equals field "(.*?)"$/) do |field1, field2|
+  expect(find_field("guidedtour_#{field1}").value).to eq(find_field("guidedtour_#{field2}").value)
+end

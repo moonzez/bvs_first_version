@@ -77,7 +77,7 @@
     <tr>
       <td><%= f.label :confirmed_date %></td>
       <td><%= f.text_field :confirmed_date, readonly: true %></td>
-      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_4') %></td>
+      <td><%= image_tag('clear.png', size: '20x20', title: 'Löschen', id: 'clear_confirmed') %></td>
       <td><%= f.label :confirmed_from %></td>
       <td><%= f.select :confirmed_from, GT_FROMINTERN.collect { |from| [from, from] }, include_blank: true, :selected => get_hours_minutes(@guidedtour.confirmed_to) %></td>
       <td><%= f.label :confirmed_to %></td>
@@ -88,7 +88,7 @@
   <table>
     <tr>
       <td><%= f.label :state %></td>
-      <td><%= f.select :state, Guidedtour.states.keys.map { |state| [I18n.t("events.states.#{ state }"), state]}, { onchange: "check_selected_status('detour_status', 'detour_thedate', 'detour_thefrom', 'detour_theto')"} %></td>
+      <td><%= f.select :state, Guidedtour.states.keys.map { |state| [I18n.t("events.states.#{ state }"), state] } %></td>
     </tr>
   </table>
 
@@ -98,9 +98,32 @@
 
   <table>
     <tr>
+      <td><%= f.label :form_language %></td>
+      <td><%= f.text_field :form_language, value: @guidedtour.get_form_language, readonly: true %></td>
+    </tr>
+    <tr>
       <td><%= f.label :language %>
       <td><%= f.select:language, ['TODO', 'TODO'] %></td>
     </tr>
+  </table>
+
+  <table>
+    <tr>
+      <td><%= f.label :participants%>
+      <td><%= f.text_field :participants, size: 4, maxlength: 3 %></td>
+      <td><%= f.label :groupnumber %>
+      <td><%= f.text_field :groupnumber, size: 4, maxlength: 3 %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr><td><%= f.label :comments %></td></tr>
+    <tr><td><%= f.text_area :comments, size: '94x5', maxlength: 600 %></td></tr>
+  </table>
+
+  <table>
+    <tr><td><%= f.label :infocenter %></td></tr>
+    <tr><td><%= f.text_area :infocenter, size: '94x5', maxlength: 600 %></td></tr>
   </table>
 
   <h2>Ansprechperson</h2>
@@ -111,7 +134,12 @@
       <td></td>
     <tr>
     <tr>
-      <td><%= f.radio_button :gender, :mr %><%= get_gender(:mr) %> <%= f.radio_button :gender, :mrs %> <%= get_gender(:mrs) %></td>
+      <td>
+        <%= f.radio_button :gender, :mr %> <%= get_gender(:mr) %>
+        <%= f.radio_button :gender, :mrs %> <%= get_gender(:mrs) %>
+        <%= f.radio_button :gender, :miss %> <%= get_gender(:miss) %>
+        <%= f.radio_button :gender, :ms %> <%= get_gender(:ms) %>
+      </td>
       <td>
         <div id='title_img'>
           <%= image_tag('plus.png', size: '20x20', title: 'Titel hinzufügen', style: (@guidedtour.title? ? 'display:none;' : '')) %>
@@ -210,12 +238,10 @@
         <td><%= f.text_field :cellphone %></td>
       </tr>
       <tr>
-        <td><%= f.label :participants %>*</td>
         <td><%= f.label :male_count %></td>
         <td><%= f.label :female_count %></td>
       </tr>
       <tr>
-        <td><%= f.text_field :participants, size: 30, maxlength: 3 %></td>
         <td><%= f.text_field :male_count, size: 30, maxlength: 3 %></td>
         <td><%= f.text_field :female_count, size: 30, maxlength:3 %></td>
       </tr>
