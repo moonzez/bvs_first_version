@@ -60,7 +60,7 @@ Feature:
     Then I should see "Ihr Profil wurde geändert"
     And I should see title "Home"
     When I follow "Profil"
-    Then I should see field "lastname" with "Married"
+    Then I should see field with "Married"
 
   Scenario: edit profile as dbuser with invalid data
     Given I am logged in as an dbuser
@@ -91,7 +91,7 @@ Feature:
     Then I should see "Ihr Profil wurde geändert"
     And I should see title "Home"
     When I follow "Profil"
-    Then I should see field "lastname" with "Married"
+    Then I should see field with "Married"
     And I see checked language "Englisch"
     And I see unchecked language "Deutsch"
     And I see checked license "License A"
@@ -126,7 +126,7 @@ Feature:
     Then I should see "Ihr Profil wurde geändert"
     And I should see title "Home"
     When I follow "Profil"
-    Then I should see field "firstname" with "Alejandro"
+    Then I should see field with "Alejandro"
 
   Scenario: edit profile as accounter with invalid data
     Given I am logged in as an accounter
@@ -155,7 +155,7 @@ Feature:
     Then I should see "Ihr Profil wurde geändert"
     And I should see title "Home"
     When I follow "Profil"
-    Then I should see field "email" with "new.name@bvs.de"
+    Then I should see field with "new.name@bvs.de"
 
   Scenario: edit profile as reader with invalid data
     Given I am logged in as an reader

@@ -12,3 +12,11 @@ end
 Then(/^I should see date "(.*?)"$/) do |date|
   expect(page).to have_content(I18n.l(eval(date)))
 end
+
+Then(/^I should see state "(.*?)"$/) do |state|
+  expect(page).to have_select('Status', selected: state)
+end
+
+When(/^I select state "(.*?)" for "(.*?)"$/) do |state, event|
+  select state, :from => "#{event}_state"
+end

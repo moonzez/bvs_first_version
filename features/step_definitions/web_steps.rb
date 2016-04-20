@@ -6,8 +6,8 @@ When(/^I fill in "(.*?)" with "(.*?)"$/) do |field, value|
   fill_in(field, with: value)
 end
 
-Then(/^I should see field "(.*?)" with "(.*?)"$/) do |field, value|
-  find("input[id='profile_#{field}'][value='#{value}']")
+Then(/^I should see field with "(.*?)"$/) do |value|
+  expect(page).to have_selector("input[value='#{value}']")
 end
 
 When(/^I press "(.*?)"$/) do |button|
@@ -154,4 +154,8 @@ When(/^I follow image_link "(.*?)" for referent "(.*?)"$/) do |title, email|
   end
 
   find(:xpath, "//a[@href='#{link}'][@title='#{title}']").click
+end
+
+When(/^I follow image_link "(.*?)"$/) do |link_id|
+  find(:xpath, "//img[@id='#{link_id}']").click
 end

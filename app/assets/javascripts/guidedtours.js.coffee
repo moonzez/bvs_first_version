@@ -16,6 +16,7 @@ reset_fields = (number_str) ->
     $('#guidedtour_confirmed_date').val('')
     $('#guidedtour_confirmed_from').val('')
     $('#guidedtour_confirmed_to').val('')
+    check_confirmed_date('guidedtour')
   else
     $('#guidedtour_date' + number_str).val('')
     $('#guidedtour_from' + number_str).val('')
@@ -37,12 +38,13 @@ $(-> $('#guidedtour_participants').change(->check_is_numeric(this)))
 $(-> $('#guidedtour_male_count').change(->check_is_numeric(this)))
 $(-> $('#guidedtour_female_count').change(->check_is_numeric(this)))
 $(-> $('#guidedtour_teamleader').change(->check_is_numeric(this)))
-
-check_is_numeric = (obj) ->
-  value = obj.value
-  if value != '' && !$.isNumeric(value)
-    obj.value = ''
-    alert('Dieses Feld darf nur Zahlen enthalten.')
+$(-> $('#guidedtour_groupnumber').
+  change(->
+    check_is_numeric(this)
+    prevent_empty_groupnumber('guidedtour')
+    check_patricipants_groupnumber('guidedtour')
+  )
+)
 
 $(-> set_base_datatable($('#opened_guidedtours'), opened_tours_not_orderable(), [0, 3]))
 
@@ -82,3 +84,6 @@ set_confirmed_date = (date_nr) ->
   $('#guidedtour_confirmed_date').val(date)
   $('#guidedtour_confirmed_from').val(from)
   $('#guidedtour_confirmed_to').val(to)
+
+$(-> $('#guidedtour_state').change(->check_state_and_date('guidedtour', this.value)))
+$(-> $('#guidedtour_confirmed_date').change(->check_confirmed_date('guidedtour')))

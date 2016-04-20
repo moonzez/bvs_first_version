@@ -61,8 +61,10 @@ de:
         confirmed_from: von
         confirmed_to: bis
         language: In welcher Sprache soll die Führung stattfinden?
+        form_language: Formular ausgefüllt in
         cellphone: Handynummer der Begleitperson
         participants: Teilnehmeranzahl
+        groupnumber: Gruppenanzahl
         male_count: davon männlich
         female_count: davon weiblich
         age: Alter (min. 14 Jahre)
@@ -210,8 +212,8 @@ de:
     genders:
       mr: Herr
       mrs: Frau
-      miss: Frau
-      ms: Frau
+      miss: Frau (miss)
+      ms: Frau (ms)
     havebeen:
       'no': Nein
       'yes': Ja
